@@ -12,7 +12,7 @@ def fetch_filings_from_rss(url):
             for item in feed['rss']['channel']['item']:
                 form_type = item.get('edgar:xbrlFiling', {}).get('edgar:formType')
                 cik_number = item.get('edgar:xbrlFiling', {}).get('edgar:cikNumber')
-                if form_type and cik_number and form_type == '8-K':
+                if form_type and cik_number and (form_type == '8-K' or form_type == '6-K'):
                     filings.append((cik_number, item.get('title', '').split(' (')[0]))
     except Exception as e:
         pass  # Optionally log the error
