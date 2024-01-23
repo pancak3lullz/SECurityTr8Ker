@@ -20,9 +20,10 @@ This script is designed to monitor and report on cybersecurity disclosures in fi
 
 In summary, the script serves as an automated tool to monitor and report on cybersecurity disclosures in company filings as reported to the SEC, focusing specifically on 8-K and 6-K filings.
 
-### Idea presented by Will Hawkins
+### Idea presented by Will Hawkins & Board-Cybersecurity.com
 - https://twitter.com/hawkinsw/status/1748508044802052540
 - https://github.com/hawkinsw/Item105/tree/main
+- https://www.board-cybersecurity.com/incidents/tracker/
 
 ### Resources
 - https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent
