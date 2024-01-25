@@ -1,3 +1,4 @@
+import os
 import requests
 import time
 import xmltodict
@@ -5,6 +6,14 @@ import logging
 import colorlog
 import json
 from datetime import datetime
+
+# Ensure the 'logs' directory exists
+logs_dir = 'logs'
+if not os.path.exists(logs_dir):
+    os.makedirs(logs_dir)
+
+# Log file path in 'logs' directory
+log_file_path = os.path.join(logs_dir, 'script_log.log')
 
 # Custom color scheme for log levels
 LOG_COLORS = {
@@ -25,8 +34,8 @@ logger = colorlog.getLogger()
 logger.addHandler(handler)
 logger.setLevel(logging.DEBUG)
 
-# Setting up logging to file
-file_handler = logging.FileHandler('script_log.log')
+# Setting up logging to file with updated path
+file_handler = logging.FileHandler(log_file_path)
 file_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
 file_handler.setLevel(logging.INFO)
 logger.addHandler(file_handler)
