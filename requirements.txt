@@ -1,1 +1,3 @@
-xmltodict==0.13.0
+requests
+xmltodict
+colorlog
