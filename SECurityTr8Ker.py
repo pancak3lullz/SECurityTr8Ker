@@ -29,15 +29,16 @@ handler = colorlog.StreamHandler()
 handler.setFormatter(colorlog.ColoredFormatter(
     '%(log_color)s%(asctime)s - %(levelname)s - %(message)s',
     log_colors=LOG_COLORS))
+handler.setLevel(logging.INFO) # Set terminal handler level to INFO
 
 logger = colorlog.getLogger()
+logger.setLevel(logging.DEBUG) # Set logger level to DEBUG
 logger.addHandler(handler)
-logger.setLevel(logging.DEBUG)
 
 # Setting up logging to file with updated path
 file_handler = logging.FileHandler(log_file_path)
 file_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
-file_handler.setLevel(logging.INFO)
+file_handler.setLevel(logging.DEBUG)
 logger.addHandler(file_handler)
 
 def fetch_filings_from_rss(url):
@@ -81,7 +82,7 @@ def check_cybersecurity_disclosure(cik_number, company_name):
         return False
 
 def main():
-    logger.debug("Script started. Monitoring SEC RSS feed for cybersecurity disclosures...")
+    logger.info("Script started. Monitoring SEC RSS feed for cybersecurity disclosures...")
     rss_url = "https://www.sec.gov/Archives/edgar/usgaap.rss.xml"
     while True:
         filings = fetch_filings_from_rss(rss_url)
@@ -91,7 +92,7 @@ def main():
                 logger.info(f"Disclosure check successful for {company_name} (CIK: {cik_number}).", extra={"log_color": "green"})
             else:
                 logger.info(f"No cybersecurity (1.05) disclosures found for {company_name} (CIK: {cik_number}).", extra={"log_color": "green"})
-        logger.debug("Waiting for 10 minutes before the next check...")
+        logger.info("Waiting for 10 minutes before the next check...")
         time.sleep(600)
 
 if __name__ == "__main__":
