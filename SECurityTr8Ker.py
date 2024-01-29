@@ -29,7 +29,7 @@ handler = colorlog.StreamHandler()
 handler.setFormatter(colorlog.ColoredFormatter(
     '%(log_color)s%(asctime)s - %(levelname)s - %(message)s',
     log_colors=LOG_COLORS))
-handler.setLevel(logging.INFO) # Set terminal handler level to INFO
+handler.setLevel(logging.ERROR) # Set terminal handler level to INFO
 
 logger = colorlog.getLogger()
 logger.setLevel(logging.DEBUG) # Set logger level to DEBUG
@@ -92,6 +92,7 @@ def main():
                 logger.info(f"Disclosure check successful for {company_name} (CIK: {cik_number}).", extra={"log_color": "green"})
             else:
                 logger.info(f"No cybersecurity (1.05) disclosures found for {company_name} (CIK: {cik_number}).", extra={"log_color": "green"})
+        print("Waiting for 10 minutes before the next check...")
         logger.info("Waiting for 10 minutes before the next check...")
         time.sleep(600)
 
