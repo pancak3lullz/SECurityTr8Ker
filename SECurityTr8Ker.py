@@ -6,9 +6,10 @@ import logging
 import colorlog
 import json
 from datetime import datetime
+import re
 
 # Ensure the 'logs' directory exists
-logs_dir = 'logs'
+logs_dir = 'local_logs'
 if not os.path.exists(logs_dir):
     os.makedirs(logs_dir)
 
@@ -69,12 +70,22 @@ def check_cybersecurity_disclosure(cik_number, company_name):
             if "filings" in data and "recent" in data["filings"] and "accessionNumber" in data["filings"]["recent"]:
                 accession_numbers = data["filings"]["recent"]["accessionNumber"]
                 if accession_numbers:
-                    first_accession_number = accession_numbers[0].replace('-', '')
-                    filing_detail_url = f"https://www.sec.gov/Archives/edgar/data/{cik_number}/{first_accession_number}/"
+                    first_accession_number = accession_numbers[0]
+                    cleaned_accession_number = first_accession_number.replace('-', '')
+                    index_headers_url = f"https://www.sec.gov/Archives/edgar/data/{cik_number}/{cleaned_accession_number}/{first_accession_number}-index-headers.html"
 
                     for item in data["filings"]["recent"]["items"]:
                         if "1.05" in item.split(','):
-                            logger.error(f"Cybersecurity disclosure (1.05) found for {company_name} (CIK: {cik_number}). More details: {filing_detail_url}", extra={"log_color": "red"})
+                            index_headers_response = requests.get(index_headers_url, headers=headers)
+                            if index_headers_response.status_code == 200:
+                                # Using regex to find the .htm file in the <TEXT> section
+                                match = re.search(r'Document \d+ - file: ([^<]+\.htm)', index_headers_response.text, re.IGNORECASE)
+                                if match:
+                                    htm_filename = match.group(1)
+                                    htm_file_link = f"https://www.sec.gov/Archives/edgar/data/{cik_number}/{cleaned_accession_number}/{htm_filename}"
+                                    logger.error(f"Cybersecurity disclosure (1.05) found for {company_name} (CIK: {cik_number}). More details: {htm_file_link}", extra={"log_color": "red"})
+                                    return True
+                            logger.error(f"Cybersecurity disclosure (1.05) found for {company_name} (CIK: {cik_number}). Unable to find .htm file. More details: {index_headers_url}", extra={"log_color": "red"})
                             return True
         return False
     except Exception as e:
