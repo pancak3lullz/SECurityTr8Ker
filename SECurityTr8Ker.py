@@ -9,7 +9,7 @@ from datetime import datetime
 import re
 
 # Ensure the 'logs' directory exists
-logs_dir = 'logs'
+logs_dir = 'local_logs'
 if not os.path.exists(logs_dir):
     os.makedirs(logs_dir)
 
@@ -66,7 +66,10 @@ def check_cybersecurity_disclosure(cik_number, company_name):
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             data = response.json()
-            logger.info(f"Successfully fetched data for CIK: {cik_number}", extra={"log_color": "green"})
+            ticker_symbol = data.get('tickers', [])[0] if 'tickers' in data and data['tickers'] else None
+            display_name = f"{company_name} (${ticker_symbol})" if ticker_symbol else company_name
+            logger.info(f"Successfully fetched data for CIK: {cik_number} ({display_name})", extra={"log_color": "green"})
+            
             if "filings" in data and "recent" in data["filings"] and "accessionNumber" in data["filings"]["recent"]:
                 accession_numbers = data["filings"]["recent"]["accessionNumber"]
                 if accession_numbers:
@@ -75,34 +78,35 @@ def check_cybersecurity_disclosure(cik_number, company_name):
                     index_headers_url = f"https://www.sec.gov/Archives/edgar/data/{cik_number}/{cleaned_accession_number}/{first_accession_number}-index-headers.html"
 
                     for item in data["filings"]["recent"]["items"]:
-                        if "1.05" in item.split(','):
+                        if "8.01" in item.split(','):
                             index_headers_response = requests.get(index_headers_url, headers=headers)
                             if index_headers_response.status_code == 200:
-                                # Using regex to find the .htm file in the <TEXT> section
                                 match = re.search(r'Document \d+ - file: ([^<]+\.htm)', index_headers_response.text, re.IGNORECASE)
                                 if match:
                                     htm_filename = match.group(1)
                                     htm_file_link = f"https://www.sec.gov/Archives/edgar/data/{cik_number}/{cleaned_accession_number}/{htm_filename}"
-                                    logger.error(f"Cybersecurity disclosure (1.05) found for {company_name} (CIK: {cik_number}). More details: {htm_file_link}", extra={"log_color": "red"})
-                                    return True
-                            logger.error(f"Cybersecurity disclosure (1.05) found for {company_name} (CIK: {cik_number}). Unable to find .htm file. More details: {index_headers_url}", extra={"log_color": "red"})
-                            return True
-        return False
+                                    logger.error(f"Cybersecurity disclosure (1.05) found for {display_name} (CIK: {cik_number}). More details: {htm_file_link}", extra={"log_color": "red"})
+                                    return True, ticker_symbol  # Ensure to return both values
+                            logger.error(f"Cybersecurity disclosure (1.05) found for {display_name} (CIK: {cik_number}). Unable to find .htm file. More details: {index_headers_url}", extra={"log_color": "red"})
+                            return True, ticker_symbol  # Ensure to return both values
+        return False, None  # Return None for ticker_symbol if no disclosure is found
     except Exception as e:
         logger.critical(f"Error checking disclosure: {e}", extra={"log_color": "red"})
-        return False
+        return False, None  # Return None for ticker_symbol in case of exception
 
 def main():
+    print("Script started. Monitoring SEC RSS feed for cybersecurity disclosures...")
     logger.info("Script started. Monitoring SEC RSS feed for cybersecurity disclosures...")
     rss_url = "https://www.sec.gov/Archives/edgar/usgaap.rss.xml"
     while True:
         filings = fetch_filings_from_rss(rss_url)
         for cik_number, company_name in filings:
-            success = check_cybersecurity_disclosure(cik_number, company_name)
+            success, ticker_symbol = check_cybersecurity_disclosure(cik_number, company_name)  # Capture ticker_symbol here
+            display_name = f"{company_name} (${ticker_symbol})" if ticker_symbol else company_name
             if success:
-                logger.info(f"Disclosure check successful for {company_name} (CIK: {cik_number}).", extra={"log_color": "green"})
+                logger.info(f"Disclosure check successful for {display_name} (CIK: {cik_number}).", extra={"log_color": "green"})
             else:
-                logger.info(f"No cybersecurity (1.05) disclosures found for {company_name} (CIK: {cik_number}).", extra={"log_color": "green"})
+                logger.info(f"No cybersecurity (1.05) disclosures found for {display_name} (CIK: {cik_number}).", extra={"log_color": "green"})
         print("Waiting for 10 minutes before the next check...")
         logger.info("Waiting for 10 minutes before the next check...")
         time.sleep(600)
