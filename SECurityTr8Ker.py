@@ -78,7 +78,7 @@ def check_cybersecurity_disclosure(cik_number, company_name):
                     index_headers_url = f"https://www.sec.gov/Archives/edgar/data/{cik_number}/{cleaned_accession_number}/{first_accession_number}-index-headers.html"
 
                     for item in data["filings"]["recent"]["items"]:
-                        if "8.01" in item.split(','):
+                        if "1.05" in item.split(','):
                             index_headers_response = requests.get(index_headers_url, headers=headers)
                             if index_headers_response.status_code == 200:
                                 match = re.search(r'Document \d+ - file: ([^<]+\.htm)', index_headers_response.text, re.IGNORECASE)
