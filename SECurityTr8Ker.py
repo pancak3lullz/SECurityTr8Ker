@@ -9,7 +9,7 @@ from datetime import datetime
 import re
 
 # Ensure the 'logs' directory exists
-logs_dir = 'local_logs'
+logs_dir = 'logs'
 if not os.path.exists(logs_dir):
     os.makedirs(logs_dir)
 
