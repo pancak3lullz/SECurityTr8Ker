@@ -5,8 +5,9 @@ import xmltodict
 import logging
 import colorlog
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import re
+from bs4 import BeautifulSoup
 
 # Ensure the 'logs' directory exists
 logs_dir = 'logs'
@@ -59,6 +60,51 @@ def fetch_filings_from_rss(url):
         logger.critical(f"Error fetching filings: {e}", extra={"log_color": "red"})
     return filings
 
+def fetch_directories(cik_number):
+    url = f"https://www.sec.gov/Archives/edgar/data/{cik_number}/"
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(url, headers=headers)
+    if response.status_code != 200:
+        raise Exception(f"Failed to fetch directories for CIK {cik_number}")
+
+    soup = BeautifulSoup(response.content, 'html.parser')
+    rows = soup.find_all('tr')
+    recent_cutoff = datetime.now() - timedelta(days=30)
+    directories = []
+
+    for row in rows:
+        cols = row.find_all('td')
+        if len(cols) == 3:
+            dir_name = cols[0].text.strip('/')
+            dir_date_str = cols[2].text.strip()
+            try:
+                dir_date = datetime.strptime(dir_date_str, '%Y-%m-%d %H:%M:%S')
+                if dir_date >= recent_cutoff:
+                    directories.append(dir_name)
+            except ValueError:
+                continue
+
+    return directories
+
+def find_cybersecurity_htm_link(cik_number):
+    directories = fetch_directories(cik_number)
+    headers = {'User-Agent': 'Mozilla/5.0'}
+
+    for directory in directories:
+        dir_url = f"https://www.sec.gov/Archives/edgar/data/{cik_number}/{directory}/"
+        response = requests.get(dir_url, headers=headers)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, 'html.parser')
+            htm_links = [link.get('href') for link in soup.find_all('a') if link.get('href').endswith('.htm')]
+
+            for htm_link in htm_links:
+                htm_url = f"https://www.sec.gov{htm_link}"
+                htm_response = requests.get(htm_url, headers=headers)
+                if htm_response.status_code == 200:
+                    if "Material Cybersecurity Incidents" in htm_response.text:
+                        return htm_url
+    return None
+
 def check_cybersecurity_disclosure(cik_number, company_name):
     url = f"https://data.sec.gov/submissions/CIK{cik_number}.json"
     headers = {'User-Agent': 'Mozilla/5.0'}
@@ -66,33 +112,26 @@ def check_cybersecurity_disclosure(cik_number, company_name):
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             data = response.json()
-            ticker_symbol = data.get('tickers', [])[0] if 'tickers' in data and data['tickers'] else None
+            ticker_symbol = data.get('tickers', [])[0] if data.get('tickers') else None
             display_name = f"{company_name} (${ticker_symbol})" if ticker_symbol else company_name
             logger.info(f"Successfully fetched data for CIK: {cik_number} ({display_name})", extra={"log_color": "green"})
-            
-            if "filings" in data and "recent" in data["filings"] and "accessionNumber" in data["filings"]["recent"]:
-                accession_numbers = data["filings"]["recent"]["accessionNumber"]
-                if accession_numbers:
-                    first_accession_number = accession_numbers[0]
-                    cleaned_accession_number = first_accession_number.replace('-', '')
-                    index_headers_url = f"https://www.sec.gov/Archives/edgar/data/{cik_number}/{cleaned_accession_number}/{first_accession_number}-index-headers.html"
 
-                    for item in data["filings"]["recent"]["items"]:
-                        if "1.05" in item.split(','):
-                            index_headers_response = requests.get(index_headers_url, headers=headers)
-                            if index_headers_response.status_code == 200:
-                                match = re.search(r'Document \d+ - file: ([^<]+\.htm)', index_headers_response.text, re.IGNORECASE)
-                                if match:
-                                    htm_filename = match.group(1)
-                                    htm_file_link = f"https://www.sec.gov/Archives/edgar/data/{cik_number}/{cleaned_accession_number}/{htm_filename}"
-                                    logger.error(f"Cybersecurity disclosure (1.05) found for {display_name} (CIK: {cik_number}). More details: {htm_file_link}", extra={"log_color": "red"})
-                                    return True, ticker_symbol  # Ensure to return both values
-                            logger.error(f"Cybersecurity disclosure (1.05) found for {display_name} (CIK: {cik_number}). Unable to find .htm file. More details: {index_headers_url}", extra={"log_color": "red"})
-                            return True, ticker_symbol  # Ensure to return both values
-        return False, None  # Return None for ticker_symbol if no disclosure is found
+            for item in data.get("filings", {}).get("recent", {}).get("items", []):
+                if "1.05" in item.split(','):
+                    # Find the correct .htm link for the disclosure
+                    cybersecurity_htm_link = find_cybersecurity_htm_link(cik_number)
+                    if cybersecurity_htm_link:
+                        logger.error(f"Cybersecurity disclosure (1.05) found for {display_name} (CIK: {cik_number}). More details: {cybersecurity_htm_link}", extra={"log_color": "red"})
+                        return True, ticker_symbol
+                    else:
+                        logger.warning(f"No specific cybersecurity disclosure found for {display_name} (CIK: {cik_number}).", extra={"log_color": "yellow"})
+            return False, ticker_symbol
+        else:
+            logger.error(f"Error fetching ticker symbol for CIK: {cik_number}", extra={"log_color": "red"})
+            return False, None
     except Exception as e:
         logger.critical(f"Error checking disclosure: {e}", extra={"log_color": "red"})
-        return False, None  # Return None for ticker_symbol in case of exception
+        return False, None
 
 def main():
     print("Script started. Monitoring SEC RSS feed for cybersecurity disclosures...")
