@@ -1,24 +1,49 @@
 # SECurityTr8Ker
-This script is designed to monitor and report on cybersecurity disclosures in financial filings of companies. Here's a breakdown of its functionality:
+This script is designed to monitor and report on cybersecurity disclosures in financial filings of companies.
 
-1. **Monitoring an RSS Feed**: The script continuously monitors an RSS feed from the U.S. Securities and Exchange Commission (SEC). The specific feed it monitors is the "US Generally Accepted Accounting Principles (US GAAP)" feed, which contains various financial filings.
+#### Overview
+This Python script is designed to continuously monitor and analyze filings from the U.S. Securities and Exchange Commission (SEC) for cybersecurity disclosures. Its primary function is to fetch and parse data from the SEC's RSS feed, identify specific filings related to cybersecurity, and log relevant information for further analysis.
 
-2. **Fetching Filings**: The `fetch_filings_from_rss` function retrieves the content of the RSS feed. It filters filings of type '8-K' and '6-K'. These are forms used by publicly traded companies in the United States to notify investors of significant events that may affect the company's share price.
+#### Key Features
+1. **Colored Logging:** Implements colored logging for easier differentiation of log levels in the terminal. Custom color schemes are set for various log levels (DEBUG, INFO, WARNING, ERROR, CRITICAL).
 
-   - **8-K Filings**: These are known as "Current Reports" and are used to report major events like bankruptcy, acquisition, resignation of directors, and other significant corporate changes.
-   - **6-K Filings**: These are used by foreign private issuers to furnish information that, among other things, was made public in the country of their domicile, filed with and made public by a foreign stock exchange on which their securities are traded, or distributed to security holders.
+2. **File Logging:** In addition to terminal logging, the script also logs to a file, ensuring that a persistent record of events is maintained.
 
-3. **Checking for Cybersecurity Disclosures**: For each relevant filing, the script then checks for cybersecurity disclosures using the `check_cybersecurity_disclosure` function. It does this by accessing a JSON data file from the SEC's data repository using the company's CIK (Central Index Key) number.
+3. **RSS Feed Parsing:** Fetches and parses the SEC RSS feed to identify filings of specific types (8-K, 6-K) and logs successful parsing or critical errors.
 
-   - The function searches for the indicator "1.05" within the 'items' field of the JSON data. This indicator signifies a cybersecurity incident disclosure.
+4. **SEC Filings Analysis:** Analyzes SEC filings for mentions of "Material Cybersecurity Incidents" within a specified recent time frame.
 
-4. **Displaying Cybersecurity Disclosures**: If a cybersecurity disclosure is found, the script prints a message to the terminal with a special red color formatting, making it stand out. This alert indicates the company name and its CIK number, notifying that a cybersecurity disclosure has been found in their filing.
+5. **Ticker Symbol Extraction:** Retrieves and logs the ticker symbol for companies from the SEC's JSON data.
 
-5. **Timing and Repeats**: The script operates in a continuous loop, checking the RSS feed every 10 minutes. After each cycle of checks, it outputs a message indicating it is waiting for 10 minutes before the next check.
+6. **Cybersecurity Disclosure Check:** Specifically checks for Item 1.05 (Cybersecurity Disclosure) in recent filings.
 
-6. **Error Handling**: The script contains basic error handling which simply passes any exceptions that might occur during the fetching and parsing of data. This could be for handling HTTP errors, parsing errors, or connectivity issues.
+7. **Continuous Monitoring:** The script runs in a loop, periodically checking the RSS feed every 10 minutes.
 
-In summary, the script serves as an automated tool to monitor and report on cybersecurity disclosures in company filings as reported to the SEC, focusing specifically on 8-K and 6-K filings.
+#### Implementation Details
+- **Logging Setup:** Uses `colorlog` and Python's `logging` module for terminal and file logging. Logs are stored in a local directory (`logs`), which is created if it doesn't exist.
+- **External Libraries:** Utilizes `requests` for HTTP requests, `xmltodict` for parsing XML, `BeautifulSoup` from `bs4` for HTML parsing, and `re` and `datetime` for handling regular expressions and date/time operations.
+- **Error Handling:** Includes try-except blocks for robust error handling during HTTP requests and data parsing.
+- **Functionality Breakdown:**
+  - `fetch_filings_from_rss`: Retrieves and parses the RSS feed for specific form types.
+  - `fetch_directories`: Fetches directories from the SEC archive for a given CIK number.
+  - `find_cybersecurity_htm_link`: Searches for a .htm link containing the phrase "Material Cybersecurity Incidents".
+  - `check_cybersecurity_disclosure`: Checks for cybersecurity disclosures in a company's filings.
+  - `main`: Orchestrates the script's workflow, continuously monitoring the SEC RSS feed and performing checks.
+
+#### Usage
+Designed for stakeholders in financial or cybersecurity domains, this script assists in real-time monitoring of public company disclosures related to cybersecurity, aiding in compliance, research, or investment analysis.
+
+#### Dependencies
+- Python 3.x
+- Libraries: `os`, `requests`, `time`, `xmltodict`, `logging`, `colorlog`, `json`, `datetime`, `re`, `bs4`
+
+#### Setup and Execution
+1. Ensure Python 3.x is installed.
+2. Install required libraries (e.g., via `pip install requests xmltodict colorlog bs4`).
+3. Run the script using Python.
+
+#### Note
+This script makes real-time queries to the SEC website and is dependent on the structure of the SEC's RSS feed and website, which may change over time. Regular updates and maintenance might be required to keep the script functional.
 
 ### Idea presented by Will Hawkins & Board-Cybersecurity.com
 - https://twitter.com/hawkinsw/status/1748508044802052540
