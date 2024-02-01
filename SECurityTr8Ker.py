@@ -9,7 +9,7 @@ from datetime import datetime
 
 # Define request interval, log file path, and logs directory
 REQUEST_INTERVAL = 0.3
-logs_dir = 'local_SECurityTr8Ker-v2'
+logs_dir = 'logs'
 log_file_path = os.path.join(logs_dir, 'debug.log')
 
 # Ensure the logs directory exists
