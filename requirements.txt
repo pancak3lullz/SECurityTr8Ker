@@ -1,4 +1,4 @@
 requests
 xmltodict
-colorlog
 beautifulsoup4
+colorlog
