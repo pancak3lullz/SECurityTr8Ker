@@ -1,56 +1,72 @@
-# SECurityTr8Ker
-This script is designed to monitor and report on cybersecurity disclosures in financial filings of companies.
+# SECurityTr8Ker: SEC RSS Feed Monitor
 
-#### Overview
-This Python script is designed to continuously monitor and analyze filings from the U.S. Securities and Exchange Commission (SEC) for cybersecurity disclosures. Its primary function is to fetch and parse data from the SEC's RSS feed, identify specific filings related to cybersecurity, and log relevant information for further analysis.
+SECurityTr8Ker is a Python script designed to monitor the U.S. Securities and Exchange Commission's (SEC) RSS feed for new 8-K and 6-K filings that contain material related to cybersecurity incidents. This script is tailored for cybersecurity analysts, financial professionals, and researchers interested in real-time alerts of potential cybersecurity incidents disclosed by publicly traded companies.
 
-#### Key Features
-1. **Colored Logging:** Implements colored logging for easier differentiation of log levels in the terminal. Custom color schemes are set for various log levels (DEBUG, INFO, WARNING, ERROR, CRITICAL).
+## Features
 
-2. **File Logging:** In addition to terminal logging, the script also logs to a file, ensuring that a persistent record of events is maintained.
+- **Real-time Monitoring**: Continuously monitors the SEC's RSS feed for 8-K and 6-K filings, ensuring timely detection of new disclosures.
+- **Cybersecurity Incident Detection**: Searches the content of each filing for mentions of "Material Cybersecurity Incidents," flagging relevant documents for further review.
+- **Logging**: Detailed logging of findings, including company name, CIK number, document link, and publication date, to a specified log file. Additional debug information is logged to facilitate troubleshooting and verification.
 
-3. **RSS Feed Parsing:** Fetches and parses the SEC RSS feed to identify filings of specific types (8-K, 6-K) and logs successful parsing or critical errors.
+## How It Works
 
-4. **SEC Filings Analysis:** Analyzes SEC filings for mentions of "Material Cybersecurity Incidents" within a specified recent time frame.
+The script operates by performing the following steps in a continuous loop:
 
-5. **Ticker Symbol Extraction:** Retrieves and logs the ticker symbol for companies from the SEC's JSON data.
+1. **Requesting the SEC RSS Feed**: Utilizes the `requests` library to fetch the latest RSS feed from the SEC's website, targeting filings that potentially include cybersecurity-related disclosures.
+2. **Parsing RSS Feed**: Employs `xmltodict` to parse the XML format of the RSS feed, extracting relevant information about each filing.
+3. **Inspecting Filings**: For each filing identified as an 8-K or 6-K form, the script retrieves the document(s) linked within the filing and inspects the content for the string "Material Cybersecurity Incidents."
+4. **Logging Findings**: When a filing containing the specified string is found, details such as the company name, CIK number, ticker symbol (if available), document link, and publication date are logged to the `debug.log` file. Informational messages are also printed to the terminal.
+5. **Sleep Interval**: After each cycle of checking the feed, the script pauses for a specified interval (default: 10 minutes) before checking the feed again, minimizing unnecessary load on SEC servers and adhering to respectful usage practices.
 
-6. **Cybersecurity Disclosure Check:** Specifically checks for Item 1.05 (Cybersecurity Disclosure) in recent filings.
+## Installation and Usage
 
-7. **Continuous Monitoring:** The script runs in a loop, periodically checking the RSS feed every 10 minutes.
+### Prerequisites
 
-#### Implementation Details
-- **Logging Setup:** Uses `colorlog` and Python's `logging` module for terminal and file logging. Logs are stored in a local directory (`logs`), which is created if it doesn't exist.
-- **External Libraries:** Utilizes `requests` for HTTP requests, `xmltodict` for parsing XML, `BeautifulSoup` from `bs4` for HTML parsing, and `re` and `datetime` for handling regular expressions and date/time operations.
-- **Error Handling:** Includes try-except blocks for robust error handling during HTTP requests and data parsing.
-- **Functionality Breakdown:**
-  - `fetch_filings_from_rss`: Retrieves and parses the RSS feed for specific form types.
-  - `fetch_directories`: Fetches directories from the SEC archive for a given CIK number.
-  - `find_cybersecurity_htm_link`: Searches for a .htm link containing the phrase "Material Cybersecurity Incidents".
-  - `check_cybersecurity_disclosure`: Checks for cybersecurity disclosures in a company's filings.
-  - `main`: Orchestrates the script's workflow, continuously monitoring the SEC RSS feed and performing checks.
-
-#### Usage
-Designed for stakeholders in financial or cybersecurity domains, this script assists in real-time monitoring of public company disclosures related to cybersecurity, aiding in compliance, research, or investment analysis.
-
-#### Dependencies
 - Python 3.x
-- Libraries: `os`, `requests`, `time`, `xmltodict`, `logging`, `colorlog`, `json`, `datetime`, `re`, `bs4`
+- Required Python packages: `requests`, `xmltodict`, `beautifulsoup4`, `colorlog`
 
-#### Setup and Execution
-1. Ensure Python 3.x is installed.
-2. Install required libraries (e.g., via `pip install requests xmltodict colorlog bs4`).
-3. Run the script using Python.
+You can install the necessary Python packages using `pip`:
 
-#### Note
-This script makes real-time queries to the SEC website and is dependent on the structure of the SEC's RSS feed and website, which may change over time. Regular updates and maintenance might be required to keep the script functional.
+```bash
+pip install requests xmltodict beautifulsoup4 colorlog
+```
 
-### Idea presented by Will Hawkins & Board-Cybersecurity.com
+### Running the Script
+
+1. Clone the repository or download the script to your local machine.
+2. Open a terminal and navigate to the directory containing the script.
+3. Run the script using Python:
+
+```bash
+python SECurityTr8Ker.py
+```
+
+The script will begin monitoring the SEC RSS feed, logging any findings as described above.
+
+### Configuration
+
+You can adjust the request interval and logging settings by modifying the following variables in the script:
+
+- `REQUEST_INTERVAL`: Time in seconds to wait between each check of the RSS feed.
+- `logs_dir`: Directory where `debug.log` will be stored.
+
+## Logging
+
+The script generates two types of logs:
+
+- **Debug Log (`debug.log`)**: Contains detailed debug information and findings. Stored in the specified `logs_dir` directory.
+- **Terminal Output**: Displays informational messages about the script's operation, including findings and operational status updates.
+
+## Acknowledgements
+
+**Idea presented by Will Hawkins & Board-Cybersecurity.com**
+
 - https://twitter.com/hawkinsw/status/1748508044802052540
 - https://github.com/hawkinsw/Item105/tree/main
 - https://www.board-cybersecurity.com/incidents/tracker/
 
-### Resources
+**Resources**
+
 - https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent
 - https://www.sec.gov/Archives/edgar/usgaap.rss.xml
 - https://data.sec.gov/submissions/CIK{cik_number}.json
