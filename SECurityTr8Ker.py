@@ -42,7 +42,7 @@ logger.addHandler(file_handler)
 
 def get_ticker_symbol(cik_number, company_name):
     url = f"https://data.sec.gov/submissions/CIK{cik_number}.json"
-    headers = {'User-Agent': 'Pancake Stacks Inc./1.0 (pancak3lullz@gmail.com)'}
+    headers = {'User-Agent': 'Mozilla/5.0'}
     try:
         response = requests.get(url, headers=headers)
         time.sleep(REQUEST_INTERVAL)
@@ -58,7 +58,7 @@ def get_ticker_symbol(cik_number, company_name):
         return None
 
 def inspect_document_for_cybersecurity(link):
-    headers = {'User-Agent': 'Pancake Stacks Inc./1.0 (pancak3lullz@gmail.com)'}
+    headers = {'User-Agent': 'Mozilla/5.0'}
     try:
         response = requests.get(link, headers=headers)
         time.sleep(REQUEST_INTERVAL)
@@ -70,7 +70,7 @@ def inspect_document_for_cybersecurity(link):
     return False
 
 def fetch_filings_from_rss(url):
-    headers = {'User-Agent': 'Pancake Stacks Inc./1.0 (pancak3lullz@gmail.com)'}
+    headers = {'User-Agent': 'Mozilla/5.0'}
     try:
         response = requests.get(url, headers=headers)
         time.sleep(REQUEST_INTERVAL)
