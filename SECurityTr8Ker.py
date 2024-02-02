@@ -89,7 +89,7 @@ def fetch_filings_from_rss(url):
                 if form_type in ['8-K', '8-K/A', '6-K']:
                     company_name = xbrlFiling['edgar:companyName']
                     cik_number = xbrlFiling['edgar:cikNumber']
-                    document_links = [xbrlFile['@edgar:url'] for xbrlFile in xbrlFiling['edgar:xbrlFiles']['edgar:xbrlFile'] if xbrlFile['@edgar:type'] in ['8-K', '8-K/A', '6-K']]
+                    document_links = [xbrlFile['@edgar:url'] for xbrlFile in xbrlFiling['edgar:xbrlFiles']['edgar:xbrlFile'] if xbrlFile['@edgar:url'].endswith(('.htm', '.html'))]
                     
                     for document_link in document_links:
                         if inspect_document_for_cybersecurity(document_link):
