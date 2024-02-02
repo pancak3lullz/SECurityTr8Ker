@@ -6,6 +6,7 @@ import colorlog
 from bs4 import BeautifulSoup
 import time
 from datetime import datetime
+import re
 
 # Define request interval, log file path, and logs directory
 REQUEST_INTERVAL = 0.3
@@ -66,15 +67,17 @@ def inspect_document_for_cybersecurity(link):
         time.sleep(REQUEST_INTERVAL)
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
-            document_text = soup.get_text()  # Correctly getting the text from the BeautifulSoup object
-            # Check if any of the search terms is in the document_text
+            document_text = soup.get_text()  # Keep the document text as is, respecting case
+            # Check if any of the search terms is in the document_text using regex for exact match
             for term in search_terms:
-                if term.lower() in document_text.lower():  # Using lower() to make the search case-insensitive
+                # Create a regex pattern with word boundaries for the exact term
+                pattern = r'\b' + re.escape(term) + r'\b'
+                if re.search(pattern, document_text):
                     return True
     except Exception as e:
         logger.error(f"Failed to inspect document at {link}: {e}")
     return False
-    
+
 def fetch_filings_from_rss(url):
     headers = {'User-Agent': 'Mozilla/5.0'}
     try:
