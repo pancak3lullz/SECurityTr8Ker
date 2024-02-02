@@ -59,16 +59,22 @@ def get_ticker_symbol(cik_number, company_name):
 
 def inspect_document_for_cybersecurity(link):
     headers = {'User-Agent': 'Mozilla/5.0'}
+    # Define a list of search terms you're interested in
+    search_terms = ["Material Cybersecurity Incidents", "cyber attack", "cybersecurity incident"]
     try:
         response = requests.get(link, headers=headers)
         time.sleep(REQUEST_INTERVAL)
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
-            return "Material Cybersecurity Incidents" in soup.text
+            document_text = soup.get_text()  # Correctly getting the text from the BeautifulSoup object
+            # Check if any of the search terms is in the document_text
+            for term in search_terms:
+                if term.lower() in document_text.lower():  # Using lower() to make the search case-insensitive
+                    return True
     except Exception as e:
         logger.error(f"Failed to inspect document at {link}: {e}")
     return False
-
+    
 def fetch_filings_from_rss(url):
     headers = {'User-Agent': 'Mozilla/5.0'}
     try:
@@ -88,7 +94,7 @@ def fetch_filings_from_rss(url):
                     for document_link in document_links:
                         if inspect_document_for_cybersecurity(document_link):
                             ticker_symbol = get_ticker_symbol(cik_number, company_name)
-                            logger.info(f"Material Cybersecurity Incident found: {company_name} (Ticker:${ticker_symbol}) (CIK:{cik_number}) - {document_link} - Published on {pubDate}")
+                            logger.info(f"Cybersecurity Incident Disclosure found: {company_name} (Ticker:${ticker_symbol}) (CIK:{cik_number}) - {document_link} - Published on {pubDate}")
                             break  # Assuming we only need to log once per filing
             logger.info("Fetched and parsed RSS feed successfully.", extra={"log_color": "green"})
     except Exception as e:
