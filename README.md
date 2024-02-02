@@ -5,7 +5,7 @@ SECurityTr8Ker is a Python script designed to monitor the U.S. Securities and Ex
 ## Features
 
 - **Real-time Monitoring**: Continuously monitors the SEC's RSS feed for 8-K and 6-K filings, ensuring timely detection of new disclosures.
-- **Cybersecurity Incident Detection**: Searches the content of each filing for mentions of "Material Cybersecurity Incidents," flagging relevant documents for further review.
+- **Cybersecurity Incident Detection**: Searches the content of each filing for mentions of "Material Cybersecurity Incidents," "cyber attack," and "cybersecurity incident," flagging relevant documents for further review.
 - **Logging**: Detailed logging of findings, including company name, CIK number, document link, and publication date, to a specified log file. Additional debug information is logged to facilitate troubleshooting and verification.
 
 ## How It Works
