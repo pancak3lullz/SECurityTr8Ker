@@ -103,7 +103,79 @@ def fetch_filings_from_rss(url):
     except Exception as e:
         logger.critical("Error fetching filings: {}".format(e), extra={"log_color": "red"})
 
+def print_ascii_art():
+    ascii_art = r"""
+MMMMMMMMMMMMMNd;,''.................................................................................................................:KMMMMMMMMMMMMMMMM
+MMMMMMMMWXKKK0kl'...................................................................................................................cXMMMMMMMMMMMMMMMM
+MMMMMMM0lcc:;,,....................................................................................................................;OXKOKXXNWW0kKWMMMM
+MMMMMMWO;.,:::;,'..................................................................................................................'cc::cl;cko,.,kNMMM
+MMMMMMMMO,.',::::;,'..............................................................................................................',::::;........'oXMM
+MMMMMMMMNo,,''';::;;;,'.  ....................................................................................................',;;::::;'. .........oXM
+MMMMMMMMWd..,;,'',;:;,'..'.. ............................................................................................ .',;;;::::,'... ......',:dXM
+MMMMMMMMM0;  .,;,'.'',..;c:;'.. ........................................................................................'..,;;:::,''',,. ...ck00KXNWMM
+MMMMMMMMMK: ....';:,'.. .;:c::;'.....................................................................................',::'.,:;,''',;,'.  ...cXMMMMMMMM
+MMMMMMMMMK:...;,'..',,..',';::::;,................................................................................',;;::'......',,''''. ....,OMMMMMMMM
+MMMMMMMMMXc.....','.... .,;,',;::::;.  ........................................................................ .,;;;;;'. ....''',,,'. ......dWMMMMMMM
+MMMMMMMMMXc..... ..''..  .,,;,'',;:;. .. .....................................................................'..,;;,'''.....'',,'.. ........oNMMMMMMM
+MMMMMMMMMK:...... .''''..';,',,,'..'...,.. .................................................................,:,.,;,'''',.....''''. ..........lXMMMMMMM
+MMMMMMMMMK:...... ..,;,,...,,,'.'''....','.. .......................''''..................................',,'..''''',,,...',;::,. ..........;0MMMMMMM
+MMMMMMMMMK;...... .'''''...,,,,''.......;;,'.  ................ .cooodk0K0kxo'..........................',;;.......',,'...,;;,,.. ............xWMMMMMM
+MMMMMMMMMO,....... .,;;,'...',,,''''....'::;,.. ...........';;. ..',,;cONMMMW0;.......................',,:;. ......''''...''',,'  ............cXMMMMMM
+MMMMMMMMWd....... ..''',,,...,,,,,''.....'::;'.. .........ckOkd:;,.cOKXWWMMMMMXc....................',';:,.  .......''...,,,'''.  ............,kMMMMMM
+MMMMMMMMK:....... .';:;,''...';;;;,,,'....';:;... ...... .::,,,,,,.:XMMMMMMMMMMK;..................',';::.  ......',,'...',',,;,. .............lNMMMMM
+MMMMMMMWk'...........''',,,'..';;;,,,,,'...;::'.......... ......  .oNMMMMMMMMMMWx.................',.,::,. ....''',,,..',,,,,,'. ..............,OMMMMM
+MMMMMMMNo........ .;:;,,''''...,;;;,,,'....;c:'.'................ '0MMMMMMMMMMMMNo................,'.:c:;...'''''',,'..'',,,,,,. ...............lNMMMM
+MMMMMMMK:.............',,;;;'..,;;;;,,'....:c:''................. .kMMMMMMMMMMMMMXc................,',::;. ...'',,,,...,,;;::;'. ...............,OMMMM
+MMMMMMMO,.............'''''''..',,,,,''...,:;,'.................. '0MMMMMMMWWWMXKW0,................',,:;. ...'',,,,...'',,,''.. ................lNMMM
+MMMMMMWx'......... .,:::::::;..';;;,,'....,:,.. ..................lNMMMMMMWN00WKokNd................ .',:,.....',,,,..',,,,;:;...................,kWMM
+MMMMMMWd...........  ...'','''..,,,,,'....::,.. ............... .oNMMMMMMMMMKdONd;kK:...............  .,c:...',;;;,...'',,,,'. ...................cXMM
+MMMMMMNl........... .',,,,,,,,'.',;,,''...::,'.................,dXMMMMMMMMMMWKkdcldx;...............  .'::...'',,,,..'''',,,,. ...................'xWM
+MMMMMMK:..............',,,,''''..,;,,''..':;'. ..............,xXMMMMMWNWMMMMMWNXOxdcckl.............. .'::....'',,..';;;;;;,.. ....................:KM
+MMMMMMO,............. ..',,,,,,''',;;,,'..;:;'. ...........'dXXXWMKONKd0X0NMMOxNMKc:dxc:;..............,:;......''..',,,,''.  .....................'kW
+MMMMMNo',....'......  '::::;;,,'..';;;,,..':::,... ...... .lxd:oOd;;do;:c;lkkc,okd,cl'.cd,...........,;:,...',,;,..';;;:::;'  ......................lX
+MMMMWk:,,,..';'..........''''......',;;;'...;::;;,'...     ... .... ......  .... .. .....    ....'',;::,...',,;;'...''',''.  ................'......'d
+MMMNx;',,;..';..........':::::;;,'..,;;;,,'...,:::;;;,. ...................................  .'',;:c:,....'',;;. ..'',,;;,. .............. .''.  .'',k
+MMMKo;,..,'.',. ..........',,,,''''...;;;;,'....',;;::. ................................... .,::::;'....''',,'.......'''.. ...................  ....;O
+MMWNxc;'.''.;. .......... .;:::;,''....',;,,,'......... ................................... .,,'........'',;'...''.',;,.  .......................'. .;
+Xdcc;';,...,'............ ....'''',,,'...'',,,,,',,..'. ...................................   ......''''''.. ..,,,,''.. .........................'.. ;
+o.... ....';....,;.........  .;::;,'...'...'',;::,',;,. ...................................   .'.';,',,,.. .'...',;:,. .......... .'.  ..','.  ..'...,
+o'.... .'.,'...,;;. .............'',,;,'......,,...'..                                      ....'..''.......',;''.... ..........  ......,'........  .,
+Xo....... ....';;;. ........... .,,,''',;;,...'. ... ...... .... ..... ..... ..... .... ....    ........',;,'..','. ........  ... .....'............;x
+0:...,;,'......;,. ..... ....... .. .;::,'..,;...:,..,;xXkc:xK0o:lOXOl:dKKxc:cxX0l:d0Ol:lOXo. ...',..';;,.';:;.  .............'.   ...........  .'';OW
+Kc...';,''''.........';,.................;:;,'.,:;.';;,kM0olOWNxcdXWKdlkWNklll0WXdcxNKdcoKMk. .;'.,;'.';:;. ... ..........''............ ..........oNM
+W0c;;;;;,,,'.. .'...';:,. ....,,....... ....';;;,';:;..kW0olOWNkcdKWXdlkWNxccl0WXdcxNKdcoKMk,..,;,.,;;..... ............  ............. ..'.......lXMM
+MW0o;......''.. ...':;:,  ...,:,........... .....,;'..,kW0llOWNkcdKWKdlkWNxcco0WXdcxNKdcoKMk,'..';. ...  ......................,,..''.......  ...:KMMM
+W0xo;.    ........'',;;. ..';;:. ...''. .......  ..  .'kWOllOWNkcdKWKdlkWNxcco0WKdcxNKdcoKMk'    .  ........................................ ...'xWMMM
+WXd,..''''...........,'....;;;,..';;;.................,kWOllOWNkcoKWKolOWNxccoKWKockNKdcdKMk'.............................................  ....lXMMMM
+MW0xxdl:,,,,''............';;;..,,'.. ............','.,kW0llOWNkcoKWKolOWNxccoKWKockNKdcdKMk'',........................................   .....cKMMMMM
+MMMMW0d:;;;,,'.......'...'.,,.....  ............'.'''',kW0olOWNxcdKW0olOWNklcdKW0ockNKocdKMx..'..'......................  .......... .........:0MMMMMM
+MMWN0l,,,,''........,;'......   ...............'..,..,,xW0ol0WNxcdXW0olOWNklcdKW0ockNKdcdKWd..'''',,'.............;kOo:.  .   .   ...........:0MMMMMMM
+MMWNKkdlc;..  .''''''''...'. ..,'.......... .''...,'','lX0ol0WXxcxXW0llOWNklldKW0lckNKocdKNl.,,'....'............:OX0l,.  ....  ............:0WMMMMMMM
+MMMMMMMMWNO;..',,',:;''''''..oOOkl'....... ........'.'''cxlo0WXxcxNWOllOWNklldKW0ockNKdcd0x'.','.',''.'.........ck0kd:..,:oxdc'............cKMMMMMMMMM
+MMMMMMMWKd:,,;;,,,,,,;,;odoccodxkxl,...,;coo,....'.''..'.'',oOkl;ck0dccOWWklloOKx:;lxd;',;..'..,''''.'':kxdlldxONKxc'.;oold0kc...........'dXMMMMMMMMMM
+MMMMMMMXxlllc;,''..',..dXkdxl''lxxOKK00KK00Od;'...........  .......''.':xxc''''......    ...'..,..''.'.':odddolxx;..':dxdx0Ol'..........;kWMMMMMMMMMMM
+MMMMMMMMMWNN0c.'',;;.  ,ooxko;',:lxO0koc;'.......... .  ...........',,'..'. .............. ............  .... ..... ,xKKOxdol'.........lKWMMMMMMMMMMMM
+MMMMMMMMMMMMWx;;;:,. . .ckKOoodolc,''..........................   ............      ...............................  ,x0x:. .........,dNMMMMMMMMMMMMMM
+MMMMMMMMMMMMMNd;,.......,clxKNW0xc'''..........................'.........'...   ..''...............................   .'............:OWMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMW0old0Kkc'.. .:OXkl;....,'.....................';;,;,. .. .      ...',,;,'...............'''''......... .............'oXMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMWWMMMMMWKxc'. .,'.......,,..................';;,;:;..''...     ..''',;,,;;'..............','.......... ............cOWMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMWKxc'..........;,................,:;;::,..;;.';.    ...'''',;;,,:;'.....   ..','.......................;kNMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMWKkl,........;'.............';;;::;'.,:;.':,.   ...''',''',;;,;:;.....  .'..''........... ........;xXMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXkl;.....',............';;;:;'.';:,.':;'.  ....','',,''',;;,;;. ..  ...'.....'..,...  .....':xXWMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXOo;...............':::;'..,::'.'::''. ..'''',;,',,,,'',;;;;. ... ..........,'... ...':d0NMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWN0xc'......... .::,'..';:;...::'.,. .',,,,';;,',,,;;,',,;. .....  .......,....,lxOKNMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXOdc,..... ...',;::;'..'::'.,,..''',,;;,;;;,,,;;::'... .......  .. .;;.';lKWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXOxl:'.  '::;,'.'.'::'.,:..',,',;,;,';;;;,',;:'  ......,:ldxOklcO0xOKNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNKOo;''...,;',:;',;:;..;;;;,;;;:,.,::;..... .,;lox0XNWMMMMWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNKOx:',,,,..;:::'.':;::,,;;::..';:'.,cox0XNWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMXd:dxc..;::,. ,:::c;.';:;..;ldldXWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNWMW0odkd:'.,::clc:lkkodKWWWWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWMMWNXkxolk0XWMMMWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"""
+
+    print(ascii_art)
+
 def monitor_sec_feed():
+    print_ascii_art()
     rss_url = 'https://www.sec.gov/Archives/edgar/usgaap.rss.xml'
     while True:
         logger.info("Checking SEC RSS feed for 8-K and 6-K filings...")
