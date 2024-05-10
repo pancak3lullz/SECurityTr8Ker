@@ -104,7 +104,6 @@ def fetch_filings_from_rss(url):
         logger.critical("Error fetching filings: {}".format(e), extra={"log_color": "red"})
 
 def monitor_sec_feed():
-    print_ascii_art()
     rss_url = 'https://www.sec.gov/Archives/edgar/usgaap.rss.xml'
     while True:
         logger.info("Checking SEC RSS feed for 8-K and 6-K filings...")
