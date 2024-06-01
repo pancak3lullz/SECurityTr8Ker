@@ -93,7 +93,7 @@ def fetch_filings_from_rss(url):
                 xbrlFiling = item['edgar:xbrlFiling']
                 form_type = xbrlFiling['edgar:formType']
                 pubDate = item['pubDate']
-                if form_type in ['8-K', '8-K/A', '6-K', 'FORM 8-K']:
+                if form_type in ['8-K', '8-K/A', 'FORM 8-K']:
                     company_name = xbrlFiling['edgar:companyName']
                     cik_number = xbrlFiling['edgar:cikNumber']
                     document_links = [xbrlFile['@edgar:url'] for xbrlFile in xbrlFiling['edgar:xbrlFiles']['edgar:xbrlFile'] if xbrlFile['@edgar:url'].endswith(('.htm', '.html'))]
@@ -110,7 +110,7 @@ def fetch_filings_from_rss(url):
 def monitor_sec_feed():
     rss_url = 'https://www.sec.gov/Archives/edgar/usgaap.rss.xml'
     while True:
-        logger.info("Checking SEC RSS feed for 8-K and 6-K filings...")
+        logger.info("Checking SEC RSS feed for 8-K filings...")
         fetch_filings_from_rss(rss_url)
         logger.info("Sleeping for 10 minutes before next check...")
         time.sleep(600)  # Sleep for 10 minutes
