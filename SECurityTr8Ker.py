@@ -61,19 +61,23 @@ def get_ticker_symbol(cik_number, company_name):
 def inspect_document_for_cybersecurity(link):
     headers = {'User-Agent': 'Mozilla/5.0'}
     # Define a list of search terms you're interested in
-    search_terms = ["Material Cybersecurity Incidents", "Item 1.05", "ITEM 1.05", "MATERIAL CYBERSECURITY INCIDENTS"]
+    search_terms = ["Material Cybersecurity Incidents", "Item 1.05", "ITEM 1.05", "MATERIAL CYBERSECURITY INCIDENTS", "unauthorized access", "unauthorized activity"]
     try:
         response = requests.get(link, headers=headers)
         time.sleep(REQUEST_INTERVAL)
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
             document_text = soup.get_text()  # Keep the document text as is, respecting case
-            # Check if any of the search terms is in the document_text using regex for exact match
-            for term in search_terms:
-                # Create a regex pattern with word boundaries for the exact term
-                pattern = r'\b' + re.escape(term) + r'\b'
-                if re.search(pattern, document_text):
-                    return True
+            
+            # Check if "Check the appropriate box below if the Form 8-K" exists in the document
+            if "Check the appropriate box below if the Form 8-K" in document_text:
+                # Check if any of the search terms is in the document_text using regex for exact match
+                for term in search_terms:
+                    # Create a regex pattern with word boundaries for the exact term
+                    pattern_with_boundaries = r'\b\s*' + re.escape(term) + r'\s*\b'
+                    pattern_without_boundaries = re.escape(term)
+                    if re.search(pattern_with_boundaries, document_text, re.IGNORECASE) or re.search(pattern_without_boundaries, document_text, re.IGNORECASE):
+                        return True
     except Exception as e:
         logger.error(f"Failed to inspect document at {link}: {e}")
     return False
@@ -89,7 +93,7 @@ def fetch_filings_from_rss(url):
                 xbrlFiling = item['edgar:xbrlFiling']
                 form_type = xbrlFiling['edgar:formType']
                 pubDate = item['pubDate']
-                if form_type in ['8-K', '8-K/A', '6-K']:
+                if form_type in ['8-K', '8-K/A', '6-K', 'FORM 8-K']:
                     company_name = xbrlFiling['edgar:companyName']
                     cik_number = xbrlFiling['edgar:cikNumber']
                     document_links = [xbrlFile['@edgar:url'] for xbrlFile in xbrlFiling['edgar:xbrlFiles']['edgar:xbrlFile'] if xbrlFile['@edgar:url'].endswith(('.htm', '.html'))]
