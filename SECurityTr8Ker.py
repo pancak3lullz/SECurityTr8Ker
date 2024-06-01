@@ -61,7 +61,7 @@ def get_ticker_symbol(cik_number, company_name):
 def inspect_document_for_cybersecurity(link):
     headers = {'User-Agent': 'Mozilla/5.0'}
     # Define a list of search terms you're interested in
-    search_terms = ["Material Cybersecurity Incidents", "Item 1.05", "ITEM 1.05", "MATERIAL CYBERSECURITY INCIDENTS", "unauthorized access", "unauthorized activity"]
+    search_terms = ["Material Cybersecurity Incidents", "Item 1.05", "ITEM 1.05", "MATERIAL CYBERSECURITY INCIDENTS", "unauthorized access", "unauthorized activity", "cybersecurity incident", "cyber-attack", "cyberattack", "threat actor", "security incident", "ransomware attack"]
     try:
         response = requests.get(link, headers=headers)
         time.sleep(REQUEST_INTERVAL)
