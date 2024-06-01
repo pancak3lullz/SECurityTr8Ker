@@ -1,11 +1,11 @@
 # SECurityTr8Ker: SEC RSS Feed Monitor
 
-SECurityTr8Ker is a Python script designed to monitor the U.S. Securities and Exchange Commission's (SEC) RSS feed for new 8-K and 6-K filings that contain material related to cybersecurity incidents. This script is tailored for cybersecurity analysts, financial professionals, and researchers interested in real-time alerts of potential cybersecurity incidents disclosed by publicly traded companies.
+SECurityTr8Ker is a Python script designed to monitor the U.S. Securities and Exchange Commission's (SEC) RSS feed for new 8-K filings that contain material related to cybersecurity incidents. This script is tailored for cybersecurity analysts, financial professionals, and researchers interested in real-time alerts of potential cybersecurity incidents disclosed by publicly traded companies.
 
 ## Features
 
-- **Real-time Monitoring**: Continuously monitors the SEC's RSS feed for 8-K and 6-K filings, ensuring timely detection of new disclosures.
-- **Cybersecurity Incident Detection**: Searches the content of each filing for mentions of "Material Cybersecurity Incidents," flagging relevant documents for further review.
+- **Real-time Monitoring**: Continuously monitors the SEC's RSS feed for 8-K filings, ensuring timely detection of new disclosures.
+- **Cybersecurity Incident Detection**: Searches the content of each filing for mentions of terms which could be related to disclosures of cybersecurity incidents, flagging relevant documents for further review.
 - **Logging**: Detailed logging of findings, including company name, CIK number, document link, and publication date, to a specified log file. Additional debug information is logged to facilitate troubleshooting and verification.
 
 ## How It Works
@@ -14,7 +14,7 @@ The script operates by performing the following steps in a continuous loop:
 
 1. **Requesting the SEC RSS Feed**: Utilizes the `requests` library to fetch the latest RSS feed from the SEC's website, targeting filings that potentially include cybersecurity-related disclosures.
 2. **Parsing RSS Feed**: Employs `xmltodict` to parse the XML format of the RSS feed, extracting relevant information about each filing.
-3. **Inspecting Filings**: For each filing identified as an 8-K or 6-K form, the script retrieves the document(s) linked within the filing and inspects the content for the string "Material Cybersecurity Incidents."
+3. **Inspecting Filings**: For each filing identified as an 8-K form, the script retrieves the document(s) linked within the filing and inspects the content for the string "Material Cybersecurity Incidents."
 4. **Logging Findings**: When a filing containing the specified string is found, details such as the company name, CIK number, ticker symbol (if available), document link, and publication date are logged to the `debug.log` file. Informational messages are also printed to the terminal.
 5. **Sleep Interval**: After each cycle of checking the feed, the script pauses for a specified interval (default: 10 minutes) before checking the feed again, minimizing unnecessary load on SEC servers and adhering to respectful usage practices.
 
