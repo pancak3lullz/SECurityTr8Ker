@@ -62,6 +62,7 @@ def inspect_document_for_cybersecurity(link):
     headers = {'User-Agent': 'Mozilla/5.0'}
     # Define a list of search terms you're interested in
     search_terms = ["Material Cybersecurity Incidents", "Item 1.05", "ITEM 1.05", "MATERIAL CYBERSECURITY INCIDENTS", "unauthorized access", "unauthorized activity", "cybersecurity incident", "cyber-attack", "cyberattack", "threat actor", "security incident", "ransomware attack"]
+    
     try:
         response = requests.get(link, headers=headers)
         time.sleep(REQUEST_INTERVAL)
@@ -69,17 +70,28 @@ def inspect_document_for_cybersecurity(link):
             soup = BeautifulSoup(response.content, 'html.parser')
             document_text = soup.get_text()  # Keep the document text as is, respecting case
             
-            # Check if "Check the appropriate box below if the Form 8-K" exists in the document
-            if "Check the appropriate box below if the Form 8-K" in document_text:
-                # Check if any of the search terms is in the document_text using regex for exact match
-                for term in search_terms:
-                    # Create a regex pattern with word boundaries for the exact term
+            # Exclude "Forward-Looking Statements" section
+            document_text = re.sub(r'Forward-Looking Statements.*?(?=(Item\s+\d+\.\d+|$))', '', document_text, flags=re.IGNORECASE | re.DOTALL)
+
+            # First, check if Item 8.01 is present in the document
+            if re.search(r'\b\s*Item 8.01\s*\b', document_text, re.IGNORECASE):
+                # If Item 8.01 is present, check for the other cybersecurity-related terms
+                for term in search_terms[4:]:  # Check terms from index 4 onward (cybersecurity-related)
                     pattern_with_boundaries = r'\b\s*' + re.escape(term) + r'\s*\b'
                     pattern_without_boundaries = re.escape(term)
                     if re.search(pattern_with_boundaries, document_text, re.IGNORECASE) or re.search(pattern_without_boundaries, document_text, re.IGNORECASE):
                         return True
+            
+            # Additionally, check for the terms related to Item 1.05
+            for term in search_terms[:4]:  # Only check the first four terms (related to Item 1.05)
+                pattern_with_boundaries = r'\b\s*' + re.escape(term) + r'\s*\b'
+                pattern_without_boundaries = re.escape(term)
+                if re.search(pattern_with_boundaries, document_text, re.IGNORECASE) or re.search(pattern_without_boundaries, document_text, re.IGNORECASE):
+                    return True
+
     except Exception as e:
         logger.error(f"Failed to inspect document at {link}: {e}")
+    
     return False
 
 def fetch_filings_from_rss(url):
