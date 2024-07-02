@@ -60,33 +60,37 @@ def get_ticker_symbol(cik_number, company_name):
 
 def inspect_document_for_cybersecurity(link):
     headers = {'User-Agent': 'Mozilla/5.0'}
-    # Define a list of search terms you're interested in
-    search_terms = ["Material Cybersecurity Incidents", "Item 1.05", "ITEM 1.05", "MATERIAL CYBERSECURITY INCIDENTS", "unauthorized access", "unauthorized activity", "cybersecurity incident", "cyber-attack", "cyberattack", "threat actor", "security incident", "ransomware attack", "cyber incident"]
+    search_terms = [
+        "Material Cybersecurity Incidents", "Item 1.05", "ITEM 1.05", "MATERIAL CYBERSECURITY INCIDENTS",
+        "unauthorized access", "unauthorized activity", "cybersecurity incident", "cyber-attack",
+        "cyberattack", "threat actor", "security incident", "ransomware attack", "cyber incident"
+    ]
     
     try:
         response = requests.get(link, headers=headers)
         time.sleep(REQUEST_INTERVAL)
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
-            document_text = soup.get_text()  # Keep the document text as is, respecting case
-            
+            document_text = soup.get_text()  # Get the entire document text
+
             # Exclude "Forward-Looking Statements" section
             document_text = re.sub(r'Forward-Looking Statements.*?(?=(Item\s+\d+\.\d+|$))', '', document_text, flags=re.IGNORECASE | re.DOTALL)
-
-            # First, check if Item 8.01 is present in the document
-            if re.search(r'\b\s*Item 8.01\s*\b', document_text, re.IGNORECASE):
-                # If Item 8.01 is present, check for the other cybersecurity-related terms
-                for term in search_terms[4:]:  # Check terms from index 4 onward (cybersecurity-related)
-                    pattern_with_boundaries = r'\b\s*' + re.escape(term) + r'\s*\b'
-                    pattern_without_boundaries = re.escape(term)
-                    if re.search(pattern_with_boundaries, document_text, re.IGNORECASE) or re.search(pattern_without_boundaries, document_text, re.IGNORECASE):
+            
+            # Regex to match "Item 8.01" section
+            item_801_pattern = r'Item\s*8\.01[^\n]*?(?=Item\s*\d+\.\d+|$)'
+            item_801_match = re.search(item_801_pattern, document_text, re.IGNORECASE | re.DOTALL)
+            
+            if item_801_match:
+                item_801_text = item_801_match.group()
+                
+                # Search for cybersecurity-related terms within the "Item 8.01" section
+                for term in search_terms[4:]:
+                    if re.search(r'\b' + re.escape(term) + r'\b', item_801_text, re.IGNORECASE) or re.search(re.escape(term), item_801_text, re.IGNORECASE):
                         return True
             
-            # Additionally, check for the terms related to Item 1.05
+            # Additionally, check for the terms related to Item 1.05 in the whole document
             for term in search_terms[:4]:  # Only check the first four terms (related to Item 1.05)
-                pattern_with_boundaries = r'\b\s*' + re.escape(term) + r'\s*\b'
-                pattern_without_boundaries = re.escape(term)
-                if re.search(pattern_with_boundaries, document_text, re.IGNORECASE) or re.search(pattern_without_boundaries, document_text, re.IGNORECASE):
+                if re.search(r'\b' + re.escape(term) + r'\b', document_text, re.IGNORECASE) or re.search(re.escape(term), document_text, re.IGNORECASE):
                     return True
 
     except Exception as e:
