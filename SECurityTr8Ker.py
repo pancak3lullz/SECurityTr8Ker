@@ -63,7 +63,7 @@ def inspect_document_for_cybersecurity(link):
     search_terms = [
         "Material Cybersecurity Incidents", "Item 1.05", "ITEM 1.05", "MATERIAL CYBERSECURITY INCIDENTS",
         "unauthorized access", "unauthorized activity", "cybersecurity incident", "cyber-attack",
-        "cyberattack", "threat actor", "security incident", "ransomware attack", "cyber incident"
+        "cyberattack", "threat actor", "security incident", "ransomware attack", "cyber incident", "unauthorized third party"
     ]
     
     try:
