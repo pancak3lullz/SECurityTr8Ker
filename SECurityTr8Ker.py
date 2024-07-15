@@ -77,7 +77,7 @@ def inspect_document_for_cybersecurity(link):
             document_text = re.sub(r'Forward-Looking Statements.*?(?=(Item\s+\d+\.\d+|$))', '', document_text, flags=re.IGNORECASE | re.DOTALL)
             
             # Regex to match "Item 8.01" section
-            item_801_pattern = r'Item\s*8\.01[^\n]*?(?=Item\s*\d+\.\d+|$)'
+            item_801_pattern = r'(Other Events|Other Information)[^\n]*?(?=Item\s*\d+\.\d+|$)'
             item_801_match = re.search(item_801_pattern, document_text, re.IGNORECASE | re.DOTALL)
             
             if item_801_match:
