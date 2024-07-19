@@ -71,13 +71,22 @@ def inspect_document_for_cybersecurity(link):
         time.sleep(REQUEST_INTERVAL)
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
-            document_text = soup.get_text()  # Get the entire document text
+            document_text = soup.get_text(separator=' ')  # Get the entire document text, maintaining spaces
+
+            # Remove any lingering XML tags, HTML tags, and new lines, but maintain spaces
+            document_text = re.sub(r'(<[^>]+>)|(\&\#\d{1,4}\;)', ' ', document_text)
+            document_text = re.sub(r'\s+', ' ', document_text).strip()
 
             # Exclude "Forward-Looking Statements" section
             document_text = re.sub(r'Forward-Looking Statements.*?(?=(Item\s+\d+\.\d+|$))', '', document_text, flags=re.IGNORECASE | re.DOTALL)
-            
-            # Regex to match "Item 8.01" section
-            item_801_pattern = r'(Other Events|Other Information)[^\n]*?(?=Item\s*\d+\.\d+|$)'
+
+            # First, check for the terms related to Item 1.05 in the whole document
+            for term in search_terms[:4]:  # Only check the first four terms (related to Item 1.05)
+                if re.search(r'\b' + re.escape(term) + r'\b', document_text, re.IGNORECASE) or re.search(re.escape(term), document_text, re.IGNORECASE):
+                    return True
+
+            # Regex to match "Item 8.01" section and extract its content
+            item_801_pattern = r'(8\.01|Other Events|Other Information|Other Items)[^\n]*?(?=Item\s*\d+\.\d+|$)'
             item_801_match = re.search(item_801_pattern, document_text, re.IGNORECASE | re.DOTALL)
             
             if item_801_match:
@@ -87,11 +96,6 @@ def inspect_document_for_cybersecurity(link):
                 for term in search_terms[4:]:
                     if re.search(r'\b' + re.escape(term) + r'\b', item_801_text, re.IGNORECASE) or re.search(re.escape(term), item_801_text, re.IGNORECASE):
                         return True
-            
-            # Additionally, check for the terms related to Item 1.05 in the whole document
-            for term in search_terms[:4]:  # Only check the first four terms (related to Item 1.05)
-                if re.search(r'\b' + re.escape(term) + r'\b', document_text, re.IGNORECASE) or re.search(re.escape(term), document_text, re.IGNORECASE):
-                    return True
 
     except Exception as e:
         logger.error(f"Failed to inspect document at {link}: {e}")
