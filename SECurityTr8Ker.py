@@ -86,7 +86,7 @@ def inspect_document_for_cybersecurity(link):
                     return True
 
             # Regex to match "Item 8.01" section and extract its content
-            item_801_pattern = r'(8\.01|Other Events|Other Information|Other Items)[^\n]*?(?=Item\s*\d+\.\d+|$)'
+            item_801_pattern = r'(Item 8\.01)[^\n]*?(?=Item\s*\d+\.\d+|$)'
             item_801_match = re.search(item_801_pattern, document_text, re.IGNORECASE | re.DOTALL)
             
             if item_801_match:
