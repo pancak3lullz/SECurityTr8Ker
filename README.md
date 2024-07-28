@@ -24,8 +24,6 @@ The script operates by performing the following steps in a continuous loop:
 
 - Python 3.x
 - Required Python packages: `requests`, `xmltodict`, `beautifulsoup4`, `colorlog`
-- Update the User-Agent lines with a proper User-Agent to align with SEC's requirements.
-  - Something like 'User-Agent: Your Company/1.0 (email@email.com)'
 
 You can install the necessary Python packages using `pip`:
 
@@ -36,8 +34,10 @@ pip install requests xmltodict beautifulsoup4 colorlog
 ### Running the Script
 
 1. Clone the repository or download the script to your local machine.
-2. Open a terminal and navigate to the directory containing the script.
-3. Run the script using Python:
+2. Update the User-Agent lines with a proper User-Agent to align with SEC's requirements.
+  - Something like headers = {'User-Agent': 'Your Company/1.0 (email@emaildomain.com)'}
+3. Open a terminal and navigate to the directory containing the script.
+4. Run the script using Python:
 
 ```bash
 python SECurityTr8Ker.py
