@@ -35,7 +35,7 @@ pip install requests xmltodict beautifulsoup4 colorlog
 
 1. Clone the repository or download the script to your local machine.
 2. Update the User-Agent lines with a proper User-Agent to align with SEC's requirements.
-  - Something like headers = {'User-Agent': 'Your Company/1.0 (email@emaildomain.com)'}
+  - Something like `headers = {'User-Agent': 'Your Company/1.0 (email@emaildomain.com)'}`
 3. Open a terminal and navigate to the directory containing the script.
 4. Run the script using Python:
 
