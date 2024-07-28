@@ -24,6 +24,8 @@ The script operates by performing the following steps in a continuous loop:
 
 - Python 3.x
 - Required Python packages: `requests`, `xmltodict`, `beautifulsoup4`, `colorlog`
+- Update the User-Agent lines with a proper User-Agent to align with SEC's requirements.
+  - Something like 'User-Agent: Your Company/1.0 (email@email.com)'
 
 You can install the necessary Python packages using `pip`:
 
