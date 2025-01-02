@@ -1,6 +1,5 @@
 import requests
 from src.config import TEAMS_WEBHOOK_URL
-from src.utils import fetch_filings_from_rss, process_disclosures
 from src.logger import logger
 
 def post_to_teams(company_name, cik_number, ticker_symbol, document_link, pubDate):
@@ -35,29 +34,22 @@ def post_to_teams(company_name, cik_number, ticker_symbol, document_link, pubDat
         ]
     }
 
-    payload = {
-        "type": "message",
-        "attachments": [
-            {
-                "contentType": "application/vnd.microsoft.card.adaptive",
-                "contentUrl": None,
-                "content": card_content
-            }
-        ]
-    }
-
     headers = {'Content-Type': 'application/json'}
-    response = requests.post(TEAMS_WEBHOOK_URL, json=payload, headers=headers)
-    if response.status_code not in {200, 202}:
+    response = requests.post(TEAMS_WEBHOOK_URL, json=card_content, headers=headers)
+
+    if response.status_code != 200:
         logger.error(f"Failed to post to Teams: {response.text}")
         return False
     else:
         logger.info(f"Teams posted successfully: {response}")
         return True
 
-def process_teams_disclosures(filings):
-    process_disclosures(filings, post_to_teams)
-
 if __name__ == "__main__":
-    filings = fetch_filings_from_rss()
-    process_teams_disclosures(filings)
+    # Example usage
+    post_to_teams(
+        "Example Company",
+        "0000123456",
+        "EXMP",
+        "https://www.sec.gov/example",
+        "2025-01-01"
+    )

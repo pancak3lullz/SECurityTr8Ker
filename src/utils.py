@@ -6,40 +6,9 @@ import xmltodict
 from bs4 import BeautifulSoup
 from datetime import datetime
 import json
-from src.config import REQUEST_INTERVAL, RSS_URL, DISCLOSURES_FILE, USER_AGENT, SEARCH_TERMS, TEAMS_WEBHOOK_URL, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, TWITTER_API_KEY, TWITTER_API_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, SLACK_WEBHOOK_URL
+from src.config import REQUEST_INTERVAL, RSS_URL, DISCLOSURES_FILE, USER_AGENT, SEARCH_TERMS
 from src.logger import logger
 from typing import Dict, Any, List, Tuple
-
-# Import notification functions if configured
-notification_functions = {}
-
-if TEAMS_WEBHOOK_URL:
-    try:
-        from src.teams_poster import post_to_teams
-        notification_functions['teams'] = post_to_teams
-    except ImportError:
-        logger.warning("Teams notification module not available")
-
-if TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID:
-    try:
-        from src.telegram_poster import send_telegram_message
-        notification_functions['telegram'] = send_telegram_message
-    except ImportError:
-        logger.warning("Telegram notification module not available")
-
-if all([TWITTER_API_KEY, TWITTER_API_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET]):
-    try:
-        from src.twitter_poster import tweet
-        notification_functions['twitter'] = tweet
-    except ImportError:
-        logger.warning("Twitter notification module not available")
-
-if SLACK_WEBHOOK_URL:
-    try:
-        from src.slack_poster import post_to_slack
-        notification_functions['slack'] = post_to_slack
-    except ImportError:
-        logger.warning("Slack notification module not available")
 
 def load_disclosures():
     if os.path.exists(DISCLOSURES_FILE):
@@ -50,12 +19,9 @@ def load_disclosures():
                 if isinstance(disclosures, dict):
                     return list(disclosures.values())
                 return disclosures
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, TypeError):
             logger.warning(f"{DISCLOSURES_FILE} is empty or corrupted. Initializing empty disclosures list.")
-            return []
-    else:
-        logger.info(f"{DISCLOSURES_FILE} does not exist. Initializing empty disclosures list.")
-        return []
+    return []
 
 def save_disclosures(disclosures):
     with open(DISCLOSURES_FILE, 'w') as file:
@@ -291,3 +257,32 @@ def check_new_filings(filings):
     except Exception as e:
         logger.error(f"Error checking new filings: {e}")
         return []
+
+def process_disclosures(filings, notification_function):
+    """Process disclosures and send notifications.
+    Args:
+        filings (list): List of filings to process
+        notification_function (callable): Function to call for each disclosure
+    """
+    if not filings:
+        logger.info("No new filings to process")
+        return
+
+    for filing in filings:
+        try:
+            company_name = filing.get('company_name', '')
+            cik_number = filing.get('cik', '')
+            document_link = filing.get('filing_url', '')
+            pub_date = filing.get('filing_date', '')
+            ticker_symbol = filing.get('ticker', '')
+
+            notification_function(
+                company_name,
+                cik_number,
+                ticker_symbol,
+                document_link,
+                pub_date
+            )
+        except Exception as e:
+            logger.error(f"Error processing disclosure: {e}")
+            continue
