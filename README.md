@@ -54,7 +54,7 @@ SECurityTr8Ker is a Python application designed to monitor the U.S. Securities a
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/SECurityTr8Ker.git
+   git clone https://github.com/pancak3lullz/SECurityTr8Ker.git
    cd SECurityTr8Ker
    ```
 
