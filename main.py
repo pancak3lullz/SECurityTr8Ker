@@ -42,31 +42,31 @@ else:
 # Check Twitter module
 if all([TWITTER_API_KEY, TWITTER_API_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET]):
     try:
-        from src.twitter_poster import tweet
+        from src.twitter_poster import tweet, update_twitter_bio
         notification_modules['twitter'] = tweet
+        notification_modules['twitter_bio'] = update_twitter_bio
         logger.info("Twitter notification module loaded and configured successfully")
-    except ImportError:
-        logger.info("Twitter notification module not available (module import failed)")
+    except ImportError as e:
+        logger.error(f"Failed to initialize Twitter module: {e}")
 else:
     logger.info("Twitter notification module not configured in .env")
 
 # Check Slack module
 if SLACK_WEBHOOK_URL:
     try:
-        logger.info(f"Attempting to load Slack module with webhook URL: {SLACK_WEBHOOK_URL[:20]}...")  # Only show first 20 chars for security
         from src.slack_poster import post_to_slack
         notification_modules['slack'] = post_to_slack
         logger.info("Slack notification module loaded and configured successfully")
     except ImportError as e:
-        logger.error(f"Slack notification module not available (module import failed): {str(e)}")
+        logger.error(f"Failed to initialize Slack module: {e}")
 else:
-    logger.warning("Slack notification module not configured in .env")
+    logger.info("Slack notification module not configured in .env")
 
-# Log overall notification status
+# Log active modules
 if notification_modules:
     logger.info(f"Active notification modules: {', '.join(notification_modules.keys())}")
 else:
-    logger.warning("No notification modules configured. Only logging to console.")
+    logger.warning("No notification modules available")
 
 def notify_disclosure(disclosure):
     """Send notifications through available notification modules."""
@@ -124,32 +124,43 @@ def notify_disclosure(disclosure):
             logger.error(f"Error posting to Slack: {e}")
 
 def monitor_sec_feed():
+    """Monitor the SEC RSS feed for new 8-K filings."""
     while True:
         try:
             logger.info("Starting new check cycle...")
             logger.info("Fetching SEC RSS feed for 8-K filings...")
-            filings = fetch_filings_from_rss()
-
-            if filings:
-                logger.info(f"Found {len(filings)} filings to inspect")
-                logger.info("Inspecting documents for cybersecurity disclosures...")
-                disclosures = check_new_filings(filings)
-                if disclosures:
-                    logger.info(f"Found {len(disclosures)} new cybersecurity disclosures")
-                    for disclosure in disclosures:
-                        notify_disclosure(disclosure)
-                else:
-                    logger.info("No new cybersecurity disclosures found in this batch")
-            else:
-                logger.info("No new filings found in RSS feed")
             
+            # Fetch and process filings
+            filings = fetch_filings_from_rss()
+            if not filings:
+                logger.warning("No filings found in RSS feed")
+                continue
+                
+            logger.info(f"Found {len(filings)} filings to inspect")
+            logger.info("Inspecting documents for cybersecurity disclosures...")
+            
+            # Check for new disclosures
+            new_disclosures = check_new_filings(filings)
+            
+            # Update Twitter bio with last check time
+            if 'twitter_bio' in notification_modules:
+                notification_modules['twitter_bio'](datetime.utcnow())
+            
+            # Process any new disclosures
+            if new_disclosures:
+                logger.info(f"Found {len(new_disclosures)} new cybersecurity disclosure(s)")
+                for disclosure in new_disclosures:
+                    notify_disclosure(disclosure)
+            else:
+                logger.info("No new cybersecurity disclosures found in this batch")
+                
             logger.info("Check cycle completed. Waiting 10 minutes before next check...")
-            time.sleep(600)  # Sleep for 10 minutes
-
+            time.sleep(600)  # Wait 10 minutes before next check
+            
         except Exception as e:
-            logger.error(f"Error in main loop: {e}")
-            logger.info("Waiting 60 seconds before retry...")
-            time.sleep(60)  # Sleep for 1 minute on error before retrying
+            logger.error(f"Error in monitoring loop: {e}")
+            logger.info("Waiting 10 minutes before retry...")
+            time.sleep(600)  # Wait 10 minutes before retry
 
 if __name__ == "__main__":
     logger.info("SECurityTr8Ker starting up...")
