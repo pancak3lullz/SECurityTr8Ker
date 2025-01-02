@@ -1,5 +1,5 @@
 <div align='center'>
-  <img src="https://github.com/pancak3lullz/SECurityTr8Ker/blob/main/traclabs.png" style="width: 200px; height: 150px">
+  <img src="https://github.com/pancak3lullz/SECurityTr8Ker/blob/main/traclabs.png" style="width: 400px; height: 150px">
   <img src="https://github.com/pancak3lullz/SECurityTr8Ker/blob/main/SECurityTr8Ker.png" style="width: 175px; height: 150px">
 </div>
 
