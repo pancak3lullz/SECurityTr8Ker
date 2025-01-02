@@ -1,6 +1,5 @@
 import requests
-from src.config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL_ID
-from src.utils import fetch_filings_from_rss, process_disclosures
+from src.config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 from src.logger import logger
 
 def send_telegram_message(company_name, cik_number, ticker_symbol, document_link, pubDate):
@@ -8,7 +7,7 @@ def send_telegram_message(company_name, cik_number, ticker_symbol, document_link
     message = f"{pubDate}\nA cybersecurity incident has been disclosed by `{company_name}` CIK: [{cik_number}](https://www.sec.gov/cgi-bin/browse-edgar?company=&CIK={cik_number}){ticker_part}.\n\n[View SEC Filing]({document_link})"
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
-        'chat_id': TELEGRAM_CHANNEL_ID,
+        'chat_id': TELEGRAM_CHAT_ID,
         'text': message,
         'parse_mode': 'Markdown'
     }
@@ -20,9 +19,12 @@ def send_telegram_message(company_name, cik_number, ticker_symbol, document_link
         logger.info(f"Telegram posted successfully: {response}")
         return True
 
-def process_telegram_disclosures(filings):
-    process_disclosures(filings, send_telegram_message)
-
 if __name__ == "__main__":
-    filings = fetch_filings_from_rss()
-    process_telegram_disclosures(filings)
+    # Example usage
+    send_telegram_message(
+        "Example Company",
+        "0000123456",
+        "EXMP",
+        "https://www.sec.gov/example",
+        "2025-01-01"
+    )

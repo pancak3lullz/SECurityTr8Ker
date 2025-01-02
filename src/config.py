@@ -23,6 +23,23 @@ USER_AGENT = os.getenv('USER_AGENT', "SECurityTr8Ker/1.0 (your-email@example.com
 if USER_AGENT == "SECurityTr8Ker/1.0 (your-email@example.com)":
     logger.warning("Using default User-Agent. Please set your email in .env file for better SEC API access.")
 
+# Twitter Configuration
+TWITTER_API_KEY = os.getenv('TWITTER_API_KEY')
+TWITTER_API_SECRET = os.getenv('TWITTER_API_SECRET')
+TWITTER_BEARER_TOKEN = os.getenv('TWITTER_BEARER_TOKEN')
+TWITTER_ACCESS_TOKEN = os.getenv('TWITTER_ACCESS_TOKEN')
+TWITTER_ACCESS_TOKEN_SECRET = os.getenv('TWITTER_ACCESS_TOKEN_SECRET')
+
+# Teams Configuration
+TEAMS_WEBHOOK_URL = os.getenv('TEAMS_WEBHOOK_URL')
+
+# Telegram Configuration
+TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
+
+# Slack Configuration
+SLACK_WEBHOOK_URL = os.getenv('SLACK_WEBHOOK_URL')
+
 # File Storage
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DISCLOSURES_FILE = os.path.join(BASE_DIR, "disclosures.json")
@@ -58,49 +75,42 @@ SEARCH_TERMS = {
 }
 
 # Notification Configurations - these will be None if not configured
-TEAMS_WEBHOOK_URL = os.getenv('TEAMS_WEBHOOK_URL')
+
 if TEAMS_WEBHOOK_URL:
     logger.info("Teams webhook URL found in environment")
 else:
     logger.warning("Teams webhook URL not found in environment")
 
-TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 if TELEGRAM_BOT_TOKEN:
     logger.info("Telegram bot token found in environment")
 else:
     logger.warning("Telegram bot token not found in environment")
 
-TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 if TELEGRAM_CHAT_ID:
     logger.info("Telegram chat ID found in environment")
 else:
     logger.warning("Telegram chat ID not found in environment")
 
-TWITTER_API_KEY = os.getenv('TWITTER_API_KEY')
 if TWITTER_API_KEY:
     logger.info("Twitter API key found in environment")
 else:
     logger.warning("Twitter API key not found in environment")
 
-TWITTER_API_SECRET = os.getenv('TWITTER_API_SECRET')
 if TWITTER_API_SECRET:
     logger.info("Twitter API secret found in environment")
 else:
     logger.warning("Twitter API secret not found in environment")
 
-TWITTER_ACCESS_TOKEN = os.getenv('TWITTER_ACCESS_TOKEN')
 if TWITTER_ACCESS_TOKEN:
     logger.info("Twitter access token found in environment")
 else:
     logger.warning("Twitter access token not found in environment")
 
-TWITTER_ACCESS_TOKEN_SECRET = os.getenv('TWITTER_ACCESS_TOKEN_SECRET')
 if TWITTER_ACCESS_TOKEN_SECRET:
     logger.info("Twitter access token secret found in environment")
 else:
     logger.warning("Twitter access token secret not found in environment")
 
-SLACK_WEBHOOK_URL = os.getenv('SLACK_WEBHOOK_URL')
 if SLACK_WEBHOOK_URL:
     logger.info("Slack webhook URL found in environment")
 else:
