@@ -1,4 +1,7 @@
 requests
 xmltodict
-beautifulsoup4
 colorlog
+beautifulsoup4
+tweepy
+pytz
+python-dotenv

@@ -1,74 +1,157 @@
-# SECurityTr8Ker: SEC RSS Feed Monitor
+<div align='center'>
+  <img src="https://github.com/pancak3lullz/SECurityTr8Ker/blob/main/traclabs.png" style="width: 200px; height: 150px">
+  <img src="https://github.com/pancak3lullz/SECurityTr8Ker/blob/main/SECurityTr8Ker.png" style="width: 175px; height: 150px">
+</div>
 
-SECurityTr8Ker is a Python script designed to monitor the U.S. Securities and Exchange Commission's (SEC) RSS feed for new 8-K filings that contain material related to cybersecurity incidents. This script is tailored for cybersecurity analysts, financial professionals, and researchers interested in real-time alerts of potential cybersecurity incidents disclosed by publicly traded companies.
+# SECurityTr8Ker: SEC Cybersecurity Disclosure Monitor
+
+SECurityTr8Ker is a Python application designed to monitor the U.S. Securities and Exchange Commission's (SEC) RSS feed for new 8-K filings that contain material cybersecurity incident disclosures. This tool is particularly useful for cybersecurity analysts, financial professionals, and researchers interested in real-time alerts of cybersecurity incidents disclosed by publicly traded companies.
 
 ## Features
 
-- **Real-time Monitoring**: Continuously monitors the SEC's RSS feed for 8-K filings, ensuring timely detection of new disclosures.
-- **Cybersecurity Incident Detection**: Searches the content of each filing for mentions of terms which could be related to disclosures of cybersecurity incidents, flagging relevant documents for further review.
-- **Logging**: Detailed logging of findings, including company name, CIK number, document link, and publication date, to a specified log file. Additional debug information is logged to facilitate troubleshooting and verification.
+- **Real-time Monitoring**: Continuously monitors the SEC's RSS feed for new 8-K filings
+- **Intelligent Detection**: 
+  - Searches for Item 1.05 (Material Cybersecurity Incidents) disclosures
+  - Identifies cybersecurity-related keywords and context
+  - Prevents duplicate notifications
+- **Multi-channel Notifications**: 
+  - Slack
+  - Microsoft Teams
+  - Telegram
+  - Twitter
+  - Console logging (always enabled)
+- **Rich Information**: 
+  - Company name and CIK number
+  - Stock ticker symbol (with Google Finance link)
+  - Direct link to SEC filing
+  - Filing date and context
+  - Matching keywords found
+- **Persistent Storage**: Maintains a record of all processed disclosures in JSON format
 
 ## How It Works
 
-The script operates by performing the following steps in a continuous loop:
+1. **RSS Feed Monitoring**:
+   - Fetches the SEC's RSS feed for 8-K filings
+   - Processes each filing to extract relevant information
+   - Respects SEC's rate limiting guidelines
 
-1. **Requesting the SEC RSS Feed**: Utilizes the `requests` library to fetch the latest RSS feed from the SEC's website, targeting filings that potentially include cybersecurity-related disclosures.
-2. **Parsing RSS Feed**: Employs `xmltodict` to parse the XML format of the RSS feed, extracting relevant information about each filing.
-3. **Inspecting Filings**: For each filing identified as an 8-K form, the script retrieves the document(s) linked within the filing and inspects the content for the string "Material Cybersecurity Incidents."
-4. **Logging Findings**: When a filing containing the specified string is found, details such as the company name, CIK number, ticker symbol (if available), document link, and publication date are logged to the `debug.log` file. Informational messages are also printed to the terminal.
-5. **Sleep Interval**: After each cycle of checking the feed, the script pauses for a specified interval (default: 10 minutes) before checking the feed again, minimizing unnecessary load on SEC servers and adhering to respectful usage practices.
+2. **Disclosure Detection**:
+   - Checks for "Item 1.05" material cybersecurity incident disclosures
+   - Searches for cybersecurity-related keywords (e.g., "unauthorized access", "cyber-attack")
+   - Extracts relevant context around matches
 
-## Installation and Usage
+3. **Notification Distribution**:
+   - Sends alerts through configured notification channels
+   - Includes direct links to SEC filings and company information
+   - Prevents duplicate notifications
 
-### Prerequisites
+4. **Data Management**:
+   - Stores processed disclosures in `disclosures.json`
+   - Maintains detailed logs for troubleshooting
+   - Prevents duplicate processing of filings
 
-- Python 3.x
-- Required Python packages: `requests`, `xmltodict`, `beautifulsoup4`, `colorlog`
+## Setup and Configuration
 
-You can install the necessary Python packages using `pip`:
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/yourusername/SECurityTr8Ker.git
+   cd SECurityTr8Ker
+   ```
 
-```bash
-pip install requests xmltodict beautifulsoup4 colorlog
+2. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Configure Environment**:
+   ```bash
+   # Copy the example environment file
+   cp .env.example .env
+   ```
+
+4. **Required Configuration**:
+   Edit `.env` and set your email address for the SEC API:
+   ```
+   # REQUIRED: Set your email address for SEC API access
+   USER_AGENT=SECurityTr8Ker/1.0 (your-email@example.com)
+   ```
+
+5. **Optional Notification Channels**:
+   Configure any of the following in `.env`:
+
+   **Slack**:
+   ```
+   SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your/webhook/url
+   ```
+
+   **Microsoft Teams**:
+   ```
+   TEAMS_WEBHOOK_URL=https://outlook.office.com/webhook/...
+   ```
+
+   **Telegram**:
+   ```
+   TELEGRAM_BOT_TOKEN=your_bot_token
+   TELEGRAM_CHAT_ID=your_chat_id
+   ```
+
+   **Twitter**:
+   ```
+   TWITTER_API_KEY=your_api_key
+   TWITTER_API_SECRET=your_api_secret
+   TWITTER_ACCESS_TOKEN=your_access_token
+   TWITTER_ACCESS_TOKEN_SECRET=your_access_token_secret
+   ```
+
+6. **Run the Program**:
+   ```bash
+   python main.py
+   ```
+
+## Output Examples
+
+### Console Output
+```
+2025-01-01 19:27:36,581 - INFO - SECurityTr8Ker starting up...
+2025-01-01 19:27:36,581 - INFO - Starting new check cycle...
+2025-01-01 19:27:36,581 - INFO - Fetching SEC RSS feed for 8-K filings...
+2025-01-01 19:27:36,809 - INFO - Found 200 filings to inspect
+2025-01-01 19:27:36,809 - INFO - Inspecting documents for cybersecurity disclosures...
 ```
 
-### Running the Script
-
-1. Clone the repository or download the script to your local machine.
-2. Update the User-Agent lines with a proper User-Agent to align with SEC's requirements.
-  - Something like `headers = {'User-Agent': 'Your Company/1.0 (email@emaildomain.com)'}`
-3. Open a terminal and navigate to the directory containing the script.
-4. Run the script using Python:
-
-```bash
-python SECurityTr8Ker.py
+### Notification Format
+All notification channels receive alerts in this format:
+```
+Cybersecurity Incident Disclosure
+Published on: Tue, 31 Dec 2024 17:30:28 EST
+Company: Example Corp (Ticker: $EXMP)
+CIK: 0000123456
+View SEC Filing: https://www.sec.gov/...
 ```
 
-The script will begin monitoring the SEC RSS feed, logging any findings as described above.
+## File Structure
 
-### Configuration
+- `main.py`: Main program entry point
+- `src/`
+  - `config.py`: Configuration and environment variables
+  - `utils.py`: Core functionality for processing filings
+  - `logger.py`: Logging configuration
+  - `slack_poster.py`: Slack notification module
+  - `teams_poster.py`: Microsoft Teams notification module
+  - `telegram_poster.py`: Telegram notification module
+  - `twitter_poster.py`: Twitter notification module
+- `.env`: Configuration file (create from .env.example)
+- `disclosures.json`: Record of processed disclosures
+- `logs/`: Directory containing log files
 
-You can adjust the request interval and logging settings by modifying the following variables in the script:
+## Acknowledgments
 
-- `REQUEST_INTERVAL`: Time in seconds to wait between each check of the RSS feed.
-- `logs_dir`: Directory where `debug.log` will be stored.
+- SEC EDGAR system for providing public access to filings
+- Inspired by the need for real-time cybersecurity incident monitoring
+- Idea presented by Will Hawkins & Board-Cybersecurity.com
 
-## Logging
+## Resources
 
-The script generates two types of logs:
-
-- **Debug Log (`debug.log`)**: Contains detailed debug information and findings. Stored in the specified `logs_dir` directory.
-- **Terminal Output**: Displays informational messages about the script's operation, including findings and operational status updates.
-
-## Acknowledgements
-
-**Idea presented by Will Hawkins & Board-Cybersecurity.com**
-
-- https://twitter.com/hawkinsw/status/1748508044802052540
-- https://github.com/hawkinsw/Item105/tree/main
-- https://www.board-cybersecurity.com/incidents/tracker/
-
-**Resources**
-
-- https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent
-- https://www.sec.gov/Archives/edgar/usgaap.rss.xml
-- https://data.sec.gov/submissions/CIK{cik_number}.json
+- [SEC EDGAR RSS Feed](https://www.sec.gov/Archives/edgar/usgaap.rss.xml)
+- [Form 8-K Information](https://www.sec.gov/fast-answers/answersform8khtm.html)
+- [Item 1.05 Material Cybersecurity Incidents](https://www.sec.gov/rules/final/2023/33-11216.pdf)
