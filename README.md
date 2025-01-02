@@ -99,6 +99,7 @@ SECurityTr8Ker is a Python application designed to monitor the U.S. Securities a
    ```
    TWITTER_API_KEY=your_api_key
    TWITTER_API_SECRET=your_api_secret
+   TWITTER_BEARER_TOKEN=your_bearer_token
    TWITTER_ACCESS_TOKEN=your_access_token
    TWITTER_ACCESS_TOKEN_SECRET=your_access_token_secret
    ```
