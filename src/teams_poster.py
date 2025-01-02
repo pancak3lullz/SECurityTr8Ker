@@ -15,8 +15,6 @@ def post_to_teams(company_name, cik_number, ticker_symbol, document_link, pubDat
     Returns:
         bool: True if successful, False otherwise
     """
-    logger.info(f"Posting to Teams: {company_name}")
-    
     ticker_part = f"(Ticker: [${ticker_symbol}](https://www.google.com/search?q=%24{ticker_symbol}+ticker))" if ticker_symbol else ""
     
     card_content = {
@@ -64,7 +62,6 @@ def post_to_teams(company_name, cik_number, ticker_symbol, document_link, pubDat
         response = requests.post(TEAMS_WEBHOOK_URL, json=payload, headers=headers)
         
         if response.status_code in {200, 202}:  # Teams webhooks can return either 200 or 202
-            logger.info(f"Teams posted successfully: {response.status_code}")
             return True
         else:
             error_text = response.text if response.text else f"Status code: {response.status_code}"
