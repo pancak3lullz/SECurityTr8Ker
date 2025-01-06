@@ -71,8 +71,13 @@ def inspect_document(url: str, search_terms: List[str]) -> Tuple[bool, Dict[str,
             # First, check for the terms related to Item 1.05 in the whole document
             item_105_terms = search_terms[:4]  # Only check the first four terms (related to Item 1.05)
             for term in item_105_terms:
-                if re.search(r'\b' + re.escape(term) + r'\b', document_text, re.IGNORECASE):
-                    return True, {'matching_terms': [term], 'context': 'Item 1.05'}
+                match = re.search(r'\b' + re.escape(term) + r'\b', document_text, re.IGNORECASE)
+                if match:
+                    # Capture context around the match
+                    start = max(0, match.start() - 100)
+                    end = min(len(document_text), match.end() + 100)
+                    context = document_text[start:end]
+                    return True, {'matching_terms': [term], 'context': context}
 
             # Regex to match "Item 8.01" section and extract its content
             item_801_pattern = r'(item 8\.01)[^\n]*?(?=item\s*\d+\.\d+|$)'
@@ -83,8 +88,13 @@ def inspect_document(url: str, search_terms: List[str]) -> Tuple[bool, Dict[str,
 
                 # Search for cybersecurity-related terms within the "Item 8.01" section
                 for term in search_terms[4:]:
-                    if re.search(r'\b' + re.escape(term) + r'\b', item_801_text, re.IGNORECASE):
-                        return True, {'matching_terms': [term], 'context': 'Item 8.01'}
+                    match = re.search(r'\b' + re.escape(term) + r'\b', item_801_text, re.IGNORECASE)
+                    if match:
+                        # Capture context around the match
+                        start = max(0, match.start() - 100)
+                        end = min(len(item_801_text), match.end() + 100)
+                        context = item_801_text[start:end]
+                        return True, {'matching_terms': [term], 'context': context}
 
     except Exception as e:
         logger.error(f"Error inspecting document: {e}")
