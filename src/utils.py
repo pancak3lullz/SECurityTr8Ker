@@ -56,39 +56,40 @@ def inspect_document(url: str, search_terms: List[str]) -> Tuple[bool, Dict[str,
         logger.debug(f"Fetching document from {url}")
         response = requests.get(url, headers=headers)
         time.sleep(REQUEST_INTERVAL)
-        
+
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
-            text = soup.get_text().lower()
-            
-            # Find all matching terms
-            matches = []
-            for term in search_terms:
-                if term.lower() in text:
-                    matches.append(term)
-                    
-            if matches:
-                logger.info(f"Found matching terms in document: {', '.join(matches)}")
-                # Get some context around the first match (for notification)
-                first_term = matches[0].lower()
-                index = text.find(first_term)
-                start = max(0, index - 100)
-                end = min(len(text), index + len(first_term) + 100)
-                context = f"...{text[start:end]}..."
-                
-                return True, {
-                    'matching_terms': matches,
-                    'context': context
-                }
-            else:
-                logger.debug("No matching terms found in document")
-                return False, None
-        else:
-            logger.error(f"Error fetching document: HTTP {response.status_code}")
-            return False, None
+            document_text = soup.get_text(separator=' ').lower()
+
+            # Remove any lingering XML tags, HTML tags, and new lines, but maintain spaces
+            document_text = re.sub(r'(<[^>]+>)|(&#\d{1,4};)', ' ', document_text)
+            document_text = re.sub(r'\s+', ' ', document_text).strip()
+
+            # Exclude "Forward-Looking Statements" section
+            document_text = re.sub(r'forward-looking statements.*?(?=(item\s+\d+\.\d+|$))', '', document_text, flags=re.IGNORECASE | re.DOTALL)
+
+            # First, check for the terms related to Item 1.05 in the whole document
+            item_105_terms = search_terms[:4]  # Only check the first four terms (related to Item 1.05)
+            for term in item_105_terms:
+                if re.search(r'\b' + re.escape(term) + r'\b', document_text, re.IGNORECASE):
+                    return True, {'matching_terms': [term], 'context': 'Item 1.05'}
+
+            # Regex to match "Item 8.01" section and extract its content
+            item_801_pattern = r'(item 8\.01)[^\n]*?(?=item\s*\d+\.\d+|$)'
+            item_801_match = re.search(item_801_pattern, document_text, re.IGNORECASE | re.DOTALL)
+
+            if item_801_match:
+                item_801_text = item_801_match.group()
+
+                # Search for cybersecurity-related terms within the "Item 8.01" section
+                for term in search_terms[4:]:
+                    if re.search(r'\b' + re.escape(term) + r'\b', item_801_text, re.IGNORECASE):
+                        return True, {'matching_terms': [term], 'context': 'Item 8.01'}
+
     except Exception as e:
         logger.error(f"Error inspecting document: {e}")
-        return False, None
+
+    return False, None
 
 def process_filing(filing: Dict[str, Any], search_terms: List[str]) -> Tuple[bool, List[str], str]:
     """Process a single filing and return if it matches search terms.
