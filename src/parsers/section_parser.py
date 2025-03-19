@@ -25,14 +25,25 @@ class SectionParser:
     KNOWN_SECTIONS = {
         "item 1.05": "Material Cybersecurity Incidents",
         "item 8.01": "Other Events",
-        "item 9.01": "Financial Statements and Exhibits",
         # Add more known sections as needed
     }
+    
+    # Patterns to identify forward-looking statements sections
+    FORWARD_LOOKING_PATTERNS = [
+        r'(Forward-Looking\s+Statements?).*?(?=Item\s+\d+\.\d+|$)',
+        r'(FORWARD-LOOKING\s+STATEMENTS?).*?(?=ITEM\s+\d+\.\d+|$)',
+        r'(Cautionary\s+Statement\s+Regarding\s+Forward-Looking.*?)(?=Item\s+\d+\.\d+|$)',
+        r'(CAUTIONARY\s+STATEMENT\s+REGARDING\s+FORWARD-LOOKING.*?)(?=ITEM\s+\d+\.\d+|$)'
+    ]
     
     def __init__(self):
         # Compile regex patterns for performance
         self.section_patterns = [re.compile(pattern, re.IGNORECASE | re.DOTALL) 
                                 for pattern in self.SECTION_PATTERNS]
+        
+        # Compile forward-looking statements patterns
+        self.forward_looking_patterns = [re.compile(pattern, re.IGNORECASE | re.DOTALL)
+                                        for pattern in self.FORWARD_LOOKING_PATTERNS]
                                 
     def clean_text(self, text: str) -> str:
         """
@@ -51,6 +62,10 @@ class SectionParser:
         # First clean the text
         clean_text = self.clean_text(document_text)
         
+        # Identify forward-looking statements sections to exclude them
+        forward_looking_sections = self._identify_forward_looking_sections(clean_text)
+        logger.debug(f"Found {len(forward_looking_sections)} forward-looking statement sections")
+        
         # Find all potential section headers
         section_candidates = []
         for pattern in self.section_patterns:
@@ -58,6 +73,12 @@ class SectionParser:
                 section_name = match.group(1).strip()
                 section_title = match.group(2).strip() if len(match.groups()) > 1 else ""
                 position = match.start()
+                
+                # Skip if this position is within a forward-looking statement section
+                if any(start <= position <= end for start, end in forward_looking_sections):
+                    logger.debug(f"Skipping section {section_name} found in forward-looking statements")
+                    continue
+                    
                 section_candidates.append((section_name, section_title, position))
         
         # Sort by position in document
@@ -73,6 +94,21 @@ class SectionParser:
             # Determine end position (start of next section or end of document)
             end_pos = section_candidates[i+1][2] if i < len(section_candidates) - 1 else len(clean_text)
             
+            # Skip if this section is entirely within a forward-looking statement
+            if any(start <= start_pos and end >= end_pos for start, end in forward_looking_sections):
+                logger.debug(f"Skipping section {section_name} contained within forward-looking statements")
+                continue
+                
+            # Check if this section contains forward-looking statements
+            section_contains_fls = False
+            for fls_start, fls_end in forward_looking_sections:
+                # If the forward-looking statement starts within this section
+                if start_pos <= fls_start < end_pos:
+                    # Adjust the section end to exclude the forward-looking statement
+                    end_pos = fls_start
+                    section_contains_fls = True
+                    logger.debug(f"Adjusted section {section_name} to exclude forward-looking statements")
+                    
             # Extract content
             content = clean_text[start_pos:end_pos].strip()
             
@@ -94,6 +130,24 @@ class SectionParser:
                 logger.debug(f"Skipping invalid section: {normalized_name}")
         
         logger.info(f"Extracted {len(sections)} valid sections from document")
+        return sections
+    
+    def _identify_forward_looking_sections(self, text: str) -> List[Tuple[int, int]]:
+        """
+        Identify the start and end positions of forward-looking statements sections.
+        
+        Args:
+            text: The document text
+            
+        Returns:
+            List of tuples (start_pos, end_pos) for each forward-looking section
+        """
+        sections = []
+        
+        for pattern in self.forward_looking_patterns:
+            for match in pattern.finditer(text):
+                sections.append((match.start(), match.end()))
+                
         return sections
     
     def _validate_section(self, section_name: str, section_title: str, content: str) -> bool:
