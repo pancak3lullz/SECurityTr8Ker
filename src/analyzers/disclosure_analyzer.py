@@ -41,6 +41,7 @@ class DisclosureAnalyzer:
         # cybersecurity terms but are not indicative of incidents)
         self.false_positive_contexts = [
             "forward-looking statements",
+            "forward looking statements",
             "risk factors",
             "not experienced any",
             "no cybersecurity incidents",
@@ -50,7 +51,20 @@ class DisclosureAnalyzer:
             "future incident",
             "potential incident",
             "in the event of",
-            "could result in"
+            "could result in",
+            "would result in",
+            "may result in",
+            "might result in",
+            "potentially",
+            "uncertainties",
+            "potential future",
+            "ability to prevent",
+            "ability to contain",
+            "risks related to",
+            "could be subject to",
+            "may be subject to",
+            "can be no assurance",
+            "cautionary statement"
         ]
         
         # Compile false positive patterns
@@ -214,6 +228,16 @@ class DisclosureAnalyzer:
         # Check for cybersecurity terms ONLY within Item 8.01 section
         section_text = item_801_section.content.lower()
         
+        # First check if this section appears to be a forward-looking statement
+        # (in case our section parser didn't catch it)
+        forward_looking_indicators = [
+            "forward-looking", "forward looking", "future event", "future result", 
+            "potential risk", "uncertainties", "cautionary statement"
+        ]
+        if any(indicator in section_text.lower() for indicator in forward_looking_indicators):
+            logger.debug("Item 8.01 section appears to contain forward-looking statements; skipping")
+            return False, [], []
+        
         # Check for cybersecurity terms in the section
         for i, pattern in enumerate(self.cybersecurity_patterns):
             matches = pattern.finditer(section_text)
@@ -221,12 +245,18 @@ class DisclosureAnalyzer:
                 term = self.cybersecurity_terms[i]
                 
                 # Get context around match
-                context = self._get_context(section_text, match.group(), 100)
+                context = self._get_context(section_text, match.group(), 200)  # Increased context size
                 
                 # Check if context contains false positive indicators
                 if not self._is_false_positive(context):
-                    matching_terms.append(term)
-                    contexts.append(context)
+                    # Double-check for forward-looking language near the match
+                    if not any(fw_term in context.lower() for fw_term in forward_looking_indicators):
+                        matching_terms.append(term)
+                        contexts.append(context)
+                    else:
+                        logger.debug(f"Skipping match '{term}' due to nearby forward-looking language")
+                else:
+                    logger.debug(f"False positive match '{term}' in context: {context[:50]}...")
         
         # If we found matching terms in Item 8.01, it's a disclosure
         if matching_terms:
@@ -250,6 +280,25 @@ class DisclosureAnalyzer:
             if pattern.search(context):
                 return True
                 
+        # Check if the match is within a forward-looking statements section
+        forward_looking_indicators = [
+            "forward-looking statement",
+            "forward looking statement",
+            "forward-looking information",
+            "such statements involve risks",
+            "risk and uncertainties",
+            "future events",
+            "future performance",
+            "future results",
+            "future financial"
+        ]
+        
+        # Check for forward-looking statement section indicators
+        for indicator in forward_looking_indicators:
+            if indicator.lower() in context.lower():
+                logger.debug(f"Found forward-looking statement context: '{indicator}'")
+                return True
+        
         # Additional checks for negations before cybersecurity terms
         negations = ["not", "no", "none", "never", "without"]
         for negation in negations:
