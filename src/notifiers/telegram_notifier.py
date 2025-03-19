@@ -121,27 +121,12 @@ class TelegramNotifier(NotificationChannel):
             Formatted message text
         """
         # Create ticker part if available
-        ticker_part = f", Ticker: [${filing.ticker_symbol}](https://www.google.com/search?q=%24{filing.ticker_symbol}+ticker)" if filing.ticker_symbol else ""
+        ticker_part = f"${filing.ticker_symbol}" if filing.ticker_symbol else ""
         
-        # Create the base message
+        # Create the simple message format
         message = f"*Cybersecurity Incident Disclosure*\n\n"
-        message += f"Published on: {filing.filing_date}\n"
-        message += f"Company: `{filing.company_name}`\n"
-        message += f"CIK: [{filing.cik}](https://www.sec.gov/cgi-bin/browse-edgar?company=&CIK={filing.cik}){ticker_part}\n"
-        message += f"Form Type: {filing.form_type}\n\n"
+        message += f"{filing.filing_date}\n"
+        message += f"A cybersecurity incident has been disclosed by {filing.company_name}, Inc CIK: [{filing.cik}](https://www.sec.gov/cgi-bin/browse-edgar?company=&CIK={filing.cik}), Ticker: [{ticker_part}](https://www.google.com/search?q=%24{filing.ticker_symbol}+ticker).\n\n"
         message += f"[View SEC Filing]({filing.filing_url})"
-        
-        # Add matching terms if available
-        if filing.matching_terms:
-            terms = ", ".join(filing.matching_terms)
-            message += f"\n\n*Matching Terms:* {terms}"
-            
-        # Add context if available (limited to first one due to Telegram message limits)
-        if filing.contexts and filing.contexts[0]:
-            # Limit context to 500 chars to avoid hitting Telegram message limits
-            context = filing.contexts[0][:500]
-            # Escape any markdown in the context
-            context = context.replace('*', '\\*').replace('_', '\\_').replace('`', '\\`')
-            message += f"\n\n*Context:*\n```\n{context}\n```"
             
         return message 

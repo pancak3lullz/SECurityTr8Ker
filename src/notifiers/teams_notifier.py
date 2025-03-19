@@ -139,50 +139,10 @@ class TeamsNotifier(NotificationChannel):
         Returns:
             Teams message payload dict
         """
-        # Create ticker display with link if available
-        ticker_part = ""
-        if filing.ticker_symbol:
-            ticker_url = f"https://www.google.com/finance/quote/{filing.ticker_symbol}"
-            ticker_part = f"(Ticker: [{filing.ticker_symbol}]({ticker_url}))"
-        
-        # Create context text if available
-        context_section = []
-        if filing.contexts and filing.contexts[0]:
-            # Use just the first context to keep the card simple
-            context = filing.contexts[0][:500]  # Limit to 500 chars
-            context_section = [
-                {
-                    "type": "TextBlock",
-                    "text": "**Context:**",
-                    "wrap": True,
-                    "weight": "Bolder" 
-                },
-                {
-                    "type": "TextBlock",
-                    "text": context,
-                    "wrap": True
-                }
-            ]
+        # Create ticker part
+        ticker_part = f"${filing.ticker_symbol}" if filing.ticker_symbol else ""
             
-        # Create matching terms section if available
-        terms_section = []
-        if filing.matching_terms:
-            terms_text = ", ".join(filing.matching_terms)
-            terms_section = [
-                {
-                    "type": "TextBlock",
-                    "text": "**Matching Terms:**",
-                    "wrap": True,
-                    "weight": "Bolder"
-                },
-                {
-                    "type": "TextBlock",
-                    "text": terms_text,
-                    "wrap": True
-                }
-            ]
-            
-        # Create card content
+        # Create card content - simpler format
         card_content = {
             "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
             "type": "AdaptiveCard",
@@ -196,22 +156,17 @@ class TeamsNotifier(NotificationChannel):
                 },
                 {
                     "type": "TextBlock",
-                    "text": f"**Published on:** {filing.filing_date}",
+                    "text": f"Published on: {filing.filing_date}",
                     "wrap": True
                 },
                 {
                     "type": "TextBlock",
-                    "text": f"**Company:** {filing.company_name} {ticker_part}",
+                    "text": f"Company: {filing.company_name}",
                     "wrap": True
                 },
                 {
                     "type": "TextBlock",
-                    "text": f"**CIK:** [{filing.cik}](https://www.sec.gov/cgi-bin/browse-edgar?company=&CIK={filing.cik})",
-                    "wrap": True
-                },
-                {
-                    "type": "TextBlock",
-                    "text": f"**Form Type:** {filing.form_type}",
+                    "text": f"CIK: [{filing.cik}](https://www.sec.gov/cgi-bin/browse-edgar?company=&CIK={filing.cik}) (Ticker: [{ticker_part}](https://www.google.com/search?q=%24{filing.ticker_symbol}+ticker))",
                     "wrap": True
                 }
             ],
@@ -224,13 +179,6 @@ class TeamsNotifier(NotificationChannel):
             ]
         }
         
-        # Add context and terms sections if available
-        if context_section:
-            card_content["body"].extend(context_section)
-            
-        if terms_section:
-            card_content["body"].extend(terms_section)
-            
         # Add to payload
         payload = {
             "type": "message",

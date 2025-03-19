@@ -126,28 +126,10 @@ class SlackNotifier(NotificationChannel):
         Returns:
             Slack message payload dict
         """
-        # Create ticker display with link if available
-        ticker_display = ""
-        if filing.ticker_symbol:
-            ticker_url = f"https://www.google.com/finance/quote/{filing.ticker_symbol}"
-            ticker_display = f" (Ticker: <{ticker_url}|${filing.ticker_symbol}>)"
-            
-        # Format context if available
-        context_blocks = []
-        if filing.contexts:
-            context_text = "...\n".join(filing.contexts[:3])  # Limit to first 3 contexts
-            if context_text:
-                context_blocks = [
-                    {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": f"*Context:*\n```{context_text[:1000]}```"  # Limit length
-                        }
-                    }
-                ]
-                
-        # Create message blocks
+        # Create ticker part if available
+        ticker_part = f"${filing.ticker_symbol}" if filing.ticker_symbol else ""
+        
+        # Create blocks for a simple message format
         blocks = [
             {
                 "type": "header",
@@ -158,67 +140,42 @@ class SlackNotifier(NotificationChannel):
             },
             {
                 "type": "section",
-                "fields": [
-                    {
-                        "type": "mrkdwn",
-                        "text": f"*Company:*\n{filing.company_name}{ticker_display}"
-                    },
-                    {
-                        "type": "mrkdwn",
-                        "text": f"*CIK:*\n{filing.cik}"
-                    }
-                ]
-            },
-            {
-                "type": "section",
-                "fields": [
-                    {
-                        "type": "mrkdwn",
-                        "text": f"*Published on:*\n{filing.filing_date}"
-                    },
-                    {
-                        "type": "mrkdwn",
-                        "text": f"*Form Type:*\n{filing.form_type}"
-                    }
-                ]
+                "text": {
+                    "type": "mrkdwn",
+                    "text": f"Published on: {filing.filing_date}"
+                }
             },
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": f"*View SEC Filing:*\n<{filing.filing_url}|SEC.gov Link>"
+                    "text": f"Company: {filing.company_name}"
                 }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": f"CIK: <https://www.sec.gov/cgi-bin/browse-edgar?company=&CIK={filing.cik}|{filing.cik}> (Ticker: <https://www.google.com/search?q=%24{filing.ticker_symbol}+ticker|{ticker_part}>)"
+                }
+            },
+            {
+                "type": "actions",
+                "elements": [
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "View SEC Filing"
+                        },
+                        "url": filing.filing_url
+                    }
+                ]
             }
         ]
-        
-        # Add context blocks if available
-        if context_blocks:
-            blocks.extend(context_blocks)
-            
-        # Add matching terms if available
-        if filing.matching_terms:
-            terms_text = ", ".join(filing.matching_terms)
-            blocks.append({
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": f"*Matching Terms:*\n{terms_text}"
-                }
-            })
-            
-        # Add footer
-        blocks.append({
-            "type": "context",
-            "elements": [
-                {
-                    "type": "mrkdwn",
-                    "text": "Reported by SECurityTr8Ker"
-                }
-            ]
-        })
         
         return {
             "blocks": blocks,
             # Fallback text for notifications
-            "text": f"Cybersecurity Incident Disclosure: {filing.company_name} ({filing.form_type}) - {filing.filing_date}"
+            "text": f"A cybersecurity incident has been disclosed by {filing.company_name} (CIK: {filing.cik}, Ticker: {ticker_part})"
         } 
