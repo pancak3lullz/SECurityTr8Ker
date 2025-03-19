@@ -16,7 +16,11 @@ else:
 
 # SEC API Configuration
 RSS_URL = 'https://www.sec.gov/Archives/edgar/usgaap.rss.xml'
-REQUEST_INTERVAL = 0.1  # Time to wait between requests to SEC API (seconds)
+# SEC rate limiting - more conservative defaults to avoid 429 errors
+# The SEC website recommends no more than 10 requests per second
+REQUEST_INTERVAL = float(os.getenv('SEC_REQUEST_INTERVAL', '1.0'))  # Default 1 second between requests
+MAX_CONCURRENT_REQUESTS = int(os.getenv('SEC_MAX_CONCURRENT_REQUESTS', '5'))  # Max concurrent requests
+MAX_RETRIES = int(os.getenv('SEC_MAX_RETRIES', '3'))  # Max retries for failed requests
 
 # Use USER_AGENT from .env if provided, otherwise use default
 USER_AGENT = os.getenv('USER_AGENT', "SECurityTr8Ker/1.0 (your-email@example.com)")
