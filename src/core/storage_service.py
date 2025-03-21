@@ -69,19 +69,46 @@ class StorageService:
             # Ensure directory exists
             os.makedirs(os.path.dirname(os.path.abspath(self.storage_file)), exist_ok=True)
             
-            # Write atomic (write to temp file then rename)
-            temp_file = f"{self.storage_file}.tmp"
-            with open(temp_file, 'w') as f:
-                json.dump(self.disclosures, f, indent=2)
+            try:
+                # First attempt: Direct write (most reliable when file is mounted as a volume in Docker)
+                with open(self.storage_file, 'w') as f:
+                    json.dump(self.disclosures, f, indent=2)
+                logger.info(f"Saved {len(self.disclosures)} disclosures to {self.storage_file} (direct write)")
+                return True
+            except (IOError, OSError) as direct_write_error:
+                logger.warning(f"Direct write to {self.storage_file} failed: {direct_write_error}. Trying atomic write...")
                 
-            # Rename to target file
-            os.rename(temp_file, self.storage_file)
-            
-            logger.info(f"Saved {len(self.disclosures)} disclosures to {self.storage_file}")
-            return True
-            
-        except (IOError, OSError) as e:
-            logger.error(f"Error saving disclosures to {self.storage_file}: {e}")
+                # Second attempt: Atomic write with temp file
+                temp_file = f"{self.storage_file}.tmp"
+                with open(temp_file, 'w') as f:
+                    json.dump(self.disclosures, f, indent=2)
+                
+                try:
+                    # Try rename (this may fail if the file is mounted as a volume)
+                    os.rename(temp_file, self.storage_file)
+                    logger.info(f"Saved {len(self.disclosures)} disclosures to {self.storage_file} (atomic rename)")
+                    return True
+                except OSError as rename_error:
+                    logger.warning(f"Rename operation failed: {rename_error}. Trying copy approach...")
+                    
+                    # Final attempt: Copy contents instead of rename
+                    with open(temp_file, 'r') as src:
+                        content = src.read()
+                        
+                    with open(self.storage_file, 'w') as dst:
+                        dst.write(content)
+                    
+                    # Clean up temp file
+                    try:
+                        os.remove(temp_file)
+                    except OSError:
+                        pass  # Ignore cleanup errors
+                        
+                    logger.info(f"Saved {len(self.disclosures)} disclosures to {self.storage_file} (copy approach)")
+                    return True
+                    
+        except Exception as e:
+            logger.error(f"Error saving disclosures to {self.storage_file}: {e}", exc_info=True)
             return False
     
     def add_disclosure(self, filing: Filing) -> bool:

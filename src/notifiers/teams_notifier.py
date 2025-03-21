@@ -139,10 +139,10 @@ class TeamsNotifier(NotificationChannel):
         Returns:
             Teams message payload dict
         """
-        # Create ticker part
-        ticker_part = f"${filing.ticker_symbol}" if filing.ticker_symbol else ""
-            
-        # Create card content - simpler format
+        # Create ticker part if available
+        ticker_part = f"(Ticker: [${filing.ticker_symbol}](https://www.google.com/search?q=%24{filing.ticker_symbol}+ticker))" if filing.ticker_symbol else ""
+        
+        # Create card content using the format from the working teams_poster.py
         card_content = {
             "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
             "type": "AdaptiveCard",
@@ -152,29 +152,22 @@ class TeamsNotifier(NotificationChannel):
                     "type": "TextBlock",
                     "text": "Cybersecurity Incident Disclosure",
                     "weight": "Bolder",
-                    "size": "Large"
+                    "size": "Medium"
                 },
                 {
                     "type": "TextBlock",
-                    "text": f"Published on: {filing.filing_date}",
+                    "text": f"{filing.filing_date}\\n\\nA cybersecurity incident has been disclosed by **{filing.company_name}** (CIK: [{filing.cik}](https://www.sec.gov/cgi-bin/browse-edgar?company=&CIK={filing.cik})) {ticker_part}.",
                     "wrap": True
                 },
                 {
-                    "type": "TextBlock",
-                    "text": f"Company: {filing.company_name}",
-                    "wrap": True
-                },
-                {
-                    "type": "TextBlock",
-                    "text": f"CIK: [{filing.cik}](https://www.sec.gov/cgi-bin/browse-edgar?company=&CIK={filing.cik}) (Ticker: [{ticker_part}](https://www.google.com/search?q=%24{filing.ticker_symbol}+ticker))",
-                    "wrap": True
-                }
-            ],
-            "actions": [
-                {
-                    "type": "Action.OpenUrl",
-                    "title": "View SEC Filing",
-                    "url": filing.filing_url
+                    "type": "ActionSet",
+                    "actions": [
+                        {
+                            "type": "Action.OpenUrl",
+                            "title": "View SEC Filing",
+                            "url": filing.filing_url
+                        }
+                    ]
                 }
             ]
         }
