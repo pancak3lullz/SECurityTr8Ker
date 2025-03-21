@@ -38,6 +38,11 @@ file_formatter = logging.Formatter(
 # Cache for loggers to avoid creating duplicates
 _loggers = {}
 
+# Create a common file handler for debug.log that all loggers will use
+debug_file_handler = logging.FileHandler(LOG_FILE_PATH)
+debug_file_handler.setFormatter(file_formatter)
+debug_file_handler.setLevel(logging.DEBUG)  # Log everything to debug.log
+
 def get_logger(name: Optional[str] = None) -> logging.Logger:
     """
     Get a logger with the specified name.
@@ -74,19 +79,20 @@ def get_logger(name: Optional[str] = None) -> logging.Logger:
     console_handler.setFormatter(color_formatter)
     console_handler.setLevel(LOG_LEVEL_NUM)
     
-    # Create file handler
+    # Create module-specific file handler
     # Use a file name based on the logger name
     module_name = name.split('.')[-1] if '.' in name else name
     log_filename = f"{datetime.now().strftime('%Y%m%d')}_{module_name}.log"
     log_filepath = os.path.join(LOG_DIR, log_filename)
     
-    file_handler = logging.FileHandler(log_filepath)
-    file_handler.setFormatter(file_formatter)
-    file_handler.setLevel(logging.DEBUG)  # Always log everything to file
+    module_file_handler = logging.FileHandler(log_filepath)
+    module_file_handler.setFormatter(file_formatter)
+    module_file_handler.setLevel(logging.DEBUG)  # Always log everything to file
     
     # Add handlers to logger
     logger.addHandler(console_handler)
-    logger.addHandler(file_handler)
+    logger.addHandler(module_file_handler)
+    logger.addHandler(debug_file_handler)  # Add the common debug.log handler
     
     # Cache the logger
     _loggers[name] = logger
