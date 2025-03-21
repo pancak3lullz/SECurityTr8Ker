@@ -137,7 +137,7 @@ class TeamsNotifier(NotificationChannel):
                     },
                     {
                         "type": "TextBlock",
-                        "text": f"{filing.filing_date}\\n\\nA cybersecurity incident has been disclosed by **{filing.company_name}** (CIK: [{filing.cik}](https://www.sec.gov/cgi-bin/browse-edgar?company=&CIK={filing.cik})) {ticker_part}.",
+                        "text": f"{filing.filing_date}\n\nA cybersecurity incident has been disclosed by **{filing.company_name}** (CIK: [{filing.cik}](https://www.sec.gov/cgi-bin/browse-edgar?company=&CIK={filing.cik})) {ticker_part}.",
                         "wrap": True
                     },
                     {
