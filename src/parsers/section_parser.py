@@ -57,79 +57,162 @@ class SectionParser:
     
     def extract_sections(self, document_text: str) -> Dict[str, FilingSection]:
         """
-        Extract all sections from document text using a state machine approach.
+        Extract all sections from document text using a combination of
+        HTML structure analysis and regex.
         """
-        # First clean the text
-        clean_text = self.clean_text(document_text)
-        
-        # Identify forward-looking statements sections to exclude them
-        forward_looking_sections = self._identify_forward_looking_sections(clean_text)
-        logger.debug(f"Found {len(forward_looking_sections)} forward-looking statement sections")
-        
-        # Find all potential section headers
+        soup = BeautifulSoup(document_text, 'html.parser')
+
         section_candidates = []
-        for pattern in self.section_patterns:
-            for match in pattern.finditer(clean_text):
-                section_name = match.group(1).strip()
-                section_title = match.group(2).strip() if len(match.groups()) > 1 else ""
-                position = match.start()
-                
-                # Skip if this position is within a forward-looking statement section
-                if any(start <= position <= end for start, end in forward_looking_sections):
-                    logger.debug(f"Skipping section {section_name} found in forward-looking statements")
-                    continue
-                    
-                section_candidates.append((section_name, section_title, position))
-        
-        # Sort by position in document
-        section_candidates.sort(key=lambda x: x[2])
-        
-        if not section_candidates:
-            logger.warning("No sections found in document")
-            return {}
-            
-        # Build sections dict
-        sections = {}
-        for i, (section_name, section_title, start_pos) in enumerate(section_candidates):
-            # Determine end position (start of next section or end of document)
-            end_pos = section_candidates[i+1][2] if i < len(section_candidates) - 1 else len(clean_text)
-            
-            # Skip if this section is entirely within a forward-looking statement
-            if any(start <= start_pos and end >= end_pos for start, end in forward_looking_sections):
-                logger.debug(f"Skipping section {section_name} contained within forward-looking statements")
+        logger.debug("Scanning document for potential section headers using combined approach...")
+
+        # --- Find candidates using common tags and patterns ---
+        potential_header_tags = soup.find_all(['b', 'strong', 'p', 'div'])
+        processed_starts = set() # Avoid duplicate matches from overlapping tags
+
+        for tag in potential_header_tags:
+            # Get text, replacing non-breaking spaces before cleaning further
+            tag_text = tag.get_text(separator=' ').replace('\xa0', ' ').strip()
+            if not tag_text:
                 continue
-                
-            # Check if this section contains forward-looking statements
-            section_contains_fls = False
-            for fls_start, fls_end in forward_looking_sections:
-                # If the forward-looking statement starts within this section
-                if start_pos <= fls_start < end_pos:
-                    # Adjust the section end to exclude the forward-looking statement
-                    end_pos = fls_start
-                    section_contains_fls = True
-                    logger.debug(f"Adjusted section {section_name} to exclude forward-looking statements")
+
+            # Use regex on the tag's text content
+            for pattern in self.section_patterns:
+                match = pattern.search(tag_text)
+                if match:
+                    section_name = match.group(1).strip()
+                    section_title = match.group(2).strip() if len(match.groups()) > 1 else ""
+                    matched_header_text = match.group(0).strip()
                     
-            # Extract content
-            content = clean_text[start_pos:end_pos].strip()
-            
-            # Normalize section name for consistent keys
-            normalized_name = section_name.lower()
-            
-            # Create section object
+                    # Estimate position in the *original* document text if possible (can be fragile)
+                    # We will primarily rely on sorting matches found in the cleaned text later.
+                    # However, finding it via tags first helps prioritize potentially clearer headers.
+                    approx_pos = document_text.find(matched_header_text)
+                    if approx_pos == -1:
+                        # Fallback: find the tag's approximate start
+                        approx_pos = document_text.find(str(tag))
+                    if approx_pos == -1:
+                        approx_pos = 0 # Default if we can't find it
+                        
+                    # Store candidate details including the tag's text
+                    candidate_detail = {
+                        "name": section_name,
+                        "title": section_title,
+                        "header_text": matched_header_text, # Text that matched regex
+                        "approx_pos": approx_pos, # For initial rough sorting/deduplication
+                        "found_by": "tag"
+                    }
+                    # Avoid adding essentially the same header match found nearby
+                    is_duplicate = False
+                    for existing in section_candidates:
+                        if abs(existing["approx_pos"] - candidate_detail["approx_pos"]) < 50 and \
+                           existing["name"] == candidate_detail["name"]:
+                            is_duplicate = True
+                            break
+                    if not is_duplicate:
+                        section_candidates.append(candidate_detail)
+                        logger.debug(f"Found candidate via tag: {candidate_detail}")
+                        break # Move to next tag once a pattern matches
+
+        # --- Clean the full text ONCE for positioning and fallback regex --- 
+        full_cleaned_text = self.clean_text(document_text)
+        
+        # --- Refine positions and add candidates from fallback regex --- 
+        final_candidates = []
+        processed_clean_starts = set()
+        
+        # Update positions for tag-found candidates using cleaned text
+        for cand in section_candidates:
+             if cand["found_by"] == "tag":
+                 cleaned_header = self.clean_text(cand["header_text"])
+                 pos_in_cleaned = full_cleaned_text.find(cleaned_header)
+                 if pos_in_cleaned != -1:
+                     cand["position"] = pos_in_cleaned
+                     cand["cleaned_header"] = cleaned_header
+                     final_candidates.append(cand)
+                     processed_clean_starts.add(pos_in_cleaned)
+                 else:
+                     logger.warning(f"Could not find cleaned header '{cleaned_header}' in cleaned text for tag-found candidate: {cand['name']}")
+        
+        # Add candidates from regex on full cleaned text (if not already found via tags)
+        logger.debug("Applying fallback regex search on fully cleaned text...")
+        for pattern in self.section_patterns:
+            for match in pattern.finditer(full_cleaned_text):
+                position = match.start()
+                if position not in processed_clean_starts:
+                    section_name = match.group(1).strip()
+                    section_title = match.group(2).strip() if len(match.groups()) > 1 else ""
+                    cleaned_header = match.group(0).strip() # Already cleaned
+                    
+                    final_candidates.append({
+                        "name": section_name,
+                        "title": section_title,
+                        "position": position,
+                        "cleaned_header": cleaned_header,
+                        "found_by": "regex_fallback"
+                    })
+                    processed_clean_starts.add(position)
+                    logger.debug(f"Found candidate via fallback: Name='{section_name}', Pos={position}, Header='{cleaned_header}'")
+
+        # --- Process final candidates --- 
+        if not final_candidates:
+            logger.warning("No final section candidates found after processing")
+            return {}
+
+        # Sort by final position in cleaned text
+        final_candidates.sort(key=lambda x: x["position"]) 
+
+        # Identify forward-looking sections based on cleaned text positions
+        forward_looking_sections = self._identify_forward_looking_sections(full_cleaned_text)
+        logger.debug(f"Identified {len(forward_looking_sections)} forward-looking statement spans")
+
+        sections = {}
+        num_candidates = len(final_candidates)
+        for i, candidate in enumerate(final_candidates):
+            section_name = candidate["name"]
+            section_title = candidate["title"]
+            start_pos = candidate["position"]
+            cleaned_header = candidate["cleaned_header"]
+
+            # Determine end position (start of next section's header or end of document)
+            end_pos = final_candidates[i+1]["position"] if i < num_candidates - 1 else len(full_cleaned_text)
+
+            logger.debug(f"Processing candidate: Name='{section_name}', Title='{section_title}', CleanedStart={start_pos}, InitialCleanedEnd={end_pos}")
+
+            # Skip if this section's header start is within a forward-looking statement span
+            if any(fls_start <= start_pos < fls_end for fls_start, fls_end in forward_looking_sections):
+                 logger.debug(f"Skipping section '{section_name}' starting within a forward-looking span")
+                 continue
+
+            # Adjust end position if it overlaps with a forward-looking statement start
+            adjusted_end_pos = end_pos
+            for fls_start, fls_end in forward_looking_sections:
+                if start_pos < fls_start < adjusted_end_pos:
+                     logger.debug(f"Adjusting end position for section '{section_name}' from {adjusted_end_pos} to {fls_start} due to overlapping forward-looking statement")
+                     adjusted_end_pos = fls_start
+
+            # Extract content: from *after* the cleaned header text to the adjusted end position
+            content_start = start_pos + len(cleaned_header)
+            content = full_cleaned_text[content_start:adjusted_end_pos].strip()
+
+            logger.debug(f"Extracted content for '{section_name}' (len: {len(content)}, start: {content_start}, end: {adjusted_end_pos}): '{content[:100]}...'" + ('[EMPTY]' if not content else ''))
+
+            normalized_name = section_name.lower().replace(')', '') # Clean ')' from Item X.XX) pattern
+
             section = FilingSection(
                 name=normalized_name,
-                content=content,
-                start_pos=start_pos,
-                end_pos=end_pos
+                content=content, # Content no longer includes the header
+                start_pos=content_start, # Position reflects start of actual content
+                end_pos=adjusted_end_pos
             )
-            
-            # Validate section (basic check)
+
+            # Validate section (use content only for length check now)
             if self._validate_section(normalized_name, section_title, content):
                 sections[normalized_name] = section
+                logger.debug(f"Added valid section: '{normalized_name}'")
             else:
-                logger.debug(f"Skipping invalid section: {normalized_name}")
-        
-        logger.info(f"Extracted {len(sections)} valid sections from document")
+                logger.debug(f"Skipping invalid or filtered section: '{normalized_name}' based on validation rule.")
+
+        logger.info(f"Extracted {len(sections)} valid sections from document. Keys: {list(sections.keys())}")
         return sections
     
     def _identify_forward_looking_sections(self, text: str) -> List[Tuple[int, int]]:
@@ -153,24 +236,31 @@ class SectionParser:
     def _validate_section(self, section_name: str, section_title: str, content: str) -> bool:
         """
         Validate a section to ensure it's a real section and not a false positive.
+        Content no longer includes the header text itself.
         """
         # Check if section name is one of our known sections
-        if section_name in self.KNOWN_SECTIONS:
-            # For known sections, optionally verify expected title
-            expected_title = self.KNOWN_SECTIONS[section_name].lower()
-            if expected_title in section_title.lower():
-                return True
-            # Still return true even if title doesn't match exactly
-            return True
-            
-        # For unknown sections, must have reasonable content length
-        if len(content) < 20:  # Too short to be a real section
-            return False
-            
-        # Check for section number pattern (e.g., item X.XX)
+        known_section_match = False
+        cleaned_section_name = section_name.lower().replace(')', '').strip()
+
+        for known_key in self.KNOWN_SECTIONS:
+            if known_key == cleaned_section_name:
+                 known_section_match = True
+                 logger.debug(f"Validated known section '{cleaned_section_name}' by item number.")
+                 return True # Finding a known item number is sufficient
+
+        # If it wasn't a directly known section (e.g. Item 1.05, Item 8.01)
+        # Check for general item pattern validity
         if not re.match(r'item\s+\d+\.\d+', section_name, re.IGNORECASE):
-            return False
-            
+             logger.debug(f"Validation failed: Section name '{section_name}' doesn't match item pattern.")
+             return False
+
+        # For unknown sections that match the pattern, check content length
+        # Allow zero length content for unknown sections as sometimes they might just be headers
+        # if len(content) < 5: 
+        #     logger.debug(f"Validation failed: Unknown section '{section_name}' has insufficient content length ({len(content)}).")
+        #     return False
+
+        logger.debug(f"Validated unknown section '{section_name}' by pattern.") # Removed length check for unknown
         return True
     
     def extract_item_section(self, document_text: str, item_number: str) -> Optional[FilingSection]:
