@@ -84,11 +84,11 @@ class DisclosureAnalyzer:
         Returns:
             Tuple of (has_disclosure, matching_terms, contexts)
         """
-        logger.info(f"Analyzing filing: {filing.company_name} ({filing.form_type})")
+        logger.info(f"Analyzing filing: {filing.company_name} ({filing.form_type}) URL: {filing.filing_href}")
         
         # Only process 8-K forms
         if filing.form_type not in ['8-K', '8-K/A']:
-            logger.debug(f"Skipping non-8K filing: {filing.form_type}")
+            logger.debug(f"Skipping non-8K filing: {filing.form_type} for {filing.filing_href}")
             return False, [], []
             
         # Parse document sections
@@ -97,109 +97,50 @@ class DisclosureAnalyzer:
         filing.raw_content = document_text
         
         # Extract all sections
+        logger.debug(f"Extracting sections for {filing.filing_href}")
         sections = self.section_parser.extract_sections(document_text)
         filing.sections = sections
+        logger.debug(f"Found sections: {list(sections.keys())} for {filing.filing_href}")
         
-        # First check for Item 1.05 disclosures
-        item_105_disclosure = self._check_item_105_disclosure(filing)
-        if item_105_disclosure[0]:
-            logger.info(f"Found Item 1.05 disclosure in {filing.company_name}")
-            # Keep track of matching terms and contexts
-            terms = item_105_disclosure[1]
-            contexts = item_105_disclosure[2]
-            return True, terms, contexts
-            
-        # Then check if Item 8.01 contains cybersecurity terms
+        # Rule 1: Always alert if a valid Item 1.05 section exists
+        item_105_section = None
+        for name, section in filing.sections.items():
+            if "item 1.05" in name.lower():
+                item_105_section = section
+                logger.info(f"Found potential Item 1.05 section for {filing.filing_href}")
+                break
+        
+        if item_105_section:
+            section_text = item_105_section.content.lower()
+            is_short_ref = False
+            if len(section_text.strip()) < 50: # Use a slightly larger threshold
+                references = ["see item", "incorporated by reference", "not applicable", "previously disclosed"]
+                if any(ref in section_text for ref in references):
+                    is_short_ref = True
+                    logger.info(f"Item 1.05 section appears to be a short reference for {filing.filing_href}")
+                
+            # If the section exists and is NOT just a short reference, and not clearly a false positive context
+            if not is_short_ref and not self._is_false_positive(section_text):
+                logger.info(f"Item 1.05 disclosure confirmed for {filing.filing_href}")
+                context = self._get_context(document_text, item_105_section.content, 200) # Get context from full doc
+                return True, ["Item 1.05"], [context]
+            else:
+                logger.info(f"Item 1.05 section found but dismissed (short ref: {is_short_ref}, FP check: {self._is_false_positive(section_text)}) for {filing.filing_href}")
+
+        # Rule 2: If no Item 1.05 alert, check Item 8.01 for cybersecurity keywords
+        logger.debug(f"Checking Item 8.01 for {filing.filing_href}")
         item_801_disclosure = self._check_item_801_disclosure(filing)
         if item_801_disclosure[0]:
-            logger.info(f"Found cybersecurity disclosure in Item 8.01 of {filing.company_name}")
-            # Keep track of matching terms and contexts
-            terms = item_801_disclosure[1]
-            contexts = item_801_disclosure[2]
-            return True, terms, contexts
+            logger.info(f"Found cybersecurity disclosure in Item 8.01 of {filing.company_name} for {filing.filing_href}")
+            return True, item_801_disclosure[1], item_801_disclosure[2]
             
-        # No disclosure found
+        # No disclosure found based on rules
+        logger.info(f"No cybersecurity disclosure found for {filing.filing_href}")
         return False, [], []
     
     def _check_item_105_disclosure(self, filing: Filing) -> Tuple[bool, List[str], List[str]]:
-        """
-        Check if a filing contains an Item 1.05 disclosure.
-        
-        Args:
-            filing: Filing object to check
-            
-        Returns:
-            Tuple of (has_disclosure, matching_terms, contexts)
-        """
-        matching_terms = []
-        contexts = []
-        
-        # Check if we have an Item 1.05 section
-        found_item_105 = False
-        item_105_section = None
-        
-        for name, section in filing.sections.items():
-            if "item 1.05" in name.lower():
-                found_item_105 = True
-                item_105_section = section
-                break
-        
-        # If we found Item 1.05 section, check for cybersecurity terms
-        if found_item_105 and item_105_section:
-            # If Item 1.05 exists, confirm it's not empty or just refers to another section
-            section_text = item_105_section.content.lower()
-            
-            # Check if section is substantial (not just a reference)
-            if len(section_text.strip()) < 30:
-                # Very short section might be just a reference
-                references = ["see item", "incorporated by reference", "not applicable"]
-                if any(ref in section_text for ref in references):
-                    logger.debug(f"Item 1.05 section appears to be just a reference")
-                    return False, [], []
-            
-            # Match Item 1.05 term itself as a matching term
-            matching_terms.append("Item 1.05")
-            contexts.append(self._get_context(section_text, "item 1.05", 100))
-            
-            # Check if the section actually discusses a cybersecurity incident
-            # by looking for cybersecurity terms
-            for i, pattern in enumerate(self.cybersecurity_patterns):
-                matches = pattern.finditer(section_text)
-                for match in matches:
-                    term = self.cybersecurity_terms[i]
-                    
-                    # Get context around match
-                    context = self._get_context(section_text, match.group(), 100)
-                    
-                    # Check if context contains false positive indicators
-                    if not self._is_false_positive(context):
-                        matching_terms.append(term)
-                        contexts.append(context)
-                    else:
-                        logger.debug(f"False positive match '{term}' in context: {context}")
-            
-            # If we have Item 1.05 and any cybersecurity terms, it's a disclosure
-            if len(matching_terms) > 1:  # More than just "Item 1.05" itself
-                return True, matching_terms, contexts
-                
-            # Even if no cybersecurity terms, having Item 1.05 is significant
-            # But let's do a final check to make sure it's not a false positive
-            if not self._is_false_positive(section_text):
-                return True, matching_terms, contexts
-        
-        # Check entire document for explicit Item 1.05 mentions
-        if not found_item_105:
-            document_text = filing.raw_content.lower() if filing.raw_content else ""
-            for pattern in self.item_105_patterns:
-                matches = pattern.finditer(document_text)
-                for match in matches:
-                    # Get context around match
-                    context = self._get_context(document_text, match.group(), 100)
-                    
-                    # Check if context contains false positive indicators
-                    if not self._is_false_positive(context):
-                        return True, [match.group()], [context]
-        
+        """DEPRECATED - Logic moved to analyze_filing. Kept for potential future use or refactoring."""
+        logger.warning("_check_item_105_disclosure is deprecated and should not be called directly.")
         return False, [], []
     
     def _check_item_801_disclosure(self, filing: Filing) -> Tuple[bool, List[str], List[str]]:
