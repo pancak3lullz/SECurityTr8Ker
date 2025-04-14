@@ -13,19 +13,20 @@ class SectionParser:
     
     # Common patterns for section headers in SEC filings
     SECTION_PATTERNS = [
-        # Standard item pattern (e.g., "Item 1.05 Material Cybersecurity Incidents")
-        r'(Item\s+\d+\.\d+)[^a-zA-Z0-9]*([^\n\r]*)',
-        # Alternative format (e.g., "ITEM 1.05")
-        r'(ITEM\s+\d+\.\d+)[^a-zA-Z0-9]*([^\n\r]*)',
-        # Format with parentheses (e.g., "Item 1.05) Material Cybersecurity Incidents")
-        r'(Item\s+\d+\.\d+\))[^a-zA-Z0-9]*([^\n\r]*)',
+        # Match "Item<space(s)>X.XX" possibly followed by ')'
+        r'(Item\s+\d+\.\d+)\)?',
+        # Match "ITEM<space(s)>X.XX" possibly followed by ')'
+        r'(ITEM\s+\d+\.\d+)\)?',
     ]
     
     # Known section names to help with validation
     KNOWN_SECTIONS = {
         "item 1.05": "Material Cybersecurity Incidents",
         "item 8.01": "Other Events",
-        # Add more known sections as needed
+        "item 9.01": "Financial Statements and Exhibits",
+        "item 7.01": "Regulation FD Disclosure",
+        "item 2.02": "Results of Operations and Financial Condition",
+        "item 5.02": "Departure of Directors or Certain Officers"
     }
     
     # Patterns to identify forward-looking statements sections
@@ -68,24 +69,34 @@ class SectionParser:
         # --- Find candidates using common tags and patterns ---
         potential_header_tags = soup.find_all(['b', 'strong', 'p', 'div'])
         processed_starts = set() # Avoid duplicate matches from overlapping tags
+        found_via_tag = False # Debug flag
 
-        for tag in potential_header_tags:
+        for tag_index, tag in enumerate(potential_header_tags):
             # Get text, replacing non-breaking spaces before cleaning further
             tag_text = tag.get_text(separator=' ').replace('\xa0', ' ').strip()
             if not tag_text:
                 continue
+            
+            # DEBUG: Log tag text if it might contain an item header
+            if 'item ' in tag_text.lower() and len(tag_text) < 100:
+                logger.debug(f"Parser[TagCheck {tag_index}]: Checking tag text: '{tag_text}'")
 
             # Use regex on the tag's text content
             for pattern in self.section_patterns:
                 match = pattern.search(tag_text)
                 if match:
+                    # Group 1 is the item identifier (e.g., "Item 8.01" or "Item 1.05)")
                     section_name = match.group(1).strip()
-                    section_title = match.group(2).strip() if len(match.groups()) > 1 else ""
+                    # DEBUG: Log if Item 8.01 is potentially found
+                    if '8.01' in section_name:
+                        logger.debug(f"Parser[TagMatch]: Potential Item 8.01 found via tag: '{tag_text}'")
+                        found_via_tag = True
+                        
+                    section_title = "" # Title is no longer captured by regex
+                    # The matched header is the whole match (group 0)
                     matched_header_text = match.group(0).strip()
                     
                     # Estimate position in the *original* document text if possible (can be fragile)
-                    # We will primarily rely on sorting matches found in the cleaned text later.
-                    # However, finding it via tags first helps prioritize potentially clearer headers.
                     approx_pos = document_text.find(matched_header_text)
                     if approx_pos == -1:
                         # Fallback: find the tag's approximate start
@@ -115,6 +126,7 @@ class SectionParser:
 
         # --- Clean the full text ONCE for positioning and fallback regex --- 
         full_cleaned_text = self.clean_text(document_text)
+        logger.debug(f"Parser: Full cleaned text length: {len(full_cleaned_text)}")
         
         # --- Refine positions and add candidates from fallback regex --- 
         final_candidates = []
@@ -135,13 +147,21 @@ class SectionParser:
         
         # Add candidates from regex on full cleaned text (if not already found via tags)
         logger.debug("Applying fallback regex search on fully cleaned text...")
+        found_via_fallback = False # Debug flag
         for pattern in self.section_patterns:
             for match in pattern.finditer(full_cleaned_text):
                 position = match.start()
                 if position not in processed_clean_starts:
+                    # Group 1 is the item identifier
                     section_name = match.group(1).strip()
-                    section_title = match.group(2).strip() if len(match.groups()) > 1 else ""
-                    cleaned_header = match.group(0).strip() # Already cleaned
+                    # DEBUG: Log if Item 8.01 is potentially found via fallback
+                    if '8.01' in section_name:
+                        logger.debug(f"Parser[FallbackMatch]: Potential Item 8.01 found via fallback regex at pos {position}: Header='{match.group(0).strip()}'")
+                        found_via_fallback = True
+                        
+                    section_title = "" # Title not captured
+                    # The matched header is the whole match (group 0)
+                    cleaned_header = match.group(0).strip() 
                     
                     final_candidates.append({
                         "name": section_name,
@@ -151,7 +171,13 @@ class SectionParser:
                         "found_by": "regex_fallback"
                     })
                     processed_clean_starts.add(position)
-                    logger.debug(f"Found candidate via fallback: Name='{section_name}', Pos={position}, Header='{cleaned_header}'")
+                    # Removed detailed log here for brevity unless it's 8.01
+                    if '8.01' not in section_name:
+                         logger.debug(f"Found candidate via fallback: Name='{section_name}', Pos={position}")
+
+        # DEBUG: Log if Item 8.01 wasn't found by either method
+        if not found_via_tag and not found_via_fallback:
+             logger.warning("Parser: Item 8.01 header was NOT matched by tag or fallback regex.")
 
         # --- Process final candidates --- 
         if not final_candidates:
@@ -178,7 +204,7 @@ class SectionParser:
 
             logger.debug(f"Processing candidate: Name='{section_name}', Title='{section_title}', CleanedStart={start_pos}, InitialCleanedEnd={end_pos}")
 
-            # Skip if this section's header start is within a forward-looking statement span
+            # Skip if this section's header start is within a forward-looking span
             if any(fls_start <= start_pos < fls_end for fls_start, fls_end in forward_looking_sections):
                  logger.debug(f"Skipping section '{section_name}' starting within a forward-looking span")
                  continue
@@ -194,7 +220,7 @@ class SectionParser:
             content_start = start_pos + len(cleaned_header)
             content = full_cleaned_text[content_start:adjusted_end_pos].strip()
 
-            logger.debug(f"Extracted content for '{section_name}' (len: {len(content)}, start: {content_start}, end: {adjusted_end_pos}): '{content[:100]}...'" + ('[EMPTY]' if not content else ''))
+            logger.debug(f"Extracted content for '{section_name}' (len: {len(content)}, start: {content_start}, end: {adjusted_end_pos}): '{content[:150]}...'" + ('[EMPTY]' if not content else ''))
 
             normalized_name = section_name.lower().replace(')', '') # Clean ')' from Item X.XX) pattern
 
@@ -254,13 +280,8 @@ class SectionParser:
              logger.debug(f"Validation failed: Section name '{section_name}' doesn't match item pattern.")
              return False
 
-        # For unknown sections that match the pattern, check content length
-        # Allow zero length content for unknown sections as sometimes they might just be headers
-        # if len(content) < 5: 
-        #     logger.debug(f"Validation failed: Unknown section '{section_name}' has insufficient content length ({len(content)}).")
-        #     return False
-
-        logger.debug(f"Validated unknown section '{section_name}' by pattern.") # Removed length check for unknown
+        # For unknown sections that match the pattern, allow them even if content is short
+        logger.debug(f"Validated unknown section '{section_name}' by pattern.") 
         return True
     
     def extract_item_section(self, document_text: str, item_number: str) -> Optional[FilingSection]:

@@ -72,9 +72,24 @@ SEARCH_TERMS = {
         "threat actor",
         "security incident",
         "ransomware attack",
+        "ransomware incident",
         "cyber incident",
         "unauthorized third party",
-        "unauthorized occurrences within its computer network"
+        "unauthorized occurrences within its computer network",
+        "cybersecurity issue",
+        "cybersecurity event",
+        "cybersecurity-related disruption",
+        "cybersecurity disruption",
+        "cybersecurity matter",
+        "network disruption",
+        "it disruption",
+        "system disruption",
+        "system outage",
+        "network outage",
+        "it outage",
+        "cyber disruption",
+        "cyber event",
+        "data security incident"
     ]
 }
 
