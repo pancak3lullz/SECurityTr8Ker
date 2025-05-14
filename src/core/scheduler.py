@@ -83,19 +83,29 @@ class SECScheduler:
         Returns:
             bool: True if within business hours, False otherwise
         """
-        now = datetime.now(self.TIMEZONE)
+        # Get the current time in UTC
+        utc_now = datetime.now(pytz.UTC)
+        # Convert to Eastern Time
+        et_now = utc_now.astimezone(self.TIMEZONE)
+        
+        logger.debug(f"Time check: UTC={utc_now.strftime('%H:%M:%S')}, ET={et_now.strftime('%H:%M:%S')}, " +
+                     f"Weekday={et_now.weekday()}, Hour={et_now.hour}, Minute={et_now.minute}")
         
         # Check if it's a business day (Monday-Friday)
-        if now.weekday() not in self.BUSINESS_DAYS:
+        if et_now.weekday() not in self.BUSINESS_DAYS:
+            logger.debug(f"Not a business day: {et_now.weekday()}")
             return False
             
         # Check if it's within business hours
-        if now.hour < self.OPEN_HOUR:
+        if et_now.hour < self.OPEN_HOUR:
+            logger.debug(f"Before opening time: {et_now.hour} < {self.OPEN_HOUR}")
             return False
             
-        if now.hour > self.CLOSE_HOUR or (now.hour == self.CLOSE_HOUR and now.minute >= self.CLOSE_MINUTE):
+        if et_now.hour > self.CLOSE_HOUR or (et_now.hour == self.CLOSE_HOUR and et_now.minute >= self.CLOSE_MINUTE):
+            logger.debug(f"After closing time: {et_now.hour}:{et_now.minute} > {self.CLOSE_HOUR}:{self.CLOSE_MINUTE}")
             return False
-            
+        
+        logger.debug(f"SEC is open: {et_now.hour}:{et_now.minute} is within business hours")
         return True
     
     def get_next_business_hours(self) -> Dict[str, Any]:
@@ -105,28 +115,30 @@ class SECScheduler:
         Returns:
             Dict with opening details
         """
-        now = datetime.now(self.TIMEZONE)
+        # Get the current time in UTC and convert to Eastern Time
+        utc_now = datetime.now(pytz.UTC)
+        et_now = utc_now.astimezone(self.TIMEZONE)
         
         # If it's already business hours, return None
         if self.is_business_hours():
             return {
                 "is_open": True,
                 "message": "SEC is currently open",
-                "now": now.isoformat()
+                "now": et_now.isoformat()
             }
             
         # Start with today at opening time
-        next_open = now.replace(hour=self.OPEN_HOUR, minute=0, second=0, microsecond=0)
+        next_open = et_now.replace(hour=self.OPEN_HOUR, minute=0, second=0, microsecond=0)
         
         # If we're past closing time today, move to next day
-        if now.hour >= self.CLOSE_HOUR:
+        if et_now.hour >= self.CLOSE_HOUR:
             next_open = next_open + timedelta(days=1)
             
         # Keep adding days until we hit a business day
         while next_open.weekday() not in self.BUSINESS_DAYS:
             next_open = next_open + timedelta(days=1)
             
-        seconds_until = (next_open - now).total_seconds()
+        seconds_until = (next_open - et_now).total_seconds()
         hours_until = seconds_until / 3600
         
         return {
@@ -135,7 +147,7 @@ class SECScheduler:
             "seconds_until": seconds_until,
             "hours_until": hours_until,
             "message": f"SEC is closed. Opens in {hours_until:.1f} hours on {next_open.strftime('%A, %B %d at %I:%M %p %Z')}",
-            "now": now.isoformat()
+            "now": et_now.isoformat()
         }
     
     def get_status(self) -> Dict[str, Any]:
@@ -145,12 +157,15 @@ class SECScheduler:
         Returns:
             Dict with status details
         """
-        now = datetime.now(self.TIMEZONE)
+        # Get the current time in UTC and convert to Eastern Time
+        utc_now = datetime.now(pytz.UTC)
+        et_now = utc_now.astimezone(self.TIMEZONE)
+        
         is_business_hours = self.is_business_hours()
         
         if is_business_hours:
-            close_time = now.replace(hour=self.CLOSE_HOUR, minute=self.CLOSE_MINUTE, second=0, microsecond=0)
-            seconds_remaining = (close_time - now).total_seconds()
+            close_time = et_now.replace(hour=self.CLOSE_HOUR, minute=self.CLOSE_MINUTE, second=0, microsecond=0)
+            seconds_remaining = (close_time - et_now).total_seconds()
             hours_remaining = seconds_remaining / 3600
             
             return {
@@ -159,7 +174,7 @@ class SECScheduler:
                 "seconds_remaining": seconds_remaining,
                 "hours_remaining": hours_remaining,
                 "message": f"SEC is open. Closes in {hours_remaining:.1f} hours at {close_time.strftime('%I:%M %p %Z')}",
-                "now": now.isoformat()
+                "now": et_now.isoformat()
             }
         else:
             return self.get_next_business_hours()
@@ -179,9 +194,9 @@ class SECScheduler:
                     # Update Twitter bio immediately on status change
                     if self.bio_update_callback:
                         try:
-                            now = datetime.now()
+                            utc_now = datetime.now(pytz.UTC)
                             sec_status = "SEC is OPEN. "
-                            self.bio_update_callback(now, additional_info=sec_status)
+                            self.bio_update_callback(utc_now, additional_info=sec_status)
                         except Exception as e:
                             logger.error(f"Error updating Twitter bio on SEC open: {e}")
                             
@@ -192,9 +207,9 @@ class SECScheduler:
                     # Update Twitter bio immediately on status change
                     if self.bio_update_callback:
                         try:
-                            now = datetime.now()
+                            utc_now = datetime.now(pytz.UTC)
                             sec_status = "SEC is CLOSED. "
-                            self.bio_update_callback(now, additional_info=sec_status)
+                            self.bio_update_callback(utc_now, additional_info=sec_status)
                         except Exception as e:
                             logger.error(f"Error updating Twitter bio on SEC close: {e}")
                 
@@ -220,9 +235,9 @@ class SECScheduler:
                     # to ensure accurate next review time
                     if self.bio_update_callback:
                         try:
-                            now = datetime.now()
+                            utc_now = datetime.now(pytz.UTC)
                             sec_status = "SEC is CLOSED. "
-                            self.bio_update_callback(now, additional_info=sec_status)
+                            self.bio_update_callback(utc_now, additional_info=sec_status)
                         except Exception as e:
                             logger.error(f"Error updating Twitter bio during closed hours: {e}")
                     
