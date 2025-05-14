@@ -135,13 +135,11 @@ class DisclosureAnalyzer:
                     is_short_ref = True
                     logger.info(f"Item 1.05 section appears to be a short reference for {filing.filing_href}")
                 
-            # If the section exists and is NOT just a short reference, and not clearly a false positive context
-            if not is_short_ref and not self._is_false_positive(section_text):
-                logger.info(f"Item 1.05 disclosure confirmed for {filing.filing_href}")
-                context = self._get_context(document_text, item_105_section.content, 200) # Get context from full doc
-                return True, ["Item 1.05"], [context]
-            else:
-                logger.info(f"Item 1.05 section found but dismissed (short ref: {is_short_ref}, FP check: {self._is_false_positive(section_text)}) for {filing.filing_href}")
+            # FIXED: For Item 1.05, ALWAYS trigger an alert regardless of content
+            # The presence of Item 1.05 in a filing indicates a cybersecurity incident disclosure
+            context = self._get_context(document_text, item_105_section.content, 200) # Get context from full doc
+            logger.info(f"Item 1.05 disclosure confirmed for {filing.filing_href} - ALWAYS treating as cybersecurity incident")
+            return True, ["Item 1.05"], [context]
 
         # Rule 2: If no Item 1.05 alert, check Item 8.01 for cybersecurity keywords
         logger.debug(f"Checking Item 8.01 for {filing.filing_href}")
