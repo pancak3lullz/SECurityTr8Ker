@@ -171,7 +171,7 @@ class TwitterNotifier(NotificationChannel):
         Update Twitter profile bio with last check time.
         
         Args:
-            last_check_time: Time of last check (default: current time)
+            last_check_time: Time of last check (default: current time) - can be naive or timezone-aware
             additional_info: Additional information to include in bio (e.g., SEC status)
         
         Returns:
@@ -182,10 +182,18 @@ class TwitterNotifier(NotificationChannel):
             return False
             
         try:
-            # Get current time if not provided
-            current_time = datetime.utcnow()
+            # Get current time in UTC if not provided
+            current_time = datetime.now(pytz.UTC)
+            
+            # Ensure last_check_time is timezone-aware
             if last_check_time is None:
                 last_check_time = current_time
+            elif not hasattr(last_check_time, 'tzinfo') or last_check_time.tzinfo is None:
+                # If naive datetime was provided, assume it's UTC
+                last_check_time = pytz.UTC.localize(last_check_time)
+            elif last_check_time.tzinfo != pytz.UTC and hasattr(last_check_time, 'astimezone'):
+                # If timezone-aware but not UTC, convert to UTC
+                last_check_time = last_check_time.astimezone(pytz.UTC)
                 
             # Check if this is a status change message (bypass throttle for these)
             is_status_change = False
@@ -196,15 +204,24 @@ class TwitterNotifier(NotificationChannel):
                 
             # Check if we should throttle updates for non-status changes
             if not is_status_change and self.last_bio_update:
-                time_since_last_update = (current_time - self.last_bio_update).total_seconds() / 60.0
+                # Ensure last_bio_update is timezone-aware for comparison
+                if not hasattr(self.last_bio_update, 'tzinfo') or self.last_bio_update.tzinfo is None:
+                    last_bio_update_utc = pytz.UTC.localize(self.last_bio_update)
+                else:
+                    last_bio_update_utc = self.last_bio_update
+                    
+                time_since_last_update = (current_time - last_bio_update_utc).total_seconds() / 60.0
                 if time_since_last_update < self.min_bio_update_interval:
                     logger.info(f"Skipping Twitter bio update - last update was {time_since_last_update:.1f} minutes ago (minimum interval: {self.min_bio_update_interval} minutes)")
                     return True  # Return True to avoid triggering error messages
                 
-            # Format time in Eastern timezone
+            # Format time in Eastern timezone (make sure to localize)
             eastern = pytz.timezone('US/Eastern')
-            last_check_time_et = last_check_time.astimezone(eastern) if hasattr(last_check_time, 'astimezone') else eastern.localize(last_check_time)
+            last_check_time_et = last_check_time.astimezone(eastern)
             time_str = last_check_time_et.strftime('%Y-%m-%d %H:%M ET')
+            
+            # Log time conversion for debugging
+            logger.debug(f"Time conversion for bio: UTC={last_check_time.strftime('%H:%M:%S')}, ET={last_check_time_et.strftime('%H:%M:%S')}")
             
             # Extract SEC status if available
             status_text = "UNKNOWN"
@@ -219,10 +236,10 @@ class TwitterNotifier(NotificationChannel):
             
             # Calculate next review time if SEC is closed
             if not is_sec_open:
-                # Calculate next business day at 9:00 AM
+                # Working with the Eastern Time datetime for next review calculation
                 next_review_time = last_check_time_et
                 
-                # Start with next day at 9:00 AM
+                # Start with next day at 9:00 AM ET
                 next_day = (next_review_time + timedelta(days=1)).replace(
                     hour=9, minute=0, second=0, microsecond=0
                 )
@@ -276,7 +293,7 @@ class TwitterNotifier(NotificationChannel):
             # Validate that update was successful
             if response and hasattr(response, 'description') and response.description == bio_message:
                 logger.info(f"Twitter bio updated successfully to: {response.description}")
-                # Record successful update time
+                # Record successful update time (store timezone-aware datetime)
                 self.last_bio_update = current_time
                 return True
             else:
