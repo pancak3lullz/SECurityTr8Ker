@@ -1,495 +1,214 @@
-
-2025-06-20 19:49:27 - __main__ - INFO - ================================================================================
-2025-06-20 19:49:27 - __main__ - INFO -  SECurityTr8Ker - SEC RSS Feed Monitor for Cybersecurity Disclosures
-2025-06-20 19:49:27 - __main__ - INFO - ================================================================================
-2025-06-20 19:49:27 - src.core.application - INFO - Initializing SECurityTr8Ker application
-2025-06-20 19:49:27 - src.core.storage_service - ERROR - Error loading disclosures from /workspace/disclosures.json: Expecting value: line 2 column 1 (char 1)
-2025-06-20 19:49:27 - src.notifiers.teams_notifier - INFO - Teams notifier initialized with webhook URL: not configured
-2025-06-20 19:49:27 - src.notifiers.twitter_notifier - WARNING - Twitter credentials not fully configured
-2025-06-20 19:49:27 - src.notifiers.notification_service - WARNING - No notification channels available
-2025-06-20 19:49:27 - src.core.application - INFO - SECurityTr8Ker application initialized
-2025-06-20 19:49:27 - src.core.application - INFO - Active notification channels: 
-2025-06-20 19:49:27 - src.core.application - INFO - Business hours mode: Enabled
-2025-06-20 19:49:27 - src.core.application - INFO - Twitter bio updater not available
-2025-06-20 19:49:27 - __main__ - INFO - Operating in business hours mode (M-F, 9:00 AM - 5:30 PM ET)
-2025-06-20 19:49:27 - src.core.application - INFO - SECurityTr8Ker starting up...
-2025-06-20 19:49:27 - src.core.application - INFO - Starting in business hours mode
-2025-06-20 19:49:27 - src.core.application - INFO - Currently within SEC business hours
-2025-06-20 19:49:27 - src.core.scheduler - INFO - SEC scheduler starting
-2025-06-20 19:49:27 - src.core.application - INFO - Fetching SEC RSS feed for 8-K filings...
-2025-06-20 19:49:27 - src.api.sec_api - INFO - Fetching SEC RSS feed from https://www.sec.gov/Archives/edgar/usgaap.rss.xml
-2025-06-20 19:49:27 - src.api.sec_api - INFO - Found 200 items in RSS feed
-2025-06-20 19:49:27 - src.api.sec_api - INFO - Successfully processed 0 filings from RSS feed
-2025-06-20 19:49:27 - src.core.application - WARNING - No filings found in RSS feed
-2025-06-20 19:49:57 - __main__ - INFO - Shutdown signal received
-2025-06-20 19:49:57 - src.core.scheduler - INFO - SEC scheduler shutting down...
-2025-06-20 19:49:57 - src.core.application - INFO - SECurityTr8Ker shutting down...
-2025-06-20 19:49:57 - src.core.scheduler - INFO - SEC scheduler shutdown complete
-2025-06-20 19:49:57 - src.core.application - INFO - SECurityTr8Ker shutdown complete
-2025-06-20 19:49:57 - src.core.scheduler - INFO - SEC scheduler shutting down...
-2025-06-20 19:49:57 - src.core.application - INFO - SECurityTr8Ker shutting down...
-2025-06-20 19:51:27 - __main__ - INFO - ================================================================================
-2025-06-20 19:51:27 - __main__ - INFO -  SECurityTr8Ker - SEC RSS Feed Monitor for Cybersecurity Disclosures
-2025-06-20 19:51:27 - __main__ - INFO - ================================================================================
-2025-06-20 19:51:27 - src.core.application - INFO - Initializing SECurityTr8Ker application
-2025-06-20 19:51:27 - src.core.storage_service - ERROR - Error loading disclosures from /workspace/disclosures.json: Expecting value: line 2 column 1 (char 1)
-2025-06-20 19:51:27 - src.notifiers.teams_notifier - INFO - Teams notifier initialized with webhook URL: not configured
-2025-06-20 19:51:27 - src.notifiers.twitter_notifier - WARNING - Twitter credentials not fully configured
-2025-06-20 19:51:27 - src.notifiers.notification_service - WARNING - No notification channels available
-2025-06-20 19:51:27 - src.core.application - INFO - SECurityTr8Ker application initialized
-2025-06-20 19:51:27 - src.core.application - INFO - Active notification channels: 
-2025-06-20 19:51:27 - src.core.application - INFO - Business hours mode: Enabled
-2025-06-20 19:51:27 - src.core.application - INFO - Twitter bio updater not available
-2025-06-20 19:51:27 - __main__ - INFO - Operating in business hours mode (M-F, 9:00 AM - 5:30 PM ET)
-2025-06-20 19:51:27 - src.core.application - INFO - SECurityTr8Ker starting up...
-2025-06-20 19:51:27 - src.core.application - INFO - Starting in business hours mode
-2025-06-20 19:51:27 - src.core.application - INFO - Currently within SEC business hours
-2025-06-20 19:51:27 - src.core.scheduler - INFO - SEC scheduler starting
-2025-06-20 19:51:27 - src.core.application - INFO - Fetching SEC RSS feed for 8-K filings...
-2025-06-20 19:51:27 - src.api.sec_api - INFO - Fetching SEC RSS feed from https://www.sec.gov/Archives/edgar/usgaap.rss.xml
-2025-06-20 19:51:27 - src.api.sec_api - INFO - Found 200 items in RSS feed
-2025-06-20 19:51:27 - src.api.sec_api - INFO - Successfully processed 159 filings from RSS feed
-2025-06-20 19:51:27 - src.core.application - INFO - Found 159 filings, 159 are new and need processing
-2025-06-20 19:51:27 - src.core.application - INFO - Found 159 filings to inspect
-2025-06-20 19:51:27 - src.core.application - INFO - Inspecting documents for cybersecurity disclosures...
 2025-06-20 19:51:29 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: HINES GLOBAL INCOME TRUST, INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1585101/000158510125000040/hgit-20250613.htm
-2025-06-20 19:51:29 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 8.01']
 2025-06-20 19:51:29 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1585101/000158510125000040/hgit-20250613.htm
 2025-06-20 19:51:29 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: ATN International, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/879585/000110465925061134/tm2518327d1_8k.htm
-2025-06-20 19:51:29 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:29 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:51:29 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/879585/000110465925061134/tm2518327d1_8k.htm
 2025-06-20 19:51:29 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SELECTIS HEALTH, INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/727346/000164117225015818/form8-k.htm
-2025-06-20 19:51:29 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 8.01']
 2025-06-20 19:51:29 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/727346/000164117225015818/form8-k.htm
 2025-06-20 19:51:31 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: GrowGeneration Corp. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1604868/000160486825000021/grwg-20250619.htm
-2025-06-20 19:51:31 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:31 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:51:31 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1604868/000160486825000021/grwg-20250619.htm
 2025-06-20 19:51:31 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: AMERIGUARD SECURITY SERVICES, INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1514443/000182912625004612/ameriguardsec_8k.htm
-2025-06-20 19:51:31 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:31 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
 2025-06-20 19:51:31 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1514443/000182912625004612/ameriguardsec_8k.htm
 2025-06-20 19:51:31 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Golub Capital BDC 4, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1901612/000110465925061129/tm2518226d1_8k.htm
-2025-06-20 19:51:31 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:31 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
 2025-06-20 19:51:31 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1901612/000110465925061129/tm2518226d1_8k.htm
 2025-06-20 19:51:33 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SURO CAPITAL CORP. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1509470/000164117225015799/form8-k.htm
-2025-06-20 19:51:33 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:33 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
 2025-06-20 19:51:33 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1509470/000164117225015799/form8-k.htm
 2025-06-20 19:51:33 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: OFS Capital Corp (8-K) URL: https://www.sec.gov/Archives/edgar/data/1487918/000148791825000050/ofs-20250618.htm
-2025-06-20 19:51:33 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:33 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
 2025-06-20 19:51:33 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1487918/000148791825000050/ofs-20250618.htm
 2025-06-20 19:51:33 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: MINERALRITE Corp (8-K) URL: https://www.sec.gov/Archives/edgar/data/1096296/000153949725001679/n4863_x8-8k.htm
-2025-06-20 19:51:33 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
 2025-06-20 19:51:33 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1096296/000153949725001679/n4863_x8-8k.htm
 2025-06-20 19:51:35 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Quantum Computing Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1758009/000121390025056038/ea0246315-8k_quantum.htm
-2025-06-20 19:51:35 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:35 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.02', 'item 5.07', 'item 9.01']
 2025-06-20 19:51:35 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1758009/000121390025056038/ea0246315-8k_quantum.htm
 2025-06-20 19:51:35 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: HNI CORP (8-K) URL: https://www.sec.gov/Archives/edgar/data/48287/000114036125023132/ef20050786_8k.htm
-2025-06-20 19:51:35 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:35 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
 2025-06-20 19:51:35 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/48287/000114036125023132/ef20050786_8k.htm
 2025-06-20 19:51:35 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SolarWindow Technologies, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1071840/000117184325003997/f8k_062025.htm
-2025-06-20 19:51:35 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:35 - src.parsers.section_parser - INFO - Extracted 4 valid sections from document. Keys: ['item 1.01', 'item 3.02', 'item 7.01', 'item 9.01']
 2025-06-20 19:51:35 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1071840/000117184325003997/f8k_062025.htm
 2025-06-20 19:51:37 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: VERIZON COMMUNICATIONS INC (8-K) URL: https://www.sec.gov/Archives/edgar/data/732712/000119312525143513/d80997d8k.htm
-2025-06-20 19:51:37 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
 2025-06-20 19:51:37 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/732712/000119312525143513/d80997d8k.htm
 2025-06-20 19:51:37 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: VILLAGE SUPER MARKET INC (8-K) URL: https://www.sec.gov/Archives/edgar/data/103595/000010359525000010/vlgea-20250620.htm
-2025-06-20 19:51:37 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
 2025-06-20 19:51:37 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/103595/000010359525000010/vlgea-20250620.htm
 2025-06-20 19:51:37 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: GoHealth, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1808220/000162828025032314/goco-20250618.htm
-2025-06-20 19:51:37 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:37 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:51:37 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1808220/000162828025032314/goco-20250618.htm
 2025-06-20 19:51:39 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: EXOZYMES INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/2010788/000164117225015782/form8-k.htm
-2025-06-20 19:51:39 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:39 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
 2025-06-20 19:51:39 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/2010788/000164117225015782/form8-k.htm
 2025-06-20 19:51:39 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Rackspace Technology, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1810019/000181001925000083/rxt-20250620.htm
-2025-06-20 19:51:39 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:39 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:51:39 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1810019/000181001925000083/rxt-20250620.htm
 2025-06-20 19:51:39 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Cactus Acquisition Corp. 1 Ltd (8-K) URL: https://www.sec.gov/Archives/edgar/data/1865861/000164117225015783/form8-k.htm
-2025-06-20 19:51:39 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:39 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
 2025-06-20 19:51:39 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1865861/000164117225015783/form8-k.htm
 2025-06-20 19:51:41 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: XCel Brands, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1083220/000155837025008766/xelb-20250617x8k.htm
-2025-06-20 19:51:41 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:41 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:51:41 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1083220/000155837025008766/xelb-20250617x8k.htm
 2025-06-20 19:51:41 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: VIRCO MFG CORPORATION (8-K) URL: https://www.sec.gov/Archives/edgar/data/751365/000162828025032305/virc-20250617.htm
-2025-06-20 19:51:41 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:41 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 5.07']
 2025-06-20 19:51:41 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/751365/000162828025032305/virc-20250617.htm
 2025-06-20 19:51:41 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Ceribell, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1861107/000095017025088309/cbll-20250612.htm
-2025-06-20 19:51:41 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:41 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
 2025-06-20 19:51:41 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1861107/000095017025088309/cbll-20250612.htm
 2025-06-20 19:51:43 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Sky Harbour Group Corp (8-K) URL: https://www.sec.gov/Archives/edgar/data/1823587/000143774925020848/ysac20250620_8k.htm
-2025-06-20 19:51:43 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:43 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:51:43 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1823587/000143774925020848/ysac20250620_8k.htm
 2025-06-20 19:51:43 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Des Moines (8-K) URL: https://www.sec.gov/Archives/edgar/data/1325814/000132581425000114/fhlbdm-20250616.htm
-2025-06-20 19:51:43 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:43 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 2.03', 'item 9.01']
 2025-06-20 19:51:43 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1325814/000132581425000114/fhlbdm-20250616.htm
 2025-06-20 19:51:43 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: VERINT SYSTEMS INC (8-K) URL: https://www.sec.gov/Archives/edgar/data/1166388/000116638825000108/vrnt-20250619.htm
-2025-06-20 19:51:43 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:43 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
 2025-06-20 19:51:43 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1166388/000116638825000108/vrnt-20250619.htm
 2025-06-20 19:51:45 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Ondas Holdings Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1646188/000121390025055968/ea0246097-8k_ondas.htm
-2025-06-20 19:51:45 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
 2025-06-20 19:51:45 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1646188/000121390025055968/ea0246097-8k_ondas.htm
 2025-06-20 19:51:45 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Dallas (8-K) URL: https://www.sec.gov/Archives/edgar/data/1331757/000133175725000111/fhlbd-20250616.htm
-2025-06-20 19:51:45 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:45 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
 2025-06-20 19:51:45 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1331757/000133175725000111/fhlbd-20250616.htm
 2025-06-20 19:51:45 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: TEAM INC (8-K) URL: https://www.sec.gov/Archives/edgar/data/318833/000031883325000049/tisi-20250618.htm
-2025-06-20 19:51:45 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:45 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 3.03', 'item 5.07', 'item 5.03']
 2025-06-20 19:51:45 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/318833/000031883325000049/tisi-20250618.htm
 2025-06-20 19:51:47 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SilverBox Corp IV (8-K) URL: https://www.sec.gov/Archives/edgar/data/2015947/000110465925061082/tm2518539d1_8k.htm
-2025-06-20 19:51:47 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:47 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 7.01', 'item 9.01']
 2025-06-20 19:51:47 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/2015947/000110465925061082/tm2518539d1_8k.htm
 2025-06-20 19:51:47 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: CITIZENS, INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/24090/000002409025000096/cia-20250617.htm
-2025-06-20 19:51:47 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:47 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:51:47 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/24090/000002409025000096/cia-20250617.htm
 2025-06-20 19:51:47 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SUPERIOR GROUP OF COMPANIES, INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/95574/000143774925020843/sgc20250620_8k.htm
-2025-06-20 19:51:47 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:47 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 7.01']
 2025-06-20 19:51:47 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/95574/000143774925020843/sgc20250620_8k.htm
 2025-06-20 19:51:49 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Future FinTech Group Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1066923/000121390025055931/ea0246314-8k_future.htm
-2025-06-20 19:51:49 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:49 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
 2025-06-20 19:51:49 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1066923/000121390025055931/ea0246314-8k_future.htm
 2025-06-20 19:51:49 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: QS Energy, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1103795/000168316825004635/qsenergy_8k.htm
-2025-06-20 19:51:49 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:49 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 3.02', 'item 9.01']
 2025-06-20 19:51:49 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1103795/000168316825004635/qsenergy_8k.htm
 2025-06-20 19:51:49 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Boston (8-K) URL: https://www.sec.gov/Archives/edgar/data/1331463/000133146325000114/fhlbbost-20250616.htm
-2025-06-20 19:51:49 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:49 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
 2025-06-20 19:51:49 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1331463/000133146325000114/fhlbbost-20250616.htm
 2025-06-20 19:51:51 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Autodesk, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/769397/000076939725000075/adsk-20250618.htm
-2025-06-20 19:51:51 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:51 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.02', 'item 5.07', 'item 9.01']
 2025-06-20 19:51:51 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/769397/000076939725000075/adsk-20250618.htm
 2025-06-20 19:51:51 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: DevvStream Corp. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1854480/000114036125023086/ef20050801_8k.htm
-2025-06-20 19:51:51 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
 2025-06-20 19:51:51 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1854480/000114036125023086/ef20050801_8k.htm
 2025-06-20 19:51:51 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Chicago (8-K) URL: https://www.sec.gov/Archives/edgar/data/1331451/000133145125000119/fhlbc-20250617.htm
-2025-06-20 19:51:51 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:51 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
 2025-06-20 19:51:51 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1331451/000133145125000119/fhlbc-20250617.htm
 2025-06-20 19:51:53 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Omega Flex, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1317945/000164117225015769/form8-k.htm
-2025-06-20 19:51:53 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:53 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:51:53 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1317945/000164117225015769/form8-k.htm
 2025-06-20 19:51:53 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: GUARANTY BANCSHARES INC /TX/ (8-K) URL: https://www.sec.gov/Archives/edgar/data/1058867/000095017025088251/gnty-20250620.htm
-2025-06-20 19:51:53 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
 2025-06-20 19:51:53 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1058867/000095017025088251/gnty-20250620.htm
 2025-06-20 19:51:53 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Stone Point Credit Income Fund (8-K) URL: https://www.sec.gov/Archives/edgar/data/2031283/000110465925061029/tm2518250d1_8k.htm
-2025-06-20 19:51:53 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:53 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 3.02']
 2025-06-20 19:51:53 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/2031283/000110465925061029/tm2518250d1_8k.htm
 2025-06-20 19:51:55 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Kronos Bio, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1741830/000121390025055915/ea0246047-8k_kronos.htm
-2025-06-20 19:51:55 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:55 - src.parsers.section_parser - INFO - Extracted 7 valid sections from document. Keys: ['item 2.01', 'item 3.01', 'item 3.03', 'item 5.01', 'item 5.02', 'item 5.03', 'item 9.01']
 2025-06-20 19:51:55 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1741830/000121390025055915/ea0246047-8k_kronos.htm
 2025-06-20 19:51:55 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Cincinnati (8-K) URL: https://www.sec.gov/Archives/edgar/data/1326771/000132677125000115/fhlbcin-20250616.htm
-2025-06-20 19:51:55 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:51:55 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
 2025-06-20 19:51:55 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1326771/000132677125000115/fhlbcin-20250616.htm
 2025-06-20 19:51:55 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: ENTERPRISE PRODUCTS PARTNERS L.P. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1061219/000119312525143357/d93202d8k.htm
-2025-06-20 19:51:55 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 1.01', 'item 8.01', 'item 9.01']
 2025-06-20 19:51:55 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1061219/000119312525143357/d93202d8k.htm
-2025-06-20 19:51:56 - __main__ - INFO - Shutdown signal received
-2025-06-20 19:51:56 - src.core.scheduler - INFO - SEC scheduler shutting down...
-2025-06-20 19:51:56 - src.core.application - INFO - SECurityTr8Ker shutting down...
-2025-06-20 19:51:57 - src.core.scheduler - INFO - SEC scheduler shutdown complete
-2025-06-20 19:51:57 - src.core.application - INFO - SECurityTr8Ker shutdown complete
-2025-06-20 19:51:57 - src.core.scheduler - INFO - SEC scheduler shutting down...
-2025-06-20 19:51:57 - src.core.application - INFO - SECurityTr8Ker shutting down...
-2025-06-20 19:53:19 - __main__ - INFO - ================================================================================
-2025-06-20 19:53:19 - __main__ - INFO -  SECurityTr8Ker - SEC RSS Feed Monitor for Cybersecurity Disclosures
-2025-06-20 19:53:19 - __main__ - INFO - ================================================================================
-2025-06-20 19:53:19 - src.core.application - INFO - Initializing SECurityTr8Ker application
-2025-06-20 19:53:19 - src.core.storage_service - ERROR - Error loading disclosures from /workspace/disclosures.json: Expecting value: line 2 column 1 (char 1)
-2025-06-20 19:53:19 - src.notifiers.teams_notifier - INFO - Teams notifier initialized with webhook URL: not configured
-2025-06-20 19:53:19 - src.notifiers.twitter_notifier - WARNING - Twitter credentials not fully configured
-2025-06-20 19:53:19 - src.notifiers.notification_service - WARNING - No notification channels available
-2025-06-20 19:53:19 - src.core.application - INFO - SECurityTr8Ker application initialized
-2025-06-20 19:53:19 - src.core.application - INFO - Active notification channels: 
-2025-06-20 19:53:19 - src.core.application - INFO - Business hours mode: Disabled
-2025-06-20 19:53:19 - src.core.application - INFO - Twitter bio updater not available
-2025-06-20 19:53:19 - __main__ - INFO - Operating in continuous mode (24/7)
-2025-06-20 19:53:19 - src.core.application - INFO - SECurityTr8Ker starting up...
-2025-06-20 19:53:19 - src.core.application - INFO - Starting in continuous mode (runs 24/7)
-2025-06-20 19:53:19 - src.core.application - INFO - Fetching SEC RSS feed for 8-K filings...
-2025-06-20 19:53:19 - src.api.sec_api - INFO - Fetching SEC RSS feed from https://www.sec.gov/Archives/edgar/usgaap.rss.xml
-2025-06-20 19:53:19 - src.api.sec_api - INFO - Found 200 items in RSS feed
-2025-06-20 19:53:19 - src.api.sec_api - INFO - Successfully processed 157 filings from RSS feed
-2025-06-20 19:53:19 - src.core.application - INFO - Found 157 filings, 157 are new and need processing
-2025-06-20 19:53:19 - src.core.application - INFO - Found 157 filings to inspect
-2025-06-20 19:53:19 - src.core.application - INFO - Inspecting documents for cybersecurity disclosures...
 2025-06-20 19:53:20 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SELECTIS HEALTH, INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/727346/000164117225015818/form8-k.htm
-2025-06-20 19:53:20 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 8.01']
 2025-06-20 19:53:20 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/727346/000164117225015818/form8-k.htm
 2025-06-20 19:53:21 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: HINES GLOBAL INCOME TRUST, INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1585101/000158510125000040/hgit-20250613.htm
-2025-06-20 19:53:21 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 8.01']
 2025-06-20 19:53:21 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1585101/000158510125000040/hgit-20250613.htm
 2025-06-20 19:53:21 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: COMCAST CORP (8-K) URL: https://www.sec.gov/Archives/edgar/data/1166691/000116669125000027/cmcsa-20250618.htm
-2025-06-20 19:53:21 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:21 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.02', 'item 5.07', 'item 9.01']
 2025-06-20 19:53:21 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1166691/000116669125000027/cmcsa-20250618.htm
 2025-06-20 19:53:21 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SOLITARIO RESOURCES CORP. (8-K) URL: https://www.sec.gov/Archives/edgar/data/917225/000165495425007257/xpl_8k.htm
-2025-06-20 19:53:21 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:21 - src.parsers.section_parser - INFO - Extracted 4 valid sections from document. Keys: ['item 5.03', 'item 5.07', 'item 7.01', 'item 9.01']
 2025-06-20 19:53:21 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/917225/000165495425007257/xpl_8k.htm
 2025-06-20 19:53:22 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: ATN International, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/879585/000110465925061134/tm2518327d1_8k.htm
-2025-06-20 19:53:22 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:22 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:53:22 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/879585/000110465925061134/tm2518327d1_8k.htm
 2025-06-20 19:53:22 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: AMERIGUARD SECURITY SERVICES, INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1514443/000182912625004612/ameriguardsec_8k.htm
-2025-06-20 19:53:22 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:22 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
 2025-06-20 19:53:22 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1514443/000182912625004612/ameriguardsec_8k.htm
 2025-06-20 19:53:22 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: GrowGeneration Corp. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1604868/000160486825000021/grwg-20250619.htm
-2025-06-20 19:53:22 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:22 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:53:22 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1604868/000160486825000021/grwg-20250619.htm
 2025-06-20 19:53:23 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: MINERALRITE Corp (8-K) URL: https://www.sec.gov/Archives/edgar/data/1096296/000153949725001679/n4863_x8-8k.htm
-2025-06-20 19:53:23 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
 2025-06-20 19:53:23 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1096296/000153949725001679/n4863_x8-8k.htm
 2025-06-20 19:53:23 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SURO CAPITAL CORP. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1509470/000164117225015799/form8-k.htm
-2025-06-20 19:53:23 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:23 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
 2025-06-20 19:53:23 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1509470/000164117225015799/form8-k.htm
 2025-06-20 19:53:23 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Golub Capital BDC 4, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1901612/000110465925061129/tm2518226d1_8k.htm
-2025-06-20 19:53:23 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:23 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
 2025-06-20 19:53:23 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1901612/000110465925061129/tm2518226d1_8k.htm
 2025-06-20 19:53:24 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Quantum Computing Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1758009/000121390025056038/ea0246315-8k_quantum.htm
-2025-06-20 19:53:24 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:24 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.02', 'item 5.07', 'item 9.01']
 2025-06-20 19:53:24 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1758009/000121390025056038/ea0246315-8k_quantum.htm
 2025-06-20 19:53:24 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: HNI CORP (8-K) URL: https://www.sec.gov/Archives/edgar/data/48287/000114036125023132/ef20050786_8k.htm
-2025-06-20 19:53:24 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:24 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
 2025-06-20 19:53:24 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/48287/000114036125023132/ef20050786_8k.htm
 2025-06-20 19:53:24 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: OFS Capital Corp (8-K) URL: https://www.sec.gov/Archives/edgar/data/1487918/000148791825000050/ofs-20250618.htm
-2025-06-20 19:53:24 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:24 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
 2025-06-20 19:53:24 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1487918/000148791825000050/ofs-20250618.htm
 2025-06-20 19:53:25 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: GoHealth, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1808220/000162828025032314/goco-20250618.htm
-2025-06-20 19:53:25 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:25 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:53:25 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1808220/000162828025032314/goco-20250618.htm
 2025-06-20 19:53:25 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SolarWindow Technologies, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1071840/000117184325003997/f8k_062025.htm
-2025-06-20 19:53:25 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:25 - src.parsers.section_parser - INFO - Extracted 4 valid sections from document. Keys: ['item 1.01', 'item 3.02', 'item 7.01', 'item 9.01']
 2025-06-20 19:53:25 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1071840/000117184325003997/f8k_062025.htm
 2025-06-20 19:53:25 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: VERIZON COMMUNICATIONS INC (8-K) URL: https://www.sec.gov/Archives/edgar/data/732712/000119312525143513/d80997d8k.htm
-2025-06-20 19:53:25 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
 2025-06-20 19:53:25 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/732712/000119312525143513/d80997d8k.htm
 2025-06-20 19:53:26 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Cactus Acquisition Corp. 1 Ltd (8-K) URL: https://www.sec.gov/Archives/edgar/data/1865861/000164117225015783/form8-k.htm
-2025-06-20 19:53:26 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:26 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
 2025-06-20 19:53:26 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1865861/000164117225015783/form8-k.htm
 2025-06-20 19:53:26 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Rackspace Technology, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1810019/000181001925000083/rxt-20250620.htm
-2025-06-20 19:53:26 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:26 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:53:26 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1810019/000181001925000083/rxt-20250620.htm
 2025-06-20 19:53:26 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: VILLAGE SUPER MARKET INC (8-K) URL: https://www.sec.gov/Archives/edgar/data/103595/000010359525000010/vlgea-20250620.htm
-2025-06-20 19:53:26 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
 2025-06-20 19:53:26 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/103595/000010359525000010/vlgea-20250620.htm
 2025-06-20 19:53:27 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: VIRCO MFG CORPORATION (8-K) URL: https://www.sec.gov/Archives/edgar/data/751365/000162828025032305/virc-20250617.htm
-2025-06-20 19:53:27 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:27 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 5.07']
 2025-06-20 19:53:27 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/751365/000162828025032305/virc-20250617.htm
 2025-06-20 19:53:27 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: EXOZYMES INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/2010788/000164117225015782/form8-k.htm
-2025-06-20 19:53:27 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:27 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
 2025-06-20 19:53:27 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/2010788/000164117225015782/form8-k.htm
 2025-06-20 19:53:27 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: XCel Brands, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1083220/000155837025008766/xelb-20250617x8k.htm
-2025-06-20 19:53:27 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:27 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:53:27 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1083220/000155837025008766/xelb-20250617x8k.htm
 2025-06-20 19:53:28 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Ceribell, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1861107/000095017025088309/cbll-20250612.htm
-2025-06-20 19:53:28 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:28 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
 2025-06-20 19:53:28 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1861107/000095017025088309/cbll-20250612.htm
 2025-06-20 19:53:28 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Sky Harbour Group Corp (8-K) URL: https://www.sec.gov/Archives/edgar/data/1823587/000143774925020848/ysac20250620_8k.htm
-2025-06-20 19:53:28 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:28 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:53:28 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1823587/000143774925020848/ysac20250620_8k.htm
 2025-06-20 19:53:28 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: VERINT SYSTEMS INC (8-K) URL: https://www.sec.gov/Archives/edgar/data/1166388/000116638825000108/vrnt-20250619.htm
-2025-06-20 19:53:28 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:28 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
 2025-06-20 19:53:28 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1166388/000116638825000108/vrnt-20250619.htm
 2025-06-20 19:53:29 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Des Moines (8-K) URL: https://www.sec.gov/Archives/edgar/data/1325814/000132581425000114/fhlbdm-20250616.htm
-2025-06-20 19:53:29 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:29 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 2.03', 'item 9.01']
 2025-06-20 19:53:29 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1325814/000132581425000114/fhlbdm-20250616.htm
 2025-06-20 19:53:29 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Dallas (8-K) URL: https://www.sec.gov/Archives/edgar/data/1331757/000133175725000111/fhlbd-20250616.htm
-2025-06-20 19:53:29 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:29 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
 2025-06-20 19:53:29 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1331757/000133175725000111/fhlbd-20250616.htm
 2025-06-20 19:53:29 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Ondas Holdings Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1646188/000121390025055968/ea0246097-8k_ondas.htm
-2025-06-20 19:53:29 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
 2025-06-20 19:53:29 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1646188/000121390025055968/ea0246097-8k_ondas.htm
 2025-06-20 19:53:30 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: TEAM INC (8-K) URL: https://www.sec.gov/Archives/edgar/data/318833/000031883325000049/tisi-20250618.htm
-2025-06-20 19:53:30 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:30 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 3.03', 'item 5.07', 'item 5.03']
 2025-06-20 19:53:30 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/318833/000031883325000049/tisi-20250618.htm
 2025-06-20 19:53:30 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: CITIZENS, INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/24090/000002409025000096/cia-20250617.htm
-2025-06-20 19:53:30 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:30 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:53:30 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/24090/000002409025000096/cia-20250617.htm
 2025-06-20 19:53:30 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SUPERIOR GROUP OF COMPANIES, INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/95574/000143774925020843/sgc20250620_8k.htm
-2025-06-20 19:53:30 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:30 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 7.01']
 2025-06-20 19:53:30 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/95574/000143774925020843/sgc20250620_8k.htm
 2025-06-20 19:53:31 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: QS Energy, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1103795/000168316825004635/qsenergy_8k.htm
-2025-06-20 19:53:31 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:31 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 3.02', 'item 9.01']
 2025-06-20 19:53:31 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1103795/000168316825004635/qsenergy_8k.htm
 2025-06-20 19:53:31 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Boston (8-K) URL: https://www.sec.gov/Archives/edgar/data/1331463/000133146325000114/fhlbbost-20250616.htm
-2025-06-20 19:53:31 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:31 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
 2025-06-20 19:53:31 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1331463/000133146325000114/fhlbbost-20250616.htm
 2025-06-20 19:53:31 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SilverBox Corp IV (8-K) URL: https://www.sec.gov/Archives/edgar/data/2015947/000110465925061082/tm2518539d1_8k.htm
-2025-06-20 19:53:31 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:31 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 7.01', 'item 9.01']
 2025-06-20 19:53:31 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/2015947/000110465925061082/tm2518539d1_8k.htm
 2025-06-20 19:53:32 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Future FinTech Group Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1066923/000121390025055931/ea0246314-8k_future.htm
-2025-06-20 19:53:32 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:32 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
 2025-06-20 19:53:32 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1066923/000121390025055931/ea0246314-8k_future.htm
 2025-06-20 19:53:32 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: DevvStream Corp. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1854480/000114036125023086/ef20050801_8k.htm
-2025-06-20 19:53:32 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
 2025-06-20 19:53:32 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1854480/000114036125023086/ef20050801_8k.htm
 2025-06-20 19:53:32 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Chicago (8-K) URL: https://www.sec.gov/Archives/edgar/data/1331451/000133145125000119/fhlbc-20250617.htm
-2025-06-20 19:53:32 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:32 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
 2025-06-20 19:53:32 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1331451/000133145125000119/fhlbc-20250617.htm
 2025-06-20 19:53:33 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: GUARANTY BANCSHARES INC /TX/ (8-K) URL: https://www.sec.gov/Archives/edgar/data/1058867/000095017025088251/gnty-20250620.htm
-2025-06-20 19:53:33 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
 2025-06-20 19:53:33 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1058867/000095017025088251/gnty-20250620.htm
 2025-06-20 19:53:33 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Omega Flex, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1317945/000164117225015769/form8-k.htm
-2025-06-20 19:53:33 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:33 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:53:33 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1317945/000164117225015769/form8-k.htm
 2025-06-20 19:53:33 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Autodesk, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/769397/000076939725000075/adsk-20250618.htm
-2025-06-20 19:53:33 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:33 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.02', 'item 5.07', 'item 9.01']
 2025-06-20 19:53:33 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/769397/000076939725000075/adsk-20250618.htm
 2025-06-20 19:53:34 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Stone Point Credit Income Fund (8-K) URL: https://www.sec.gov/Archives/edgar/data/2031283/000110465925061029/tm2518250d1_8k.htm
-2025-06-20 19:53:34 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:34 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 3.02']
 2025-06-20 19:53:34 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/2031283/000110465925061029/tm2518250d1_8k.htm
 2025-06-20 19:53:34 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: ENTERPRISE PRODUCTS PARTNERS L.P. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1061219/000119312525143357/d93202d8k.htm
-2025-06-20 19:53:34 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 1.01', 'item 8.01', 'item 9.01']
 2025-06-20 19:53:34 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1061219/000119312525143357/d93202d8k.htm
 2025-06-20 19:53:34 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Kronos Bio, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1741830/000121390025055915/ea0246047-8k_kronos.htm
-2025-06-20 19:53:34 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:34 - src.parsers.section_parser - INFO - Extracted 7 valid sections from document. Keys: ['item 2.01', 'item 3.01', 'item 3.03', 'item 5.01', 'item 5.02', 'item 5.03', 'item 9.01']
 2025-06-20 19:53:34 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1741830/000121390025055915/ea0246047-8k_kronos.htm
 2025-06-20 19:53:35 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SEAFARER EXPLORATION CORP (8-K) URL: https://www.sec.gov/Archives/edgar/data/1106213/000119983525000215/sfrx_8k.htm
-2025-06-20 19:53:35 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:35 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.03']
 2025-06-20 19:53:35 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1106213/000119983525000215/sfrx_8k.htm
 2025-06-20 19:53:35 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Vuzix Corp (8-K) URL: https://www.sec.gov/Archives/edgar/data/1463972/000110465925061008/tm2518395d1_8k.htm
-2025-06-20 19:53:35 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:35 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:53:35 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1463972/000110465925061008/tm2518395d1_8k.htm
 2025-06-20 19:53:35 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Cincinnati (8-K) URL: https://www.sec.gov/Archives/edgar/data/1326771/000132677125000115/fhlbcin-20250616.htm
-2025-06-20 19:53:35 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:35 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
 2025-06-20 19:53:35 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1326771/000132677125000115/fhlbcin-20250616.htm
 2025-06-20 19:53:36 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Topeka (8-K) URL: https://www.sec.gov/Archives/edgar/data/1325878/000132587825000129/fhlbt-20250616.htm
-2025-06-20 19:53:36 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:36 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
 2025-06-20 19:53:36 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1325878/000132587825000129/fhlbt-20250616.htm
 2025-06-20 19:53:37 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: GOLD RESOURCE CORP (8-K) URL: https://www.sec.gov/Archives/edgar/data/1160791/000155837025008751/goro-20250617x8k.htm
-2025-06-20 19:53:37 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:37 - src.parsers.section_parser - INFO - Extracted 4 valid sections from document. Keys: ['item 5.02', 'item 5.07', 'item 7.01', 'item 9.01']
 2025-06-20 19:53:37 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1160791/000155837025008751/goro-20250617x8k.htm
 2025-06-20 19:53:37 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Pittsburgh (8-K) URL: https://www.sec.gov/Archives/edgar/data/1330399/000095017025088216/ck0001330399-20250616.htm
-2025-06-20 19:53:37 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:37 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 2.03', 'item 9.01']
 2025-06-20 19:53:37 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1330399/000095017025088216/ck0001330399-20250616.htm
 2025-06-20 19:53:38 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Kindly MD, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1946573/000164117225015752/form8-k.htm
-2025-06-20 19:53:38 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:38 - src.parsers.section_parser - INFO - Extracted 5 valid sections from document. Keys: ['item 1.01', 'item 3.02', 'item 5.07', 'item 7.01', 'item 9.01']
 2025-06-20 19:53:38 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1946573/000164117225015752/form8-k.htm
 2025-06-20 19:53:39 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: CADIZ INC (8-K) URL: https://www.sec.gov/Archives/edgar/data/727273/000121390025055863/ea0246316-8k_cadiz.htm
-2025-06-20 19:53:39 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 7.01', 'item 8.01', 'item 9.01']
 2025-06-20 19:53:39 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/727273/000121390025055863/ea0246316-8k_cadiz.htm
 2025-06-20 19:53:39 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Federal Home Loan Bank of Indianapolis (8-K) URL: https://www.sec.gov/Archives/edgar/data/1331754/000133175425000130/fhlbi-20250616.htm
-2025-06-20 19:53:39 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:39 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
 2025-06-20 19:53:39 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1331754/000133175425000130/fhlbi-20250616.htm
 2025-06-20 19:53:40 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: SOUTH DAKOTA SOYBEAN PROCESSORS LLC (8-K) URL: https://www.sec.gov/Archives/edgar/data/1163609/000116360925000021/sdsp-20250617.htm
-2025-06-20 19:53:40 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:40 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:53:40 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1163609/000116360925000021/sdsp-20250617.htm
 2025-06-20 19:53:41 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: CleanCore Solutions, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1956741/000121390025055851/ea0246287-8k_cleancore.htm
-2025-06-20 19:53:41 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:41 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
 2025-06-20 19:53:41 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1956741/000121390025055851/ea0246287-8k_cleancore.htm
 2025-06-20 19:53:41 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Five Point Holdings, LLC (8-K) URL: https://www.sec.gov/Archives/edgar/data/1574197/000119312525143291/d934817d8k.htm
-2025-06-20 19:53:41 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:41 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 1.01', 'item 7.01', 'item 9.01']
 2025-06-20 19:53:41 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1574197/000119312525143291/d934817d8k.htm
 2025-06-20 19:53:42 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: ACI WORLDWIDE, INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/935036/000119312525143290/d906059d8k.htm
-2025-06-20 19:53:42 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:42 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 1.01', 'item 2.03', 'item 9.01']
 2025-06-20 19:53:42 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/935036/000119312525143290/d906059d8k.htm
 2025-06-20 19:53:43 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Marvell Technology, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1835632/000119312525143288/d935188d8k.htm
-2025-06-20 19:53:43 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:43 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
 2025-06-20 19:53:43 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1835632/000119312525143288/d935188d8k.htm
 2025-06-20 19:53:43 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: GEN Restaurant Group, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1891856/000095017025088198/genk-20250618.htm
-2025-06-20 19:53:43 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:43 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:53:43 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1891856/000095017025088198/genk-20250618.htm
 2025-06-20 19:53:44 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: NEXSTAR MEDIA GROUP, INC. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1142417/000095017025088197/nxst-20250617.htm
-2025-06-20 19:53:44 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:44 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.07', 'item 7.01', 'item 9.01']
 2025-06-20 19:53:44 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1142417/000095017025088197/nxst-20250617.htm
 2025-06-20 19:53:45 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Synchrony Financial (8-K) URL: https://www.sec.gov/Archives/edgar/data/1601712/000160171225000200/syf-20250617.htm
-2025-06-20 19:53:45 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:45 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.07', 'item 9.01']
 2025-06-20 19:53:45 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1601712/000160171225000200/syf-20250617.htm
 2025-06-20 19:53:45 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Clipper Realty Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1649096/000143774925020819/clpr20250619_8k.htm
-2025-06-20 19:53:45 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:45 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
 2025-06-20 19:53:45 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1649096/000143774925020819/clpr20250619_8k.htm
 2025-06-20 19:53:46 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Orthofix Medical Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/884624/000095017025088194/ofix-20250618.htm
-2025-06-20 19:53:46 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.07', 'item 8.01']
 2025-06-20 19:53:46 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/884624/000095017025088194/ofix-20250618.htm
 2025-06-20 19:53:47 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: GXO Logistics, Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1852244/000110465925060942/tm2518398d1_8k.htm
-2025-06-20 19:53:47 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:47 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.02', 'item 7.01', 'item 9.01']
 2025-06-20 19:53:47 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1852244/000110465925060942/tm2518398d1_8k.htm
 2025-06-20 19:53:47 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: BTCS Inc. (8-K) URL: https://www.sec.gov/Archives/edgar/data/1436229/000164117225015746/form8-k.htm
-2025-06-20 19:53:47 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:47 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 2.03', 'item 7.01', 'item 9.01']
 2025-06-20 19:53:47 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1436229/000164117225015746/form8-k.htm
 2025-06-20 19:53:48 - src.analyzers.disclosure_analyzer - INFO - Analyzing filing: Sealy Industrial Partners IV, LP (8-K) URL: https://www.sec.gov/Archives/edgar/data/1929017/000095017025088192/ck0001929017-20250616.htm
-2025-06-20 19:53:48 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
-2025-06-20 19:53:48 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
 2025-06-20 19:53:48 - src.analyzers.disclosure_analyzer - INFO - No cybersecurity disclosure found for https://www.sec.gov/Archives/edgar/data/1929017/000095017025088192/ck0001929017-20250616.htm
-2025-06-20 19:53:49 - __main__ - INFO - Shutdown signal received
-2025-06-20 19:53:49 - src.core.application - INFO - SECurityTr8Ker shutting down...
-2025-06-20 19:53:49 - src.core.application - INFO - SECurityTr8Ker shutdown complete
-2025-06-20 19:53:49 - src.core.application - INFO - SECurityTr8Ker shutting down...

@@ -1,0 +1,9 @@
+2025-06-20 19:49:27 - src.api.sec_api - INFO - Fetching SEC RSS feed from https://www.sec.gov/Archives/edgar/usgaap.rss.xml
+2025-06-20 19:49:27 - src.api.sec_api - INFO - Found 200 items in RSS feed
+2025-06-20 19:49:27 - src.api.sec_api - INFO - Successfully processed 0 filings from RSS feed
+2025-06-20 19:51:27 - src.api.sec_api - INFO - Fetching SEC RSS feed from https://www.sec.gov/Archives/edgar/usgaap.rss.xml
+2025-06-20 19:51:27 - src.api.sec_api - INFO - Found 200 items in RSS feed
+2025-06-20 19:51:27 - src.api.sec_api - INFO - Successfully processed 159 filings from RSS feed
+2025-06-20 19:53:19 - src.api.sec_api - INFO - Fetching SEC RSS feed from https://www.sec.gov/Archives/edgar/usgaap.rss.xml
+2025-06-20 19:53:19 - src.api.sec_api - INFO - Found 200 items in RSS feed
+2025-06-20 19:53:19 - src.api.sec_api - INFO - Successfully processed 157 filings from RSS feed

@@ -1,0 +1,194 @@
+2025-06-20 19:51:29 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 8.01']
+2025-06-20 19:51:29 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:29 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:51:29 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 8.01']
+2025-06-20 19:51:31 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:31 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:51:31 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:31 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
+2025-06-20 19:51:31 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:31 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
+2025-06-20 19:51:33 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:33 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
+2025-06-20 19:51:33 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:33 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
+2025-06-20 19:51:33 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
+2025-06-20 19:51:35 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:35 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.02', 'item 5.07', 'item 9.01']
+2025-06-20 19:51:35 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:35 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
+2025-06-20 19:51:35 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:35 - src.parsers.section_parser - INFO - Extracted 4 valid sections from document. Keys: ['item 1.01', 'item 3.02', 'item 7.01', 'item 9.01']
+2025-06-20 19:51:37 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
+2025-06-20 19:51:37 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
+2025-06-20 19:51:37 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:37 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:51:39 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:39 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
+2025-06-20 19:51:39 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:39 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:51:39 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:39 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
+2025-06-20 19:51:41 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:41 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:51:41 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:41 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 5.07']
+2025-06-20 19:51:41 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:41 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
+2025-06-20 19:51:43 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:43 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:51:43 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:43 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 2.03', 'item 9.01']
+2025-06-20 19:51:43 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:43 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
+2025-06-20 19:51:45 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
+2025-06-20 19:51:45 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:45 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
+2025-06-20 19:51:45 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:45 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 3.03', 'item 5.07', 'item 5.03']
+2025-06-20 19:51:47 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:47 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 7.01', 'item 9.01']
+2025-06-20 19:51:47 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:47 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:51:47 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:47 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 7.01']
+2025-06-20 19:51:49 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:49 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
+2025-06-20 19:51:49 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:49 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 3.02', 'item 9.01']
+2025-06-20 19:51:49 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:49 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
+2025-06-20 19:51:51 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:51 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.02', 'item 5.07', 'item 9.01']
+2025-06-20 19:51:51 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
+2025-06-20 19:51:51 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:51 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
+2025-06-20 19:51:53 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:53 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:51:53 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
+2025-06-20 19:51:53 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:53 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 3.02']
+2025-06-20 19:51:55 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:55 - src.parsers.section_parser - INFO - Extracted 7 valid sections from document. Keys: ['item 2.01', 'item 3.01', 'item 3.03', 'item 5.01', 'item 5.02', 'item 5.03', 'item 9.01']
+2025-06-20 19:51:55 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:51:55 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
+2025-06-20 19:51:55 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 1.01', 'item 8.01', 'item 9.01']
+2025-06-20 19:53:20 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 8.01']
+2025-06-20 19:53:21 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 8.01']
+2025-06-20 19:53:21 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:21 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.02', 'item 5.07', 'item 9.01']
+2025-06-20 19:53:21 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:21 - src.parsers.section_parser - INFO - Extracted 4 valid sections from document. Keys: ['item 5.03', 'item 5.07', 'item 7.01', 'item 9.01']
+2025-06-20 19:53:22 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:22 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:53:22 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:22 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
+2025-06-20 19:53:22 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:22 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:53:23 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
+2025-06-20 19:53:23 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:23 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
+2025-06-20 19:53:23 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:23 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
+2025-06-20 19:53:24 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:24 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.02', 'item 5.07', 'item 9.01']
+2025-06-20 19:53:24 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:24 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
+2025-06-20 19:53:24 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:24 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
+2025-06-20 19:53:25 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:25 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:53:25 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:25 - src.parsers.section_parser - INFO - Extracted 4 valid sections from document. Keys: ['item 1.01', 'item 3.02', 'item 7.01', 'item 9.01']
+2025-06-20 19:53:25 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
+2025-06-20 19:53:26 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:26 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
+2025-06-20 19:53:26 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:26 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:53:26 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
+2025-06-20 19:53:27 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:27 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 5.07']
+2025-06-20 19:53:27 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:27 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
+2025-06-20 19:53:27 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:27 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:53:28 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:28 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
+2025-06-20 19:53:28 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:28 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:53:28 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:28 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']
+2025-06-20 19:53:29 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:29 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 2.03', 'item 9.01']
+2025-06-20 19:53:29 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:29 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
+2025-06-20 19:53:29 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
+2025-06-20 19:53:30 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:30 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 3.03', 'item 5.07', 'item 5.03']
+2025-06-20 19:53:30 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:30 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:53:30 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:30 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 7.01']
+2025-06-20 19:53:31 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:31 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 3.02', 'item 9.01']
+2025-06-20 19:53:31 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:31 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
+2025-06-20 19:53:31 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:31 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 7.01', 'item 9.01']
+2025-06-20 19:53:32 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:32 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
+2025-06-20 19:53:32 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
+2025-06-20 19:53:32 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:32 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
+2025-06-20 19:53:33 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 8.01', 'item 9.01']
+2025-06-20 19:53:33 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:33 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:53:33 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:33 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.02', 'item 5.07', 'item 9.01']
+2025-06-20 19:53:34 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:34 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 3.02']
+2025-06-20 19:53:34 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 1.01', 'item 8.01', 'item 9.01']
+2025-06-20 19:53:34 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:34 - src.parsers.section_parser - INFO - Extracted 7 valid sections from document. Keys: ['item 2.01', 'item 3.01', 'item 3.03', 'item 5.01', 'item 5.02', 'item 5.03', 'item 9.01']
+2025-06-20 19:53:35 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:35 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.03']
+2025-06-20 19:53:35 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:35 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:53:35 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:35 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
+2025-06-20 19:53:36 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:36 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
+2025-06-20 19:53:37 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:37 - src.parsers.section_parser - INFO - Extracted 4 valid sections from document. Keys: ['item 5.02', 'item 5.07', 'item 7.01', 'item 9.01']
+2025-06-20 19:53:37 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:37 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 2.03', 'item 9.01']
+2025-06-20 19:53:38 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:38 - src.parsers.section_parser - INFO - Extracted 5 valid sections from document. Keys: ['item 1.01', 'item 3.02', 'item 5.07', 'item 7.01', 'item 9.01']
+2025-06-20 19:53:39 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 7.01', 'item 8.01', 'item 9.01']
+2025-06-20 19:53:39 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:39 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 2.03']
+2025-06-20 19:53:40 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:40 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:53:41 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:41 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 1.01', 'item 9.01']
+2025-06-20 19:53:41 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:41 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 1.01', 'item 7.01', 'item 9.01']
+2025-06-20 19:53:42 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:42 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 1.01', 'item 2.03', 'item 9.01']
+2025-06-20 19:53:43 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:43 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.02']
+2025-06-20 19:53:43 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:43 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:53:44 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:44 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.07', 'item 7.01', 'item 9.01']
+2025-06-20 19:53:45 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:45 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.07', 'item 9.01']
+2025-06-20 19:53:45 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:45 - src.parsers.section_parser - INFO - Extracted 1 valid sections from document. Keys: ['item 5.07']
+2025-06-20 19:53:46 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.07', 'item 8.01']
+2025-06-20 19:53:47 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:47 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 5.02', 'item 7.01', 'item 9.01']
+2025-06-20 19:53:47 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:47 - src.parsers.section_parser - INFO - Extracted 3 valid sections from document. Keys: ['item 2.03', 'item 7.01', 'item 9.01']
+2025-06-20 19:53:48 - src.parsers.section_parser - WARNING - Parser: Item 8.01 header was NOT matched by tag or fallback regex.
+2025-06-20 19:53:48 - src.parsers.section_parser - INFO - Extracted 2 valid sections from document. Keys: ['item 5.02', 'item 9.01']

@@ -287,7 +287,8 @@ class SECApiClient:
             # Extract filing info from xbrlFiling
             xbrl_filing = item.get('edgar:xbrlFiling', {})
             
-            form_type = xbrl_filing.get('edgar:formType', '')
+            # Form type is in the description field, not in xbrlFiling
+            form_type = item.get('description', '')
             company_name = xbrl_filing.get('edgar:companyName', '')
             cik = xbrl_filing.get('edgar:cikNumber', '')
             
@@ -309,6 +310,11 @@ class SECApiClient:
             # Skip incomplete items
             if not all([form_type, company_name, cik, filing_href]):
                 logger.debug(f"Skipping incomplete item: {item}")
+                return None
+            
+            # Only process 8-K filings for cybersecurity disclosures
+            if form_type != '8-K':
+                logger.debug(f"Skipping non-8-K filing: {form_type}")
                 return None
             
             filing = Filing(
